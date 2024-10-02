@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, Button, Picker, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { Picker } from '@react-native-picker/picker'
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
-const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState(1); // 0 para Macho, 1 para Hembra
-  const [condicionBucal, setCondicionBucal] = useState('');
-  const [condicionCorporal, setCondicionCorporal] = useState(3); // Valor inicial
+interface RegistrarRevisionOvinoProps {
+    OnFinalizar: () => void;
+    OnObservacion: () => void;
+}
+  
+const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinalizar, OnObservacion }) => {
+  const [sexo, setSexo] = useState<0 | 1>(1); //D 0 para Macho, 1 para Hembra
+  const [condicionBucal, setCondicionBucal] = useState<string>(''); 
+  const [condicionCorporal, setCondicionCorporal] = useState<number>(3);
+
 
   const handleRegistro = () => {
     const sexoValue = sexo === 0 ? 'Macho' : 'Hembra';
@@ -24,7 +31,7 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
         <SegmentedControlTab
           values={['Macho', 'Hembra']}
           selectedIndex={sexo}
-          onTabPress={setSexo}
+          onTabPress={(index) => setSexo(index as 0 | 1)}
           tabsContainerStyle={styles.tabsContainer}
           tabStyle={styles.tabStyle}
           activeTabStyle={styles.activeTabStyle}
@@ -86,11 +93,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     padding: 20,
+    backgroundColor: '#f0f4f7', 
   },
   label: {
     fontWeight: 'bold',
-    fontSize: 16,
-    marginVertical: 10,
+    fontSize: 18, 
+    marginVertical: 15, 
   },
   picker: {
     height: 50,
@@ -98,42 +106,46 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     borderWidth: 1,
     backgroundColor: '#7893B6',
-    borderColor: "black"
+    borderColor: "black",
+    paddingHorizontal: 10, 
   },
   title: {
     textAlign: 'center',
-    fontSize: 24,
-    margin: 10,
+    fontSize: 28, 
+    marginBottom: 30, 
     fontWeight: 'bold',
     backgroundColor: '#ecf0f1',
-    padding: 8,
+    padding: 10,
     color: '#7893B6'
   },
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 10,
+    marginTop: 30, 
   },
   button: {
-    backgroundColor: '#7893B6', 
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: '#7893B6',
+    padding: 15, 
+    borderRadius: 8,
     alignItems: 'center',
     flex: 1,
-    marginHorizontal: 5,
+    marginHorizontal: 10, 
   },
   buttonText: {
-    color: '#0', 
+    color: '#0',
     fontWeight: 'bold',
+    fontSize: 16, 
   },
   sliderContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginVertical: 10,
+    marginVertical: 20, 
   },
   slider: {
     flex: 1,
+    marginHorizontal: 10, 
   },
   sliderValue: {
     fontSize: 24,
@@ -144,28 +156,33 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 1,
     backgroundColor: '#7893B6',
+    padding: 10, 
     textAlign: 'center',
-    alignItems: 'flex-end'
+    justifyContent: 'center', 
   },
   row: {
     flexDirection: 'row',
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    alignItems: 'center', 
   },
   tabsContainer: {
-    marginBottom: 20,
+    marginBottom: 30, 
   },
   tabStyle: {
     borderColor: 'black',
+    paddingVertical: 10, 
   },
   activeTabStyle: {
     backgroundColor: '#7893B6',
   },
   tabTextStyle: {
     color: 'black',
+    fontSize: 16, 
   },
   activeTabTextStyle: {
     color: 'black',
+    fontWeight: 'bold',
   },
 });
 
