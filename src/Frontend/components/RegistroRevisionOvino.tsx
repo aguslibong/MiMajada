@@ -4,21 +4,38 @@ import { Picker } from '@react-native-picker/picker'
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
+import { RevisionOvino } from '../../Backend/model/RevisionOvino';
+
+import { SexoService } from '../../Backend/service/Sexo.service';
+import { CondicionBucalService } from '../../Backend/service/CondicionBucal.service';
+
+
 interface RegistrarRevisionOvinoProps {
-    OnFinalizar: () => void;
-    OnObservacion: () => void;
+  OnFinalizar: () => void;
+  OnObservacion: () => void;
 }
   
 const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState<0 | 1>(1); //D 0 para Macho, 1 para Hembra
+  const [sexo, setSexo] = useState<0 | 1>(1); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState<string>(''); 
   const [condicionCorporal, setCondicionCorporal] = useState<number>(3);
 
-
   const handleRegistro = () => {
-    const sexoValue = sexo === 0 ? 'Macho' : 'Hembra';
-    console.log(`Sexo: ${sexoValue}, Condición Bucal: ${condicionBucal}, Condición Corporal: ${condicionCorporal}`);
-    // Aquí puedes manejar el envío de los datos
+    try {
+      const sexoValue = SexoService.getInstance().getSexoByDescripcion(sexo);
+      const condicionBucalObjetoValue = CondicionBucalService.getInstance().getCondicionBucalByDescripcion(condicionBucal);
+      if (sexoValue && condicionBucalObjetoValue) {
+      const revisionOvino = new RevisionOvino(
+        sexoValue,
+        condicionCorporal,
+        condicionBucalObjetoValue
+      );
+      console.log(condicionBucalObjetoValue)
+      console.log(revisionOvino.toString())
+    }
+    } catch (error) {
+      console.error('Error during registro:', error);
+    }
   };
 
   return (

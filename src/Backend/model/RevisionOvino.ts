@@ -1,39 +1,40 @@
-class RevisionOvino {
-    private sexo: Sexo;
-    private condicionCorporal: String;
-    private condicionBucal: String;
+import { CondicionBucal } from "./CondicionBucal";
+import { Sexo } from "./Sexo";
 
-    public RevisionOvino(sexo, condicionBucal, condicionCorporal): void {
-      this.sexo = sexo;
-      this.condicionBucal = condicionBucal;
-      this.condicionCorporal = condicionCorporal;
-    }
+export class RevisionOvino {
+  private sexo: Sexo;
+  private condicionCorporal: number; 
+  private condicionBucal: CondicionBucal;
 
+  constructor(sexo: Sexo, condicionCorporal: number, condicionBucal: CondicionBucal) { 
+    this.sexo = sexo;
+    this.condicionCorporal = condicionCorporal;
+    this.condicionBucal = condicionBucal;
+  }
+    
+  public getSexo(): Sexo {
+    return this.sexo;
+  }
 
-    // Getter and Setter for 'sexo'
-    getSexo(): Sexo {
-      return this.sexo;
-    }
-    setSexo(sexo) {
-      this.sexo = sexo;
-    }
+  public setSexo(sexo: Sexo): void {
+    this.sexo = sexo;
+  }
 
-    // Getter and Setter for 'condicionCorporal'
-    getCondicionCorporal() {
-      return this.condicionCorporal;
-    }
+  public getCondicionCorporal(): number {
+    return this.condicionCorporal;
+  }
 
-    setCondicionCorporal(condicionCorporal) {
-      this.condicionCorporal = condicionCorporal;
-    }
+  public setCondicionCorporal(condicionCorporal: number): void { 
+    this.condicionCorporal = condicionCorporal;
+  }
 
-    // Getter and Setter for 'condicionBucal'
-    getCondicionBucal() {
-      return this.condicionBucal;
-    }
+  public getCondicionBucal(): CondicionBucal {
+    return this.condicionBucal;
+  }
 
-    setCondicionBucal(condicionBucal) {
-      this.condicionBucal = condicionBucal;
-    }
+  public setCondicionBucal(condicionBucal: CondicionBucal): void {
+    this.condicionBucal = condicionBucal;
+  }
+
 
 }
