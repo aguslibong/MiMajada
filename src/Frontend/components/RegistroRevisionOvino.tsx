@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import Slider from '@react-native-community/slider';
@@ -30,9 +30,8 @@ const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinal
         condicionCorporal,
         condicionBucalObjetoValue
       );
-      console.log(condicionBucalObjetoValue)
-      console.log(revisionOvino.toString())
-    }
+      console.log(revisionOvino)
+      }
     } catch (error) {
       console.error('Error during registro:', error);
     }

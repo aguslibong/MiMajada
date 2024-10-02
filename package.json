@@ -14,10 +14,11 @@
     "@react-native-picker/picker": "^2.8.1",
     "expo": "~51.0.28",
     "expo-sqlite": "~14.0.6",
+    "expo-sqlite-hooks": "^0.1.2",
     "expo-status-bar": "~1.12.1",
     "react": "18.2.0",
-    "react-native": "0.74.5",
     "react-dom": "^18.2.0",
+    "react-native": "0.74.5",
     "react-native-segmented-control-tab": "^4.0.0",
     "react-native-web": "^0.19.12"
   },
