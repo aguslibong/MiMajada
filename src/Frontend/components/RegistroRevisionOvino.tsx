@@ -4,21 +4,27 @@ import { Picker } from '@react-native-picker/picker'
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
+import db from '../../Backend/db/db-config'
+
 import { RevisionOvino } from '../../Backend/model/RevisionOvino';
 
 import { SexoService } from '../../Backend/service/Sexo.service';
 import { CondicionBucalService } from '../../Backend/service/CondicionBucal.service';
+import { Enfermedad } from '../../Backend/model/Enfermedad';
 
 
 interface RegistrarRevisionOvinoProps {
   OnFinalizar: () => void;
   OnObservacion: () => void;
 }
-  
+
+
 const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinalizar, OnObservacion }) => {
   const [sexo, setSexo] = useState<0 | 1>(1); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState<string>(''); 
   const [condicionCorporal, setCondicionCorporal] = useState<number>(3);
+  //borrar despues 
+  const enfermedad = new Enfermedad (1, 'sarna');
 
   const handleRegistro = () => {
     try {
@@ -26,12 +32,19 @@ const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinal
       const condicionBucalObjetoValue = CondicionBucalService.getInstance().getCondicionBucalByDescripcion(condicionBucal);
       if (sexoValue && condicionBucalObjetoValue) {
       const revisionOvino = new RevisionOvino(
+        'defaultCaravana', // Replace 'defaultCaravana' with the actual caravana value
         sexoValue,
         condicionCorporal,
-        condicionBucalObjetoValue
+        condicionBucalObjetoValue,
+        enfermedad
       );
       console.log(revisionOvino)
-      }
+      db.setupDatabase()
+      db.insertConditionBucal(condicionBucalObjetoValue)
+      db.insertSexo(sexoValue)
+      db.insertRevisionOvino(revisionOvino)
+    
+    }
     } catch (error) {
       console.error('Error during registro:', error);
     }

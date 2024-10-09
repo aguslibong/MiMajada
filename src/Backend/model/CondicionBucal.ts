@@ -5,7 +5,6 @@ export class CondicionBucal {
     constructor(idCondicionBucal: number, descripcion: string) {
         this.idCondicionBucal = idCondicionBucal;
         this.descripcion = descripcion;
-
     }
 
     public getIdCondicionBucal(): number {
