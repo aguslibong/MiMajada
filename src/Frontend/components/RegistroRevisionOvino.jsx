@@ -31,11 +31,11 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
           condicionBucalObjetoValue,
           enfermedad
         );
-        console.log(revisionOvino);
         db.setupDatabase();
         db.insertConditionBucal(condicionBucalObjetoValue);
         db.insertSexo(sexoValue);
         db.insertRevisionOvino(revisionOvino);
+        db.getAllRevisionOvino();
       }
     } catch (error) {
       console.error('Error during registro:', error);
@@ -116,98 +116,110 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#f0f4f7', 
+    alignItems: 'center', 
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+    backgroundColor: '#f0f4f7',
   },
   label: {
     fontWeight: 'bold',
-    fontSize: 18, 
-    marginVertical: 15, 
+    fontSize: 18,
+    marginVertical: 10,
+    textAlign: 'center',
   },
   picker: {
-    height: 50,
-    width: '100%',
+    height: 100,
+    width: '100%', // Aumentamos al 100% para que sea más visible
     marginBottom: 20,
-    borderWidth: 1,
+    borderWidth: 100,
     backgroundColor: '#7893B6',
     borderColor: "black",
-    paddingHorizontal: 10, 
+    alignSelf: 'center',
+    borderRadius: 5, // Para mejorar la apariencia visual
   },
   title: {
     textAlign: 'center',
-    fontSize: 28, 
-    marginBottom: 30, 
+    fontSize: 24, 
+    marginBottom: 30,
     fontWeight: 'bold',
     backgroundColor: '#ecf0f1',
-    padding: 10,
-    color: '#7893B6'
+    padding: 15,
+    color: '#7893B6',
+    width: '100%',
   },
   buttonsContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row', // Botones en fila (horizontal)
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    marginTop: 30, 
+    marginTop: 20,
+    width: '100%', // Ancho completo de los botones
   },
   button: {
     backgroundColor: '#7893B6',
-    padding: 15, 
+    paddingVertical: 15,
+    paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: 'center',
-    flex: 1,
-    marginHorizontal: 10, 
+    flex: 1, // Distribuir espacio uniformemente entre los botones
+    marginHorizontal: 10,
   },
   buttonText: {
-    color: '#0',
+    color: '#000',
     fontWeight: 'bold',
-    fontSize: 16, 
+    fontSize: 16,
   },
   sliderContainer: {
-    flexDirection: 'row',
+    flexDirection: 'row', // Cambiamos a fila para que el valor y el slider estén alineados
     alignItems: 'center',
-    marginVertical: 20, 
+    marginVertical: 20,
+    width: '100%', // Ancho completo del contenedor
+    justifyContent: 'space-between', // Espaciado entre el texto y el slider
   },
   slider: {
-    flex: 1,
-    marginHorizontal: 10, 
+    flex: 1, // El slider ocupará todo el espacio disponible
+    marginHorizontal: 10,
   },
   sliderValue: {
     fontSize: 24,
-    width: 40,
     textAlign: 'center',
+    width: 40, // Ajuste para que el valor tenga su propio espacio
   },
   colorboxVioleta: {
     borderColor: "black",
     borderWidth: 1,
     backgroundColor: '#7893B6',
-    padding: 10, 
-    textAlign: 'center',
-    justifyContent: 'center', 
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '25%', // Ancho ajustado para que no ocupe toda la pantalla
   },
   row: {
     flexDirection: 'row',
-    flex: 1,
     justifyContent: 'space-between',
-    alignItems: 'center', 
+    alignItems: 'center',
+    width: '100%', // Alineado en fila con distribución horizontal completa
   },
   tabsContainer: {
-    marginBottom: 30, 
+    marginBottom: 30,
+    width: '100%', // Aumentado al 100% para que se ajuste a la pantalla
   },
   tabStyle: {
     borderColor: 'black',
-    paddingVertical: 10, 
+    paddingVertical: 10,
   },
   activeTabStyle: {
     backgroundColor: '#7893B6',
   },
   tabTextStyle: {
     color: 'black',
-    fontSize: 16, 
+    fontSize: 16,
   },
   activeTabTextStyle: {
     color: 'black',
     fontWeight: 'bold',
   },
 });
+
+
 
 export default RegistrarRevisionOvino;
