@@ -1,50 +1,42 @@
 import { useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
-import { Picker } from '@react-native-picker/picker'
+import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 
-import db from '../../Backend/db/db-config'
+import db from '../../Backend/db/db-config';
 
 import { RevisionOvino } from '../../Backend/model/RevisionOvino';
-
 import { SexoService } from '../../Backend/service/Sexo.service';
 import { CondicionBucalService } from '../../Backend/service/CondicionBucal.service';
 import { Enfermedad } from '../../Backend/model/Enfermedad';
 
-
-interface RegistrarRevisionOvinoProps {
-  OnFinalizar: () => void;
-  OnObservacion: () => void;
-}
-
-
-const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState<0 | 1>(1); // 0 = Macho y 1 = Hembra
-  const [condicionBucal, setCondicionBucal] = useState<string>(''); 
-  const [condicionCorporal, setCondicionCorporal] = useState<number>(3);
+const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
+  const [sexo, setSexo] = useState(1); // 0 = Macho y 1 = Hembra
+  const [condicionBucal, setCondicionBucal] = useState(''); 
+  const [condicionCorporal, setCondicionCorporal] = useState(3);
+  
   //borrar despues 
-  const enfermedad = new Enfermedad (1, 'sarna');
+  const enfermedad = new Enfermedad(1, 'sarna');
 
   const handleRegistro = () => {
     try {
       const sexoValue = SexoService.getInstance().getSexoByDescripcion(sexo);
       const condicionBucalObjetoValue = CondicionBucalService.getInstance().getCondicionBucalByDescripcion(condicionBucal);
       if (sexoValue && condicionBucalObjetoValue) {
-      const revisionOvino = new RevisionOvino(
-        'defaultCaravana', // Replace 'defaultCaravana' with the actual caravana value
-        sexoValue,
-        condicionCorporal,
-        condicionBucalObjetoValue,
-        enfermedad
-      );
-      console.log(revisionOvino)
-      db.setupDatabase()
-      db.insertConditionBucal(condicionBucalObjetoValue)
-      db.insertSexo(sexoValue)
-      db.insertRevisionOvino(revisionOvino)
-    
-    }
+        const revisionOvino = new RevisionOvino(
+          'defaultCaravana', // Replace 'defaultCaravana' with the actual caravana value
+          sexoValue,
+          condicionCorporal,
+          condicionBucalObjetoValue,
+          enfermedad
+        );
+        console.log(revisionOvino);
+        db.setupDatabase();
+        db.insertConditionBucal(condicionBucalObjetoValue);
+        db.insertSexo(sexoValue);
+        db.insertRevisionOvino(revisionOvino);
+      }
     } catch (error) {
       console.error('Error during registro:', error);
     }
@@ -53,14 +45,14 @@ const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinal
   return (
     <View style={styles.container}>
       <View>
-        <Text style={styles.title}>Registrar Revision Ovino</Text>
+        <Text style={styles.title}>Registrar Revisión Ovino</Text>
       </View>
       <View>
         <Text style={styles.label}>Sexo</Text>
         <SegmentedControlTab
           values={['Macho', 'Hembra']}
           selectedIndex={sexo}
-          onTabPress={(index) => setSexo(index as 0 | 1)}
+          onTabPress={(index) => setSexo(index)}
           tabsContainerStyle={styles.tabsContainer}
           tabStyle={styles.tabStyle}
           activeTabStyle={styles.activeTabStyle}
@@ -82,12 +74,14 @@ const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinal
           <Picker.Item label="md" value="md" />
           <Picker.Item label="sd" value="sd" />
         </Picker>
+
         <View style={styles.row}>
           <Text style={styles.label}>Condición Corporal</Text>
           <View style={styles.colorboxVioleta}>
             <Text style={styles.sliderValue}>{condicionCorporal}</Text>
           </View>
         </View>
+
         <View style={styles.sliderContainer}>
           <Slider
             style={styles.slider}
@@ -102,12 +96,13 @@ const RegistrarRevisionOvino: React.FC<RegistrarRevisionOvinoProps> = ({ OnFinal
           />
         </View>
       </View>
+
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
           <Text style={styles.buttonText}>Finalizar</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={OnObservacion}>
-          <Text style={styles.buttonText}>Agregar Observacion</Text>
+          <Text style={styles.buttonText}>Agregar Observación</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleRegistro}>
           <Text style={styles.buttonText}>Registrar</Text>

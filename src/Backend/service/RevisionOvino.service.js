@@ -1,14 +1,13 @@
 import { RevisionOvino } from "../model/RevisionOvino";
 
 class RevisionOvinoService {
-    private revisionesOvinos: any[];
-
     constructor() {
         this.revisionesOvinos = [];
     }
 
-    public agregarRevisionOvino (RO : RevisionOvino) : void {
-            //ummm dudoso
+    agregarRevisionOvino(RO) {
+        // Aquí puedes agregar la lógica para agregar una revisión ovina
+        this.revisionesOvinos.push(RO);
     }
 }
 
