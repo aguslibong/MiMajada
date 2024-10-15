@@ -19,6 +19,7 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
   //borrar despues 
   const enfermedad = new Enfermedad(1, 'sarna');
 
+
   const handleRegistro = () => {
     try {
       const sexoValue = SexoService.getInstance().getSexoByDescripcion(sexo);
