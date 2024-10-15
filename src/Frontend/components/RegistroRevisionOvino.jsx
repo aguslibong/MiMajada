@@ -26,7 +26,7 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
       const condicionBucalObjetoValue = CondicionBucalService.getInstance().getCondicionBucalByDescripcion(condicionBucal);
       if (sexoValue && condicionBucalObjetoValue) {
         const revisionOvino = new RevisionOvino(
-          'defaultCaravana', // Replace 'defaultCaravana' with the actual caravana value
+          'nyg68', // Replace 'defaultCaravana' with the actual caravana value
           sexoValue,
           condicionCorporal,
           condicionBucalObjetoValue,

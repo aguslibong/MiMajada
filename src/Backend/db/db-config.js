@@ -98,6 +98,10 @@ const insertRevisionOvino = async (revisionOvino) => {
 
 const getAllRevisionOvino = async () => {
     if (!db) return;
+    const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos');
+    for (const row of allRows) {
+        console.log(row.id, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana);
+}
     };
 
 export default { setupDatabase, insertConditionBucal, insertEnfermedad, insertSexo, insertRevisionOvino, getAllRevisionOvino };
