@@ -1,8 +1,15 @@
-import db from '../db/db-config';
-import { RevisionOvino } from '../model/RevisionOvino';
-import { SexoSingleton } from '../service/SexoSingleton.service';
-import { CondicionBucalSingleton } from '../service/CondicionBucalSingleton.service';
-import { EnfermedadSingleton } from '../service/EnfermedadSingleton.service'
+import db from '../db/db-init';
+import setupDatabase from '../db/db-config';
+import { insertCondicionBucal } from '../service/dbManager/CondicionBucalManager';
+import { insertSexo, getAllSexo } from '../service/dbManager/SexoManager';
+import { insertEnfermedad } from '../service/dbManager/EnfermedadManager';
+import { insertRevisionOvino } from '../service/dbManager/RevisionOvinoManager';
+import { RevisionOvino }  from '../model/RevisionOvino';
+import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
+import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
+import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service'
+
+// Clase que lleva la lógica de como se registran las revisiones de ovinos
 
 class ControladorRevisionOvino {
   constructor() {
@@ -33,13 +40,12 @@ class ControladorRevisionOvino {
 
       // Guardar los datos en la base de datos
       
-      console.log(enfermedadValue)
-      db.setupDatabase();
-      db.insertConditionBucal(condicionBucalObjetoValue);
-      db.insertSexo(sexoValue);
-      db.insertEnfermedad(enfermedadValue)
-      db.insertRevisionOvino(revisionOvino);
-      db.getAllRevisionOvino();
+      setupDatabase();
+      insertCondicionBucal(condicionBucalObjetoValue);
+      insertSexo(sexoValue);
+      insertEnfermedad(enfermedadValue)
+      insertRevisionOvino(revisionOvino);
+      getAllSexo();
     }
   }
 

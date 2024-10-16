@@ -1,4 +1,7 @@
-import { CondicionBucal } from "../model/CondicionBucal";
+import { CondicionBucal } from "../../../model/CondicionBucal";
+
+//Clase para asegurar que haya solo estos objetos creados de está manera 
+//de Condición Bucal
 export class CondicionBucalSingleton {
     static instance;
     condicionesBucales;
