@@ -1,4 +1,7 @@
-import {Enfermedad} from '../model/Enfermedad';
+import {Enfermedad} from '../../../model/Enfermedad';
+
+//Clase para asegurar que haya solo estos objetos creados de está manera 
+//de Enfermedad
 
 export class EnfermedadSingleton {
     static instance;

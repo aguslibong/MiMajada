@@ -1,5 +1,8 @@
-import { Sexo } from "../model/Sexo";
+import { Sexo } from "../../../model/Sexo";
 
+
+//Clase para asegurar que haya solo estos objetos creados de está manera 
+//de sexos
 export class SexoSingleton {
     static instance;
     sexos;

@@ -1,4 +1,4 @@
-import { RevisionOvino } from "../model/RevisionOvino";
+import { RevisionOvino } from "../../../model/RevisionOvino";
 
 class RevisionOvinoService {
     constructor() {

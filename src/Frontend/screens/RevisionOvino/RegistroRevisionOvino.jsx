@@ -6,21 +6,18 @@ import SegmentedControlTab from 'react-native-segmented-control-tab';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino';
 
 const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState(); // 0 = Macho y 1 = Hembra
+  const [sexo, setSexo] = useState(0); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState(''); 
   const [condicionCorporal, setCondicionCorporal] = useState();
-  const [enfermedad, setEnfermedad] = useState('');
+  const [enfermedad, setEnfermedad] = useState('No posee');
   const [caravana, setCaravana] = useState(''); // Campo para la caravana
 
   const handleRegistro = () => {
     try{
       instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      
       console.log("Revisión registrada con éxito");
-      setCaravana('');
-      setSexo();
-      setCondicionBucal('');
-      setCondicionCorporal();
-      setEnfermedad('');
+      // Limpiar los campos después de registrar
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
