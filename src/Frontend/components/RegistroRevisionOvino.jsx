@@ -1,47 +1,30 @@
 import { useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-
-import db from '../../Backend/db/db-config';
-
-import { RevisionOvino } from '../../Backend/model/RevisionOvino';
-import { SexoService } from '../../Backend/service/Sexo.service';
-import { CondicionBucalService } from '../../Backend/service/CondicionBucal.service';
-import { Enfermedad } from '../../Backend/model/Enfermedad';
+import instanciaControlador from '../../Backend/Controller/ControladorRevisionOvino';
 
 const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState(1); // 0 = Macho y 1 = Hembra
+  const [sexo, setSexo] = useState(); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState(''); 
-  const [condicionCorporal, setCondicionCorporal] = useState(3);
-  
-  //borrar despues 
-  const enfermedad = new Enfermedad(1, 'sarna');
-
+  const [condicionCorporal, setCondicionCorporal] = useState();
+  const [enfermedad, setEnfermedad] = useState('');
+  const [caravana, setCaravana] = useState(''); // Campo para la caravana
 
   const handleRegistro = () => {
-    try {
-      const sexoValue = SexoService.getInstance().getSexoByDescripcion(sexo);
-      const condicionBucalObjetoValue = CondicionBucalService.getInstance().getCondicionBucalByDescripcion(condicionBucal);
-      if (sexoValue && condicionBucalObjetoValue) {
-        const revisionOvino = new RevisionOvino(
-          'nyg68', // Replace 'defaultCaravana' with the actual caravana value
-          sexoValue,
-          condicionCorporal,
-          condicionBucalObjetoValue,
-          enfermedad
-        );
-        db.setupDatabase();
-        db.insertConditionBucal(condicionBucalObjetoValue);
-        db.insertSexo(sexoValue);
-        db.insertRevisionOvino(revisionOvino);
-        db.getAllRevisionOvino();
-      }
+    try{
+      instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      console.log("Revisión registrada con éxito");
+      setCaravana('');
+      setSexo();
+      setCondicionBucal('');
+      setCondicionCorporal();
+      setEnfermedad('');
     } catch (error) {
-      console.error('Error during registro:', error);
+      console.log("Error al registrar la revisión:", error);
     }
-  };
+  }
 
   return (
     <View style={styles.container}>
@@ -49,6 +32,14 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
         <Text style={styles.title}>Registrar Revisión Ovino</Text>
       </View>
       <View>
+        <Text style={styles.label}>Caravana (opcional)</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ingresa el número de caravana"
+          value={caravana}
+          onChangeText={setCaravana}
+        />
+
         <Text style={styles.label}>Sexo</Text>
         <SegmentedControlTab
           values={['Macho', 'Hembra']}
@@ -96,6 +87,22 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             thumbTintColor="#45658C"
           />
         </View>
+
+        <Text style={styles.label}>Enfermedad</Text>
+        <Picker
+          selectedValue={enfermedad}
+          style={styles.picker}
+          onValueChange={(itemValue) => setEnfermedad(itemValue)}
+        >
+          <Picker.Item label="Seleccione la enfermedad" value="" />
+          <Picker.Item label="Ninguna" value="1" />
+          <Picker.Item label="Sarna" value="ddl" />
+          <Picker.Item label="2d" value="2d" />
+          <Picker.Item label="4d" value="4d" />
+          <Picker.Item label="6d" value="6d" />
+          <Picker.Item label="md" value="md" />
+          <Picker.Item label="sd" value="sd" />
+        </Picker>
       </View>
 
       <View style={styles.buttonsContainer}>
@@ -110,8 +117,8 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {

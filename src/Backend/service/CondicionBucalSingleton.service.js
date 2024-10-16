@@ -1,10 +1,10 @@
 import { CondicionBucal } from "../model/CondicionBucal";
-export class CondicionBucalService {
+export class CondicionBucalSingleton {
     static instance;
     condicionesBucales;
 
     constructor() {
-        if (!CondicionBucalService.instance) {
+        if (!CondicionBucalSingleton.instance) {
             this.condicionesBucales = [
                 new CondicionBucal(1, 'ddl'),
                 new CondicionBucal(2, '2d'),
@@ -14,17 +14,17 @@ export class CondicionBucalService {
                 new CondicionBucal(6, 'md'),
                 new CondicionBucal(7, 'sd')
             ];
-            CondicionBucalService.instance = this;
+            CondicionBucalSingleton.instance = this;
         }
 
-        return CondicionBucalService.instance;
+        return CondicionBucalSingleton.instance;
     }
 
     static getInstance() {
-        if (!CondicionBucalService.instance) {
-            CondicionBucalService.instance = new CondicionBucalService();
+        if (!CondicionBucalSingleton.instance) {
+            CondicionBucalSingleton.instance = new CondicionBucalSingleton();
         }
-        return CondicionBucalService.instance;
+        return CondicionBucalSingleton.instance;
     }
 
     getCondicionBucalByDescripcion(descripcion) {

@@ -1,26 +1,26 @@
 import { Sexo } from "../model/Sexo";
 
-export class SexoService {
+export class SexoSingleton {
     static instance;
     sexos;
 
     constructor() {
-        if (!SexoService.instance) {
+        if (!SexoSingleton.instance) {
             this.sexos = [
                 new Sexo(0, 'Macho'),
                 new Sexo(1, 'Hembra'),
             ];
-            SexoService.instance = this;
+            SexoSingleton.instance = this;
         }
 
-        return SexoService.instance;
+        return SexoSingleton.instance;
     }
 
     static getInstance() {
-        if (!SexoService.instance) {
-            SexoService.instance = new SexoService();
+        if (!SexoSingleton.instance) {
+            SexoSingleton.instance = new SexoSingleton();
         }
-        return SexoService.instance;
+        return SexoSingleton.instance;
     }
 
     getSexoByDescripcion(id) {
