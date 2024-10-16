@@ -1,31 +1,70 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, ActivityIndicator, View, StyleSheet } from 'react-native';
 import SheepReviewCard from '../../components/SheepReviewCard.jsx';
+import { getAllRevisionOvino } from '../../../Backend/service/dbManager/RevisionOvinoManager.js';
 
 const ConsultarRevisionOvino = () => {
-  
-  const handleModify = () => {
-    console.log('Modificar');
+  const [revisions, setRevisions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const handleModify = (id) => {
+    console.log('Modificar', id);
   };
 
-  const handleDelete = () => {
-    console.log('Eliminar');
+  const handleDelete = (id) => {
+    console.log('Eliminar', id);
+    // Aquí puedes agregar la lógica para eliminar la revisión
   };
 
-  return (//la idea es traer las cosas del back y mostrarla en las card
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const allRevisions = await getAllRevisionOvino();
+        setRevisions(allRevisions);
+      } catch (error) {
+        console.error('Error fetching revisions:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loaderContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
+  }
+
+  return (
     <ScrollView>
-      <SheepReviewCard
-        revisionNumber="12345"
-        caravana="67890"
-        sexo="Macho"
-        condicionBucal="Buena"
-        condicionCorporal="3"
-        enfermedad="Ninguna"
-        onModify={handleModify}
-        onDelete={handleDelete}
-      />
+      {revisions.map((revision) => (
+        <SheepReviewCard
+          key={revision.id}
+          revisionNumber={revision.id}
+          caravana={revision.caravana}
+          sexo={revision.idSexo}
+          condicionBucal={revision.idConditionBucal}
+          condicionCorporal={revision.condicionCorporal}
+          enfermedad={revision.idEnfermedad}
+          onModify={() => handleModify(revision.id)}
+          onDelete={() => handleDelete(revision.id)}
+        />
+      ))}
     </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+  },
+});
 
 export default ConsultarRevisionOvino;

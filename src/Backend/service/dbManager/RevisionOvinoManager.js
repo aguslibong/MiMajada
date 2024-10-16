@@ -20,6 +20,7 @@ const getAllRevisionOvino = async () => {
     for (const row of allRows) {
         console.log(row.id, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana);
     };
+    return allRows;
 }
 
 export { insertRevisionOvino, getAllRevisionOvino };

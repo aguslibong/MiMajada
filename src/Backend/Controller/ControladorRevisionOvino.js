@@ -1,8 +1,8 @@
 import db from '../db/db-init';
 import setupDatabase from '../db/db-config';
-import { insertCondicionBucal } from '../service/dbManager/CondicionBucalManager';
+import { getAllCondicionBucal, insertCondicionBucal } from '../service/dbManager/CondicionBucalManager';
 import { insertSexo, getAllSexo } from '../service/dbManager/SexoManager';
-import { insertEnfermedad } from '../service/dbManager/EnfermedadManager';
+import { getAllEnfermedad, insertEnfermedad } from '../service/dbManager/EnfermedadManager';
 import { insertRevisionOvino } from '../service/dbManager/RevisionOvinoManager';
 import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
@@ -45,13 +45,14 @@ class ControladorRevisionOvino {
       insertSexo(sexoValue);
       insertEnfermedad(enfermedadValue)
       insertRevisionOvino(revisionOvino);
-      getAllSexo();
+      getAllCondicionBucal();
     }
   }
 
   obtenerRevisiones() {
     return this.revisiones;
   }
+  
 }
 
 // Asegurar una única instancia
