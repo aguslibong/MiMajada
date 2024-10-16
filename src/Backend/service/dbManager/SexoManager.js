@@ -14,7 +14,6 @@ const insertSexo = async (sexo) => {
 const getAllSexo = async () => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM Sexo');
-    console.log("Entre acá")
     for (const row of allRows) {
         console.log(row.idSexo, row.descripcion);
     };
