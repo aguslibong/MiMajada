@@ -94,14 +94,11 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
           style={styles.picker}
           onValueChange={(itemValue) => setEnfermedad(itemValue)}
         >
-          <Picker.Item label="Seleccione la enfermedad" value="" />
-          <Picker.Item label="Ninguna" value="1" />
-          <Picker.Item label="Sarna" value="ddl" />
-          <Picker.Item label="2d" value="2d" />
-          <Picker.Item label="4d" value="4d" />
-          <Picker.Item label="6d" value="6d" />
-          <Picker.Item label="md" value="md" />
-          <Picker.Item label="sd" value="sd" />
+          <Picker.Item label="Ninguna" value="No posee" />
+          <Picker.Item label="Sarna" value="Sarna" />
+          <Picker.Item label="Infeccion" value="Infeccion" />
+          <Picker.Item label="Garrapata" value="Garrapata" />
+          <Picker.Item label="Otra" value="Otra" />
         </Picker>
       </View>
 
@@ -117,8 +114,8 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
         </TouchableOpacity>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

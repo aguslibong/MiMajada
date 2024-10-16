@@ -17,7 +17,7 @@ class ControladorRevisionOvino {
   registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const sexoValue = SexoSingleton.getInstance().getSexoByDescripcion(sexo);
     const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalByDescripcion(condicionBucal);
-    let enfermedadValue = null;
+    let enfermedadValue = 0;
     if (EnfermedadSingleton.getInstance().getEnfermedadByDescripcion(enfermedad)) {
       enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadByDescripcion(enfermedad);
     }
@@ -32,9 +32,12 @@ class ControladorRevisionOvino {
       this.revisiones.push(revisionOvino); // Agregar la nueva revisión al array
 
       // Guardar los datos en la base de datos
+      
+      console.log(enfermedadValue)
       db.setupDatabase();
       db.insertConditionBucal(condicionBucalObjetoValue);
       db.insertSexo(sexoValue);
+      db.insertEnfermedad(enfermedadValue)
       db.insertRevisionOvino(revisionOvino);
       db.getAllRevisionOvino();
     }

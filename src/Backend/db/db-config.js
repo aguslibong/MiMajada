@@ -1,8 +1,3 @@
-import * as SQLite from 'expo-sqlite';
-import { CondicionBucal } from '../model/CondicionBucal';
-import { Sexo } from '../model/Sexo';
-import { RevisionOvino } from '../model/RevisionOvino';
-import { Enfermedad } from '../model/Enfermedad';
 import db from './db-init.js';
 
 const setupDatabase = async () => {
@@ -99,9 +94,9 @@ const insertRevisionOvino = async (revisionOvino) => {
 const getAllRevisionOvino = async () => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos');
+    const contador = 0;
     for (const row of allRows) {
         console.log(row.id, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana);
-}
     };
-
+}
 export default { setupDatabase, insertConditionBucal, insertEnfermedad, insertSexo, insertRevisionOvino, getAllRevisionOvino };

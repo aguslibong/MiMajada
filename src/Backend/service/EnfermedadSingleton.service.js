@@ -7,6 +7,7 @@ export class EnfermedadSingleton {
     constructor() {
         if (!EnfermedadSingleton.instance) {
             this.enfermedades = [
+                new Enfermedad(0, 'No posee'),
                 new Enfermedad(1, 'Sarna'),
                 new Enfermedad(2, 'Infeccion'),
                 new Enfermedad(3, 'Garrapata'),
