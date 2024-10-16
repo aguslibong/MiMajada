@@ -24,10 +24,7 @@ class ControladorRevisionOvino {
   registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const sexoValue = SexoSingleton.getInstance().getSexoByDescripcion(sexo);
     const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalByDescripcion(condicionBucal);
-    let enfermedadValue = 0;
-    if (EnfermedadSingleton.getInstance().getEnfermedadByDescripcion(enfermedad)) {
-      enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadByDescripcion(enfermedad);
-    }
+    const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadByDescripcion(enfermedad)
     if (sexoValue && condicionBucalObjetoValue) {
       const revisionOvino = new RevisionOvino(
         caravana ? caravana : 'No posee', // Si hay caravana, usar el valor ingresado; si no, usar un valor por defecto
@@ -43,7 +40,7 @@ class ControladorRevisionOvino {
       setupDatabase();
       insertCondicionBucal(condicionBucalObjetoValue);
       insertSexo(sexoValue);
-      insertEnfermedad(enfermedadValue)
+      insertEnfermedad(enfermedadValue);
       insertRevisionOvino(revisionOvino);
       getAllCondicionBucal();
     }
