@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, TouchableOpacity, TextInput } from 'rea
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-import instanciaControlador from '../../Backend/Controller/ControladorRevisionOvino';
+import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino';
 
 const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
   const [sexo, setSexo] = useState(); // 0 = Macho y 1 = Hembra

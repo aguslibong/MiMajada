@@ -1,34 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import RegistrarRevisionOvino from './src/Frontend/components/RegistroRevisionOvino';
-import { useEffect } from 'react';
-import setupDataBase from './src/Backend/db/db-config';
-import db from './src/Backend/db/db-init';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Menu from './src/Frontend/screens/Menu';
+import RegistrarRevisionOvino from './src/Frontend/screens/RevisionOvino/RegistroRevisionOvino';
+import ConsultarRevisionOvino from './src/Frontend/screens/RevisionOvino/ConsultarRevisionOvino';
 
-export default function App() {
-  const handleFinalizar = () => {
-    console.log('Finalizar pressed');
-  };
+const Stack = createStackNavigator();
 
-  const handleObservacion = () => {
-    console.log('Agregar Observación pressed');
-  };
+const App = () => {
   return (
-
-    <View style={styles.container}>
-      <RegistrarRevisionOvino
-        OnFinalizar={handleFinalizar}
-        OnObservacion={handleObservacion}
-      />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Menu">
+        <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="RegistrarRevisionOvino" component={RegistrarRevisionOvino} />
+        <Stack.Screen name="ConsultarRevisionOvino" component={ConsultarRevisionOvino} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
+
