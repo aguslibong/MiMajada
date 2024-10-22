@@ -12,20 +12,20 @@ const { width } = Dimensions.get('window');
 
 const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion }) => {
   const id = (revisionModificar) ? revisionModificar.id : null; // Obtenemos el ID de la revisión a modificar, si existe
-  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo : null); // 0 = Macho y 1 = Hembra
-  const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? `${revisionModificar.condicionBucal}` : '');
+  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo.idSexo : null); // 0 = Macho y 1 = Hembra
+  const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? String(revisionModificar.condicionBucal.idCondicionBucal) : '');
   const [condicionCorporal, setCondicionCorporal] = useState((revisionModificar) ? revisionModificar.condicionCorporal : 0);
-  const [enfermedad, setEnfermedad] = useState((revisionModificar) ? revisionModificar.enfermedad : '');
+  const [enfermedad, setEnfermedad] = useState((revisionModificar) ? String(revisionModificar.enfermedad.idEnfermedad) : '');
   const [caravana, setCaravana] = useState((revisionModificar) ? revisionModificar.caravana : ''); // Campo para la caravana
 
+  console.log(revisionModificar)
   const handleConsultar = () => {
     setAction('C')
   }
 
-
   const handleRegistro = () => {
     try {
-      instanciaControlador.registrarRevision((sexo + 1), condicionCorporal, condicionBucal, enfermedad, caravana);
+      instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
     } catch (error) {
       console.log("Error al registrar la revisión:", error);

@@ -10,8 +10,8 @@ export class SexoSingleton {
     constructor() {
         if (!SexoSingleton.instance) {
             this.sexos = [
-                new Sexo(1, 'Macho'),
-                new Sexo(2, 'Hembra'),
+                new Sexo(0, 'Macho'),
+                new Sexo(1, 'Hembra'),
             ];
             SexoSingleton.instance = this;
         }

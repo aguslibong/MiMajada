@@ -41,7 +41,7 @@ const setupDatabase = async () => {
         //Seteo los valores predeterminados que nunca cambian de los atributos de la revision ovino
         
         await (await db).runAsync(
-            'INSERT OR IGNORE INTO Sexo (idSexo, descripcion) VALUES (1, "Macho"), (2, "Hembra");'
+            'INSERT OR IGNORE INTO Sexo (idSexo, descripcion) VALUES (0, "Macho"), (1, "Hembra");'
           );
 
         await (await db).runAsync(
