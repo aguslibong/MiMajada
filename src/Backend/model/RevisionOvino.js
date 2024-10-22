@@ -1,14 +1,33 @@
 import { CondicionBucal } from "./CondicionBucal";
 import { Enfermedad } from "./Enfermedad";
 import { Sexo } from "./Sexo";
+import * as RevisionOvinoManager from "../service/dbManager/RevisionOvinoManager";
 
 export class RevisionOvino {
-  constructor(caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
+  constructor(id,nroRevision, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
+    this.id = id;
+    this.nroRevision = nroRevision;
     this.sexo = sexo;
     this.condicionCorporal = condicionCorporal;
     this.condicionBucal = condicionBucal;
     this.caravana = caravana;
     this.enfermedad = enfermedad;
+  }
+
+ getId() {
+    return this.id;
+  }
+
+  setId(id) {
+    this.id = id;
+  }
+
+  getNroRevision() {
+    return this.nroRevision;
+  }
+
+  setNroRevision(nroRevision) {
+    this.nroRevision = nroRevision;
   }
 
   getEnfermedad() {
@@ -54,5 +73,11 @@ export class RevisionOvino {
   toString() {
     return `Sexo: ${this.sexo}, Condicion Corporal: ${this.condicionCorporal}, Condicion Bucal: ${this.condicionBucal}`;
   }
+
+  delete(){
+    this.RevisionOvino = null;
+  }
+
+
 }
 

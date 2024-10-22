@@ -1,22 +1,45 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Dimensions, ScrollView, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino';
+import { EnfermedadSingleton } from '../../../Backend/service/Singleton/RevisionOvino/EnfermedadSingleton.service';
+import { SexoSingleton } from '../../../Backend/service/Singleton/RevisionOvino/SexoSingleton.service';
+import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 
-const { width } = Dimensions.get('window'); // Obtenemos el ancho de la pantalla del dispositivo
+const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
-  const [sexo, setSexo] = useState(5); // 0 = Macho y 1 = Hembra
-  const [condicionBucal, setCondicionBucal] = useState(''); 
-  const [condicionCorporal, setCondicionCorporal] = useState();
-  const [enfermedad, setEnfermedad] = useState('No posee');
+const RegistrarRevisionOvino = ({ route, OnFinalizar, OnObservacion }) => {
+  const { id } = route.params || {}; // Obtenemos el ID de la revisión a modificar, si existe
+  const [sexo, setSexo] = useState(0); // 0 = Macho y 1 = Hembra
+  const [condicionBucal, setCondicionBucal] = useState('');
+  const [condicionCorporal, setCondicionCorporal] = useState(1);
+  const [enfermedad, setEnfermedad] = useState('');
   const [caravana, setCaravana] = useState(''); // Campo para la caravana
+
+  useEffect(() => {
+    if (id) {
+      const fetchData = async () => {
+        try {
+          const revision = await instanciaControlador.obtenerRevisionPorId(id);
+          console.log(revision);
+          setSexo(revision.sexo.IdSexo - 1);
+          setCondicionBucal(revision.condicionBucal.idCondicionBucal);
+          setCondicionCorporal(revision.condicionCorporal);
+          setEnfermedad(revision.enfermedad.idEnfermedad);
+          setCaravana(revision.caravana);
+        } catch (error) {
+          console.error('Error fetching revision:', error);
+        }
+      };
+      fetchData();
+    }
+  }, [id]);
 
   const handleRegistro = () => {
     try {
-      instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      instanciaControlador.registrarRevision((sexo + 1), condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
@@ -29,7 +52,6 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Caravana (opcional)</Text>
           <TextInput
@@ -39,7 +61,6 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             onChangeText={setCaravana}
           />
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Sexo</Text>
           <SegmentedControlTab
@@ -53,7 +74,6 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             activeTabTextStyle={styles.activeTabTextStyle}
           />
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Condición Bucal</Text>
           <Picker
@@ -62,16 +82,15 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             onValueChange={(itemValue) => setCondicionBucal(itemValue)}
           >
             <Picker.Item label="Seleccione la condición bucal" value="" />
-            <Picker.Item label="ddl" value="ddl" />
-            <Picker.Item label="2d" value="2d" />
-            <Picker.Item label="4d" value="4d" />
-            <Picker.Item label="6d" value="6d" />
-            <Picker.Item label="bll" value="bll" />
-            <Picker.Item label="md" value="md" />
-            <Picker.Item label="sd" value="sd" />
+            <Picker.Item label="ddl" value="1" />
+            <Picker.Item label="2d" value="2" />
+            <Picker.Item label="4d" value="3" />
+            <Picker.Item label="6d" value="4" />
+            <Picker.Item label="bll" value="5" />
+            <Picker.Item label="md" value="6" />
+            <Picker.Item label="sd" value="7" />
           </Picker>
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Condición Corporal</Text>
           <Text style={styles.sliderValue}>{condicionCorporal}</Text>
@@ -87,7 +106,6 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             thumbTintColor="#45658C"
           />
         </View>
-
         <View style={styles.formGroup}>
           <Text style={styles.label}>Enfermedad</Text>
           <Picker
@@ -95,14 +113,13 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             style={styles.picker}
             onValueChange={(itemValue) => setEnfermedad(itemValue)}
           >
-            <Picker.Item label="Ninguna" value="No posee" />
-            <Picker.Item label="Sarna" value="Sarna" />
-            <Picker.Item label="Infeccion" value="Infeccion" />
-            <Picker.Item label="Garrapata" value="Garrapata" />
-            <Picker.Item label="Otra" value="Otra" />
+            <Picker.Item label="Ninguna" value="1" />
+            <Picker.Item label="Sarna" value="2" />
+            <Picker.Item label="Infección" value="3" />
+            <Picker.Item label="Garrapata" value="4" />
+            <Picker.Item label="Otra" value="5" />
           </Picker>
         </View>
-
         <View style={styles.buttonsContainer}>
           <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
             <Text style={styles.buttonText}>Finalizar</Text>
@@ -119,7 +136,7 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
   );
 };
 
-export default RegistrarRevisionOvino;
+export default  RegistrarRevisionOvino;
 
 const styles = StyleSheet.create({
   scrollContainer: {

@@ -29,7 +29,7 @@ export class EnfermedadSingleton {
         return EnfermedadSingleton.instance;
     }
 
-    getEnfermedadByDescripcion(descripcion) {
-        return this.enfermedades.find(enfermedad => enfermedad.getDescripcion() === descripcion);
+    getEnfermedadById(id) {
+        return this.enfermedades.find(enfermedad => enfermedad.getIdEnfermedad() == id);
     }
 }

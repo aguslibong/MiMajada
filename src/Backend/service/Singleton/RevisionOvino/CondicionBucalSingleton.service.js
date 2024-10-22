@@ -30,7 +30,7 @@ export class CondicionBucalSingleton {
         return CondicionBucalSingleton.instance;
     }
 
-    getCondicionBucalByDescripcion(descripcion) {
-        return this.condicionesBucales.find(condicion => condicion.getDescripcion() === descripcion);
+    getCondicionBucalById(id) {
+        return this.condicionesBucales.find(condicion => condicion.getIdCondicionBucal() == id);
     }
 }

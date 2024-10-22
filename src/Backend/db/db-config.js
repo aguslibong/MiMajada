@@ -37,6 +37,8 @@ const setupDatabase = async () => {
                     FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad)
                 );`
         )
+
+        //Seteo los valores predeterminados que nunca cambian de los atributos de la revision ovino
         await (await db).runAsync(
             'INSERT OR IGNORE INTO Sexo (idSexo, descripcion) VALUES (1, "Macho"), (2, "Hembra");'
           );
@@ -47,7 +49,7 @@ const setupDatabase = async () => {
 
         await (await db).runAsync(
             'INSERT OR IGNORE INTO Enfermedades (idEnfermedad, descripcion) VALUES (1, "No posee"), (2, "Sarna"), (3, "Infeccion"), (4, "Garrapata"), (5, "Otra");'
-        )
+        );
         
         /*LIMPIAR BASE DE DATOS
         await (await db).runAsync(
@@ -65,9 +67,6 @@ const setupDatabase = async () => {
         await (await db).runAsync(
             'DROP TABLE IF EXISTS RevisionOvinos'
         );*/
-
-        
-
         console.log("Base de datos configurada y tablas creadas correctamente.");
     } catch (error) {
         console.error("Error al configurar la base de datos:", error);

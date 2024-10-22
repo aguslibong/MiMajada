@@ -10,8 +10,8 @@ export class SexoSingleton {
     constructor() {
         if (!SexoSingleton.instance) {
             this.sexos = [
-                new Sexo(0, 'Macho'),
-                new Sexo(1, 'Hembra'),
+                new Sexo(1, 'Macho'),
+                new Sexo(2, 'Hembra'),
             ];
             SexoSingleton.instance = this;
         }
@@ -26,7 +26,7 @@ export class SexoSingleton {
         return SexoSingleton.instance;
     }
 
-    getSexoByDescripcion(id) {
+    getSexoById(id) {
         return this.sexos.find(sexo => sexo.getIdSexo() === id);
     }
 }
