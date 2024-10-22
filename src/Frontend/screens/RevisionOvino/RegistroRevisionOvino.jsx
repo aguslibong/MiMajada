@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TouchableOpacity, TextInput, Dimensions, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Dimensions, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
@@ -18,20 +18,54 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const [enfermedad, setEnfermedad] = useState((revisionModificar) ? String(revisionModificar.enfermedad.idEnfermedad) : '');
   const [caravana, setCaravana] = useState((revisionModificar) ? revisionModificar.caravana : ''); // Campo para la caravana
 
-  console.log(revisionModificar)
+  console.log(revisionModificar);
+  
   const handleConsultar = () => {
-    setAction('C')
-  }
+    setAction('C');
+  };
+
+  const validarFormulario = () => {
+    if (sexo === null) {
+      Alert.alert('Error', 'Debe seleccionar el sexo del ovino.');
+      return false;
+    }
+    if (condicionBucal === '') {
+      Alert.alert('Error', 'Debe seleccionar una condición bucal.');
+      return false;
+    }
+    if (condicionCorporal === 0) {
+      Alert.alert('Error', 'La condición corporal no puede ser 0.');
+      return false;
+    }
+    return true;
+  };
 
   const handleRegistro = () => {
+    if (!validarFormulario()) return; // Si la validación falla, no continúa
     try {
       instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
-      setSexo(null)
-      setCondicionBucal('')
-      setCondicionCorporal(0)
-      setEnfermedad('')
-      setCaravana('')
+      setSexo(null);
+      setCondicionBucal('');
+      setCondicionCorporal(0);
+      setEnfermedad('');
+      setCaravana('');
+    } catch (error) {
+      console.log("Error al registrar la revisión:", error);
+    }
+  };
+
+  const handleActualizar = () => {
+    if (!validarFormulario()) return; // Si la validación falla, no continúa
+    try {
+      instanciaControlador.modificarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      console.log("Revisión registrada con éxito");
+      setSexo(null);
+      setCondicionBucal('');
+      setCondicionCorporal(0);
+      setEnfermedad('');
+      setCaravana('');
+      setAction('C')
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
@@ -130,7 +164,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
           <TouchableOpacity style={styles.button} onPress={OnObservacion}>
             <Text style={styles.buttonText}>Agregar Observación</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={handleRegistro}>
+          <TouchableOpacity style={styles.button} onPress={revisionModificar === null ? handleRegistro : handleActualizar}>
             <Text style={styles.buttonText}>
               {revisionModificar === null ? 'Registrar' : 'Actualizar'}
             </Text>
