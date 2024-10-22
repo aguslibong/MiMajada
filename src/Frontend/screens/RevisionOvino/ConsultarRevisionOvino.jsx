@@ -28,6 +28,7 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar}) =>
     );
   }
 
+  console.log(revisions);
  
   return (
     <View>

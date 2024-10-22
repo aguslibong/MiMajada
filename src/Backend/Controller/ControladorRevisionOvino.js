@@ -43,7 +43,6 @@ class ControladorRevisionOvino {
       // Guardar los datos en la base de datos
       setupDatabase();
       insertRevisionOvino(revisionOvino)
-      getAllRevisionOvino();
     }
   }
 
@@ -61,11 +60,14 @@ class ControladorRevisionOvino {
 
   modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const revision = this.revisiones.find((revision) => revision.id === id);
+    const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
+    const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
+    const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad)
     if (revision) {
-      revision.setSexo(sexo);
+      revision.setSexo(sexoValue);
       revision.setCondicionCorporal(condicionCorporal);
-      revision.setCondicionBucal(condicionBucal);
-      revision.setEnfermedad(enfermedad);
+      revision.setCondicionBucal(condicionBucalObjetoValue);
+      revision.setEnfermedad(enfermedadValue);
       revision.setCaravana(caravana);
       updateRevisionOvino(revision);
     }
