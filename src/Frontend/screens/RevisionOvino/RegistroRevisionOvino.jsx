@@ -12,14 +12,11 @@ const { width } = Dimensions.get('window');
 
 const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion }) => {
   const id = (revisionModificar) ? revisionModificar.id : null; // Obtenemos el ID de la revisión a modificar, si existe
-  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo.idSexo : null); // 0 = Macho y 1 = Hembra
+  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo.IdSexo : null); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? String(revisionModificar.condicionBucal.idCondicionBucal) : '');
   const [condicionCorporal, setCondicionCorporal] = useState((revisionModificar) ? revisionModificar.condicionCorporal : 0);
   const [enfermedad, setEnfermedad] = useState((revisionModificar) ? String(revisionModificar.enfermedad.idEnfermedad) : '');
   const [caravana, setCaravana] = useState((revisionModificar) ? revisionModificar.caravana : ''); // Campo para la caravana
-
-  console.log(revisionModificar);
-  
   const handleConsultar = () => {
     setAction('C');
   };
@@ -58,8 +55,8 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const handleActualizar = () => {
     if (!validarFormulario()) return; // Si la validación falla, no continúa
     try {
-      instanciaControlador.modificarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
-      console.log("Revisión registrada con éxito");
+      instanciaControlador.modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      console.log("Revisión Modificada con éxito");
       setSexo(null);
       setCondicionBucal('');
       setCondicionCorporal(0);
