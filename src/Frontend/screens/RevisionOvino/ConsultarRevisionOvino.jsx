@@ -3,17 +3,14 @@ import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, Touchabl
 import SheepReviewCard from '../../components/SheepReviewCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js';
 
-const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar}) => {
+const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onEliminar}) => {
 
   const handleModify = (RevisionOvinoModificar) => {
     onModificar(RevisionOvinoModificar);
   };
 
   const handleDelete = (id) => {
-    console.log('Eliminar', id);
-    // Aquí puedes agregar la lógica para eliminar la revisión
-    instanciaControlador.eliminarRevision(id);
-    setAction('R')
+    onEliminar(id)
   };
 
   const handleRegistro = () => {
@@ -27,8 +24,6 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar}) =>
       </View>
     );
   }
-
-  console.log(revisions);
  
   return (
     <View>

@@ -55,13 +55,14 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const handleActualizar = () => {
     if (!validarFormulario()) return; // Si la validación falla, no continúa
     try {
-      instanciaControlador.modificarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      instanciaControlador.modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setSexo(null);
       setCondicionBucal('');
       setCondicionCorporal(0);
       setEnfermedad('');
       setCaravana('');
+      setAction('C')
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
