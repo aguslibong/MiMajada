@@ -61,6 +61,7 @@ class ControladorRevisionOvino {
 
   modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const revision = this.revisiones.find((revision) => revision.id === id);
+
     if (revision) {
       revision.setSexo(sexo);
       revision.setCondicionCorporal(condicionCorporal);
