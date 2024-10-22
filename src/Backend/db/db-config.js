@@ -37,6 +37,37 @@ const setupDatabase = async () => {
                     FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad)
                 );`
         )
+        await (await db).runAsync(
+            'INSERT OR IGNORE INTO Sexo (idSexo, descripcion) VALUES (1, "Macho"), (2, "Hembra");'
+          );
+
+        await (await db).runAsync(
+            'INSERT OR IGNORE INTO CondicionBucal (idCondicionBucal, descripcion) VALUES (1, "ddl"), (2, "2d"), (3, "4d"), (4, "6d"), (5, "bll"), (6, "md"), (7, "sd");'
+          );
+
+        await (await db).runAsync(
+            'INSERT OR IGNORE INTO Enfermedades (idEnfermedad, descripcion) VALUES (1, "No posee"), (2, "Sarna"), (3, "Infeccion"), (4, "Garrapata"), (5, "Otra");'
+        )
+        
+        /*LIMPIAR BASE DE DATOS
+        await (await db).runAsync(
+            'DELETE FROM Sexo'
+          );
+
+        await (await db).runAsync(
+            'DELETE FROM CondicionBucal'
+          );
+
+        await (await db).runAsync(
+            'DELETE FROM Enfermedades'
+        );
+
+        await (await db).runAsync(
+            'DROP TABLE IF EXISTS RevisionOvinos'
+        );*/
+
+        
+
         console.log("Base de datos configurada y tablas creadas correctamente.");
     } catch (error) {
         console.error("Error al configurar la base de datos:", error);

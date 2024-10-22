@@ -16,7 +16,7 @@ const getAllCondicionBucal = async () => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM CondicionBucal');
     for (const row of allRows) {
-        console.log(row.id, row.descripcion);
+        console.log(row.idCondicionBucal, row.descripcion);
     };
 }
 

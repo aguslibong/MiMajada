@@ -3,7 +3,7 @@ import setupDatabase from '../db/db-config';
 import { getAllCondicionBucal, insertCondicionBucal } from '../service/dbManager/CondicionBucalManager';
 import { insertSexo, getAllSexo } from '../service/dbManager/SexoManager';
 import { getAllEnfermedad, insertEnfermedad } from '../service/dbManager/EnfermedadManager';
-import { insertRevisionOvino } from '../service/dbManager/RevisionOvinoManager';
+import { getAllRevisionOvino, insertRevisionOvino } from '../service/dbManager/RevisionOvinoManager';
 import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
@@ -38,11 +38,8 @@ class ControladorRevisionOvino {
       // Guardar los datos en la base de datos
       
       setupDatabase();
-      insertCondicionBucal(condicionBucalObjetoValue);
-      insertSexo(sexoValue);
-      insertEnfermedad(enfermedadValue);
       insertRevisionOvino(revisionOvino);
-      getAllCondicionBucal();
+      getAllRevisionOvino();
     }
   }
 

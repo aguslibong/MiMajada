@@ -66,6 +66,7 @@ const RegistrarRevisionOvino = ({ OnFinalizar, OnObservacion }) => {
             <Picker.Item label="2d" value="2d" />
             <Picker.Item label="4d" value="4d" />
             <Picker.Item label="6d" value="6d" />
+            <Picker.Item label="bll" value="bll" />
             <Picker.Item label="md" value="md" />
             <Picker.Item label="sd" value="sd" />
           </Picker>

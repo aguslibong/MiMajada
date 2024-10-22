@@ -16,7 +16,7 @@ const getAllEnfermedad = async () => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM Enfermedades');
     for (const row of allRows) {
-        console.log(row.id, row.descripcion);
+        console.log(row.idEnfermedad, row.descripcion);
     };
 }
 
