@@ -17,6 +17,7 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onE
     setAction('R')
   }
 
+
   if (loading) {
     return (
       <View style={styles.loaderContainer}>
@@ -24,7 +25,7 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onE
       </View>
     );
   }
- 
+  
   return (
     <View>
       <View style={styles.buttonsContainer}>

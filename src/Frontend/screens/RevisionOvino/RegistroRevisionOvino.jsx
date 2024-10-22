@@ -10,7 +10,7 @@ import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/Revi
 
 const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion }) => {
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData }) => {
   const id = (revisionModificar) ? revisionModificar.id : null; // Obtenemos el ID de la revisión a modificar, si existe
   const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo.IdSexo : null); // 0 = Macho y 1 = Hembra
   const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? String(revisionModificar.condicionBucal.idCondicionBucal) : '');
