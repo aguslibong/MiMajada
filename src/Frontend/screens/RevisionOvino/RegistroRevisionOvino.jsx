@@ -27,6 +27,11 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     try {
       instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
+      setSexo(null)
+      setCondicionBucal('')
+      setCondicionCorporal(0)
+      setEnfermedad('')
+      setCaravana('')
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
@@ -34,10 +39,12 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <TouchableOpacity style={styles.button} onPress={handleConsultar}>
-        <Text style={styles.buttonText}>Lista Majada</Text>
-      </TouchableOpacity>
       <View style={styles.container}>
+      {revisionModificar === null && (
+        <TouchableOpacity style={styles.button} onPress={handleConsultar}>
+          <Text style={styles.buttonText}>Lista Majada</Text>
+        </TouchableOpacity>
+      )}
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
         </View>
@@ -116,7 +123,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
             </TouchableOpacity>
           )}
           {revisionModificar !== null && (
-            <TouchableOpacity style={styles.button} onPress={setAction('R')}>
+            <TouchableOpacity style={styles.button} onPress={handleConsultar}>
               <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>
           )}
