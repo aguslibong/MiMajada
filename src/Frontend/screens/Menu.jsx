@@ -6,11 +6,7 @@ const Menu = ({ navigation }) => {
     <View style={styles.container}>
       <Button
         title="Registrar Revisión Ovino"
-        onPress={() => navigation.navigate('RegistrarRevisionOvino')}
-      />
-      <Button
-        title="Consultar Revisión Ovino"
-        onPress={() => navigation.navigate('ConsultarRevisionOvino')}
+        onPress={() => navigation.navigate('RevisionOvino')}
       />
     </View>
   );

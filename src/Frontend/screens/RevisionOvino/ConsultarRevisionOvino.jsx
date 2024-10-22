@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import SheepReviewCard from '../../components/SheepReviewCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js';
 
-const ConsultarRevisionOvino = () => {
-  const [revisions, setRevisions] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigation = useNavigation();
+const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar}) => {
 
-  const handleModify = (id) => {
-    navigation.navigate('RegistrarRevisionOvino', { id });
+  const handleModify = (RevisionOvinoModificar) => {
+    onModificar(RevisionOvinoModificar);
   };
 
   const handleDelete = (id) => {
@@ -19,19 +15,6 @@ const ConsultarRevisionOvino = () => {
     instanciaControlador.eliminarRevision(id);
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allRevisions = await instanciaControlador.obtenerRevisiones();
-        setRevisions(allRevisions);
-      } catch (error) {
-        console.error('Error fetching revisions:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, []);
 
   if (loading) {
     return (
@@ -57,7 +40,7 @@ const ConsultarRevisionOvino = () => {
             condicionBucal={revision.condicionBucal.descripcion}
             condicionCorporal={revision.condicionCorporal}
             enfermedad={revision.enfermedad.descripcion}
-            onModify={() => handleModify(revision.id)}
+            onModify={() => handleModify(revision)}
             onDelete={() => handleDelete(revision.id)}
           />
         ))

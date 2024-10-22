@@ -10,32 +10,18 @@ import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/Revi
 
 const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ route, OnFinalizar, OnObservacion }) => {
-  const { id } = route.params || {}; // Obtenemos el ID de la revisión a modificar, si existe
-  const [sexo, setSexo] = useState(0); // 0 = Macho y 1 = Hembra
-  const [condicionBucal, setCondicionBucal] = useState('');
-  const [condicionCorporal, setCondicionCorporal] = useState(1);
-  const [enfermedad, setEnfermedad] = useState('');
-  const [caravana, setCaravana] = useState(''); // Campo para la caravana
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion }) => {
+  const id = (revisionModificar) ? revisionModificar.id : null; // Obtenemos el ID de la revisión a modificar, si existe
+  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo : null); // 0 = Macho y 1 = Hembra
+  const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? `${revisionModificar.condicionBucal}` : '');
+  const [condicionCorporal, setCondicionCorporal] = useState((revisionModificar) ? revisionModificar.condicionCorporal : 0);
+  const [enfermedad, setEnfermedad] = useState((revisionModificar) ? revisionModificar.enfermedad : '');
+  const [caravana, setCaravana] = useState((revisionModificar) ? revisionModificar.caravana : ''); // Campo para la caravana
 
-  useEffect(() => {
-    if (id) {
-      const fetchData = async () => {
-        try {
-          const revision = await instanciaControlador.obtenerRevisionPorId(id);
-          console.log(revision);
-          setSexo(revision.sexo.IdSexo - 1);
-          setCondicionBucal(revision.condicionBucal.idCondicionBucal);
-          setCondicionCorporal(revision.condicionCorporal);
-          setEnfermedad(revision.enfermedad.idEnfermedad);
-          setCaravana(revision.caravana);
-        } catch (error) {
-          console.error('Error fetching revision:', error);
-        }
-      };
-      fetchData();
-    }
-  }, [id]);
+  const handleConsultar = () => {
+    setAction('C')
+  }
+
 
   const handleRegistro = () => {
     try {
@@ -48,6 +34,9 @@ const RegistrarRevisionOvino = ({ route, OnFinalizar, OnObservacion }) => {
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <TouchableOpacity style={styles.button} onPress={handleConsultar}>
+        <Text style={styles.buttonText}>Lista Majada</Text>
+      </TouchableOpacity>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
@@ -121,14 +110,23 @@ const RegistrarRevisionOvino = ({ route, OnFinalizar, OnObservacion }) => {
           </Picker>
         </View>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
-            <Text style={styles.buttonText}>Finalizar</Text>
-          </TouchableOpacity>
+            {revisionModificar === null && (
+            <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
+              <Text style={styles.buttonText}>Finalizar</Text>
+            </TouchableOpacity>
+          )}
+          {revisionModificar !== null && (
+            <TouchableOpacity style={styles.button} onPress={setAction('R')}>
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.button} onPress={OnObservacion}>
             <Text style={styles.buttonText}>Agregar Observación</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-            <Text style={styles.buttonText}>Registrar</Text>
+            <Text style={styles.buttonText}>
+              {revisionModificar === null ? 'Registrar' : 'Actualizar'}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
