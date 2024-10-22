@@ -36,7 +36,7 @@ class ControladorRevisionOvino {
         sexoValue,
         condicionCorporal,
         condicionBucalObjetoValue,
-        enfermedadValue
+        enfermedadValue ? enfermedadValue : EnfermedadSingleton.getInstance().getEnfermedadById(1) // Si hay enfermedad, usar el valor ingresado; si no, usar un valor por defecto
       );
       this.revisiones.push(revisionOvino); // Agregar la nueva revisión al array
 
