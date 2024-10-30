@@ -19,6 +19,7 @@ class ControladorMajada {
     registrarMajada(epocaDelAño, estancia) {
 
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+        console.log("Objeto de epoca del año:",epocaDelAñoValue)
         const date = new Date();
         const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
 
@@ -29,7 +30,7 @@ class ControladorMajada {
 
             const idMajada = insertMajada(this.majada)
             this.majada.setId(idMajada)
-
+            console.log("Cree el objeto en la base de datos:",idMajada)
             return idMajada;
             
         } else {
