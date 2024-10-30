@@ -17,15 +17,15 @@ const insertMajada = async (majada) => {
 };
 
 const getAllMajada = async () => {
-    if (!db) return;
+    if (!db) return [];  // Devuelve un array vacío si `db` no está inicializado
+
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
-    const arrayMajadas = new Array();
-    for (const row of allRows) {
-        arrayMajadas.push(new Majada(row.idMajada,row.idEpocaDelAño,row.estancia,row.fechaDeRevision,row.observacion))
-    };
-    console.log(arrayMajadas)
-    return arrayMajadas;
+    
+    return allRows.map(row => 
+        new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
+    );
 }
+
 
 const deleteMajada = async (idMajada) => {
     if (!db) return;

@@ -3,6 +3,7 @@ import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaD
 import { Majada } from '../model/Majada.js';
 import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository.js';
 import { getAllEpocaDelAño } from '../service/repository/EpocaDelAñoRepository.js';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry.js';
 
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
@@ -39,12 +40,15 @@ class ControladorMajada {
         }
     }
 
-    obtenerMajada(){
-        if(this.majadas.length === 0){ 
-            this.majadas = getAllMajada();
+    async obtenerMajada() {
+        if (this.majadas.length === 0) { 
+            const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
+            this.majadas.push(...majadas);         // Agrega los elementos del array a `this.majadas`
         }
+        console.log(this.majadas);
         return this.majadas;
     }
+    
 
     modifificarMajada(id, epocaDelAño, estancia){
         this.majada = getAllMajada().find((majada) => majada.idMajada === id);

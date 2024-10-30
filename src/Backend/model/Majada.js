@@ -58,11 +58,11 @@ export class Majada {
 
     toString() {
         return `Majada {
-            epocaDelAño: ${this.epocaDelAño},
+            idepocaDelAño: ${this.epocaDelAño},
             estancia: ${this.estancia},
             fechaDeRevision: ${this.fechaDeRevision},
             observacion: ${this.observacion},
-            RevisionOvino: ${this.RevisionOvino}
+            idMajada: ${this.id}
         }`;
     }
 }
