@@ -43,7 +43,7 @@ class ControladorMajada {
         if (this.majadas.length === 0) { 
             const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
             majadas.forEach((majada)=>{
-                this.majada.push(this.crearMajada(majada));
+                this.majadas.push(this.crearMajada(majada));
             });         // Agrega los elementos del array a `this.majadas`
         }
         console.log(this.majadas);
