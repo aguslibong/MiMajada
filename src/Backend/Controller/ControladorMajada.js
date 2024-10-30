@@ -8,35 +8,36 @@ import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service'
+import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
+import instanciaControlador from './ControladorRevisionOvino';
+import { Majada } from '../model/majada';
 
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
-class ControladorRevisionOvino {
+class ControladorMajada {
   constructor() {
-    if (!ControladorRevisionOvino.instance) {
-      this.revisiones = []; // Array para almacenar los objetos RevisionOvino
-      posActual = 0,
-      ControladorRevisionOvino.instance = this;
+    if (!ControladorMajada.instance) {
+        const majada = new Majada();
+        ControladorMajada.instance = this;
     }
-    return ControladorRevisionOvino.instance;
+    return ControladorMajada.this;
   }
 
 
-  registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
-    const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
-    const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
-    const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad)
-    console.log(this.revisiones.length);
-    if (sexoValue && condicionBucalObjetoValue) {
-      const revisionOvino = new RevisionOvino(
-        0, // ID autogenerado
-        caravana ? caravana : 'No posee', // Si hay caravana, usar el valor ingresado; si no, usar un valor por defecto
-        sexoValue,
-        condicionCorporal,
-        condicionBucalObjetoValue,
-        enfermedadValue ? enfermedadValue : EnfermedadSingleton.getInstance().getEnfermedadById(1) // Si hay enfermedad, usar el valor ingresado; si no, usar un valor por defecto
-      );
-      this.revisiones.push(revisionOvino); // Agregar la nueva revisión al array
+  registrarMajada(epocaDelAño, estancia) {
+    const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+    const arrayRevisiones = instanciaControlador.obtenerRevisiones();
+    const date = new Date();
+    const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
+    
+    try{ if(epocaDelAño && estancia && arrayRevisiones){
+
+        majada.set
+
+    }} catch {
+
+    }
+
 
       // Guardar los datos en la base de datos
       setupDatabase();
@@ -73,13 +74,10 @@ class ControladorRevisionOvino {
   obtenerRevisionPorId(id) {
     return this.revisiones.find((revision) => revision.id == id);
 }
-  getPosActua(){
-
-  }
 }
 
 // Asegurar una única instancia
-const instanciaControlador = new ControladorRevisionOvino();
-Object.freeze(instanciaControlador);
+const instanciaControladorMajada = new ControladorMajada();
+Object.freeze(instanciaControladorMajada);
 
-export default instanciaControlador;
+export default instanciaControladorMajada;

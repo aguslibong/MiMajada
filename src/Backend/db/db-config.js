@@ -23,6 +23,24 @@ const setupDatabase = async () => {
                     descripcion TEXT
                 );`
         )
+
+        await (await db).execAsync(
+            `CREATE TABLE IF NOT EXISTS EpocasDelAño (
+                    idEpocaDelAño INTEGER PRIMARY KEY,
+                    descripcion TEXT
+                );`
+        )
+
+        await (await db).execAsync(
+            `CREATE TABLE IF NOT EXISTS Majadas (
+                idMajada INTEGER PRIMARY KEY,
+                idEpocaDelAño INTEGER,
+                estancia TEXT,
+                fechaDeRevision DATETIME,
+                observacion TEXT,
+                FOREIGN KEY(idEpocaDelAño) REFERENCES EpocasDelAño(idEpocaDelAño)
+            );`
+        )
          
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS RevisionOvinos (
@@ -31,10 +49,12 @@ const setupDatabase = async () => {
                     idSexo INTEGER,
                     idConditionBucal INTEGER,
                     idEnfermedad INTEGER,
+                    idMajada INTEGER,
                     caravana TEXT,
                     FOREIGN KEY(idSexo) REFERENCES Sexo(idSexo),
                     FOREIGN KEY(idConditionBucal) REFERENCES CondicionBucal(idCondicionBucal),
-                    FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad)
+                    FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad),
+                    FOREIGN KEY(idMajada) REFERENCES Majadas(idMajada)
                 );`
         )
 
