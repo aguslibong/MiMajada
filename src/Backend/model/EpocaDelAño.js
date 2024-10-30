@@ -1,6 +1,6 @@
 export class EpocaDelAño {
-    constructor(idEnfermedad, descripcion) {
-        this.idEpocaDelAño = idEnfermedad;
+    constructor(idEpocaDelAño, descripcion) {
+        this.idEpocaDelAño = idEpocaDelAño;
         this.descripcion = descripcion;
     }
 

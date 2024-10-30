@@ -1,12 +1,14 @@
 import db from '../../db/db-init';
+import { Majada } from '../../model/Majada';
 
 const insertMajada = async (majada) => {
-    if (!db) return;
+    if (!db) {return};
 
     const estancia = majada.getEstancia();
     const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
     const fechaActual = majada.getFechaDeRevision();
     const observacion = majada.getObservacion();
+    console.log("Insertando Majada en la base de datos", idEpocaDelAño, estancia, fechaActual, observacion) 
 
     const result = (await db).runAsync('INSERT INTO Majadas (idEpocaDelAño, estancia, fechaDeRevision, observacion) VALUES (?, ?, ?, ?)',
     idEpocaDelAño, estancia, fechaActual, observacion)
@@ -19,8 +21,9 @@ const getAllMajada = async () => {
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
     const arrayMajadas = new Array();
     for (const row of allRows) {
-        arrayMajadas.push()//new Majada(row.idMajada,row.idEpocaDelAño,row.estancia,row.fechaDeRevision,row.observacion))
+        arrayMajadas.push(new Majada(row.idMajada,row.idEpocaDelAño,row.estancia,row.fechaDeRevision,row.observacion))
     };
+    console.log(arrayMajadas)
     return arrayMajadas;
 }
 

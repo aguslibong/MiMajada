@@ -2,6 +2,7 @@ import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 import { Majada } from '../model/Majada.js';
 import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository.js';
+import { getAllEpocaDelAño } from '../service/repository/EpocaDelAñoRepository.js';
 
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
@@ -16,20 +17,20 @@ class ControladorMajada {
         return ControladorMajada.this;
     }
 
-    registrarMajada(epocaDelAño, estancia) {
+    registrarMajada(estancia, epocaDelAño, observacion) {
 
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
-        console.log("Objeto de epoca del año:",epocaDelAñoValue)
         const date = new Date();
         const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
 
-        if (epocaDelAño && estancia ) {
+        if (epocaDelAño && estancia) {
             this.majada.setEpocaDelAño(epocaDelAñoValue)
             this.majada.setEstancia(estancia)
             this.majada.setFechaDeRevision(fechaActual)
-
+            this.majada.setObservacion(observacion)
             const idMajada = insertMajada(this.majada)
             this.majada.setId(idMajada)
+            getAllEpocaDelAño();
             console.log("Cree el objeto en la base de datos:",idMajada)
             return idMajada;
             
@@ -46,14 +47,14 @@ class ControladorMajada {
     }
 
     modifificarMajada(id, epocaDelAño, estancia){
-        const majada = getAllMajada().find((majada) => majada.idMajada === id);
+        this.majada = getAllMajada().find((majada) => majada.idMajada === id);
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
 
-        if (majada) {
-            majada.setEpocaDelAño(epocaDelAñoValue);
-            majada.setEstancia(estancia);
-            majada.setFecha(fechaActual);
-            updateMajada(majada)
+        if (this.majada) {
+            this.majada.setEpocaDelAño(epocaDelAñoValue);
+            this.majada.setEstancia(estancia);
+            this.majada.setFecha(fechaActual);
+            updateMajada(this.majada)
         }
 
     }

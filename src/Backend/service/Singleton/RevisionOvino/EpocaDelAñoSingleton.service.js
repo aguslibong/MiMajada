@@ -29,6 +29,7 @@ export class EpocaDelAñoSingleton {
     }
 
     getEpocaDelAñoById(id) {
+        console.log("Epocas del año:",this.epocasDelAño)
         return this.epocasDelAño.find(epoca => epoca.getIdEpocaDelAño() == id);
     }
 }
