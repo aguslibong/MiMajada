@@ -41,14 +41,6 @@ export class Majada{
         this.observacion = observacion;
     }
 
-    getRevisionOvino() {
-        return this.RevisionOvino;
-    }
-
-    insertRevisionOvino(revisionOvino) {
-        this.RevisionOvino.push(revisionOvino);
-    }
-
     toString() {
         return `Majada {
             epocaDelAño: ${this.epocaDelAño},

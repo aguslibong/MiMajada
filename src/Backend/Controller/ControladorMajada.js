@@ -68,7 +68,7 @@ class ControladorMajada {
 }
 
 // Asegurar una única instancia
-const instanciaControladorMajada = new ControladorMajada();
-Object.freeze(instanciaControladorMajada);
+const instanciaControlador = new ControladorMajada();
+Object.freeze(instanciaControlador);
 
-export default instanciaControladorMajada;
+export default instanciaControlador;
