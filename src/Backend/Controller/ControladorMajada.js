@@ -17,7 +17,7 @@ class ControladorMajada {
     }
 
     registrarMajada(epocaDelAño, estancia) {
-        
+
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
         const date = new Date();
         const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
@@ -62,7 +62,7 @@ class ControladorMajada {
         updateMajada(this.majada)
     }
 
-    ekiminarMajada(idMajada){
+    eliminarMajada(idMajada){
         deleteMajada(idMajada)
     }
 }
