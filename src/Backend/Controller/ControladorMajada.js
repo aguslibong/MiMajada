@@ -9,7 +9,7 @@ class ControladorMajada {
     constructor() {
         if (!ControladorMajada.instance) {
             this.majada = new Majada();
-            this.majadas = [];
+            this.majadas = new Array();
             setupDatabase();
             ControladorMajada.instance = this;
         }
@@ -38,8 +38,8 @@ class ControladorMajada {
     }
 
     obtenerMajada(){
-        if(majadas.length === 0){ 
-            majadas = getAllMajada();
+        if(this.majadas.length === 0){ 
+            this.majadas = getAllMajada();
         }
         return this.majadas;
     }
