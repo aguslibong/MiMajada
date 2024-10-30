@@ -1,7 +1,7 @@
 import { CondicionBucal } from "./CondicionBucal";
 import { Enfermedad } from "./Enfermedad";
 import { Sexo } from "./Sexo";
-import * as RevisionOvinoManager from "../service/dbManager/RevisionOvinoManager";
+import * as RevisionOvinoManager from "../service/repository/RevisionOvinoManagerRepository";
 
 export class RevisionOvino {
   constructor(id,nroRevision, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
