@@ -11,7 +11,6 @@ class ControladorMajada {
     constructor() {
         if (!ControladorMajada.instance) {
             this.majada = new Majada();
-            this.majadas = new Array();
             setupDatabase();
             ControladorMajada.instance = this;
         }
@@ -40,15 +39,12 @@ class ControladorMajada {
     }
 
     async obtenerMajada() {
-        if (this.majadas.length === 0) { 
             const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
-            majadas.forEach((majada)=>{
-                this.majadas.push(this.crearMajada(majada));
-            });         // Agrega los elementos del array a `this.majadas`
-        }
-        console.log(this.majadas);
-        return this.majadas;
-    }
+            const majadaCreada = majadas.forEach((majada)=>{
+                this.majada.push(this.crearMajada(majada));}
+            )
+        return majadaCreada;
+}
     
     crearMajada(majada) {
         if (majada) {
