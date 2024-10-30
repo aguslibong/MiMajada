@@ -1,5 +1,4 @@
 import db from '../../db/db-init';
-import { Majada } from '../../model/majada';
 
 const insertMajada = async (majada) => {
     if (!db) return;
@@ -20,7 +19,7 @@ const getAllMajada = async () => {
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
     const arrayMajadas = new Array();
     for (const row of allRows) {
-        arrayMajadas.push(new Majada(row.idMajada,row.idEpocaDelAño,row.estancia,row.fechaDeRevision,row.observacion))
+        arrayMajadas.push()//new Majada(row.idMajada,row.idEpocaDelAño,row.estancia,row.fechaDeRevision,row.observacion))
     };
     return arrayMajadas;
 }

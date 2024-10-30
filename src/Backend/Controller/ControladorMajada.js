@@ -1,7 +1,7 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
-import { Majada } from '../model/majada';
-import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository';
+import { Majada } from '../model/Majada.js';
+import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository.js';
 
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 

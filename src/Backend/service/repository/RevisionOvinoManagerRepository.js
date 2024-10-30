@@ -1,5 +1,5 @@
 import db from '../../db/db-init';
-
+import { RevisionOvino } from '../../model/RevisionOvino';
 const insertRevisionOvino = async (revisionOvino) => {
     if (!db) return;
 
