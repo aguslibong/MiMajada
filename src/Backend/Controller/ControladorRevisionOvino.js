@@ -1,9 +1,9 @@
 import db from '../db/db-init';
 import setupDatabase from '../db/db-config';
-import { getAllCondicionBucal, insertCondicionBucal } from '../service/dbManager/CondicionBucalManager';
-import { insertSexo, getAllSexo } from '../service/dbManager/SexoManager';
-import { getAllEnfermedad, insertEnfermedad } from '../service/dbManager/EnfermedadManager';
-import { getAllRevisionOvino, insertRevisionOvino, deleteRevisionOvino, updateRevisionOvino } from '../service/dbManager/RevisionOvinoManager';
+import { getAllCondicionBucal, insertCondicionBucal } from '../service/repository/CondicionBucalRepository';
+import { insertSexo, getAllSexo } from '../service/repository/SexoRepository';
+import { getAllEnfermedad, insertEnfermedad } from '../service/repository/EnfermedadManagerRepository';
+import { getAllRevisionOvino, insertRevisionOvino, deleteRevisionOvino, updateRevisionOvino } from '../service/repository/RevisionOvinoManagerRepository';
 import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
