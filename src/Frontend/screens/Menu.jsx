@@ -5,8 +5,12 @@ const Menu = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Button
-        title="Registrar Majada"
-        onPress={() => navigation.navigate('Majada')}
+        title="Consultar Majadas"
+        onPress={() => navigation.navigate('Majada', { actionInicial: 'C' })}
+      />
+      <Button
+        title="Registrar Majada Nueva"
+        onPress={() => navigation.navigate('Majada', { actionInicial: 'R' })}
       />
     </View>
   );

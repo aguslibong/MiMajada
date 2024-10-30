@@ -1,17 +1,16 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-
 import { CommonActions } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text, BottomNavigation } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 
-const navigation = useNavigation();
-
 const Tab = createBottomTabNavigator();
 
-export default function MyComponent() {
+const NavegacionInferior = () => {
+  const navigation = useNavigation();
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -20,7 +19,7 @@ export default function MyComponent() {
       tabBar={({ navigation, state, descriptors, insets }) => (
         <BottomNavigation.Bar
           navigationState={state}
-         safeAreaInsets={insets}
+          safeAreaInsets={insets}
           onTabPress={({ route, preventDefault }) => {
             const event = navigation.emit({
               type: 'tabPress',
@@ -31,7 +30,7 @@ export default function MyComponent() {
             if (event.defaultPrevented) {
               preventDefault();
             } else {
-             navigation.dispatch({
+              navigation.dispatch({
                 ...CommonActions.navigate(route.name, route.params),
                 target: state.key,
               });
@@ -60,41 +59,41 @@ export default function MyComponent() {
       )}
     >
       <Tab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="ConsultarMajada"
+        component={ConsultarMajada}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Consultar Majada',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
+            return <Icon name="clipboard-list" size={size} color={color} />;
           },
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="RegistrarMajada"
+        component={RegistrarMajada}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: 'Registrar Majada',
           tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
+            return <Icon name="plus-circle" size={size} color={color} />;
           },
         }}
       />
     </Tab.Navigator>
   );
-}
+};
 
-function HomeScreen() {
+function ConsultarMajada() {
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium">Home!</Text>
+      <Text variant="headlineMedium">Consultar Majada</Text>
     </View>
   );
 }
 
-function SettingsScreen() {
+function RegistrarMajada() {
   return (
     <View style={styles.container}>
-      <Text variant="headlineMedium">Settings!</Text>
+      <Text variant="headlineMedium">Registrar Majada</Text>
     </View>
   );
 }
@@ -106,3 +105,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
+
+export default NavegacionInferior;

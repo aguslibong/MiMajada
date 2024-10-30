@@ -3,12 +3,16 @@ import { View } from 'react-native';
 import ConsultarMajada from './ConsultarMajada.jsx';
 import RegistrarMajada from './RegistrarMajada.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'
+import { useRoute } from '@react-navigation/native';
 
 const Majada = () => {
-    const [action, setAction] = useState('C');
+    const route = useRoute()
+    const {actionInicial} = route.params
+    const [action, setAction] = useState(actionInicial);
     const [majadas, setMajadas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [MajadaModificar, setMajadaModificar] = useState(null);
+
 
     const fetchData = useCallback(async () => {
         try {
@@ -67,6 +71,8 @@ const Majada = () => {
         fetchData();
     }, [fetchData]);
 
+
+    //falta la accion cuando se modifica majada
     return (
         <View>
             {(action === 'R' || action === 'M') && (
