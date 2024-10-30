@@ -10,7 +10,7 @@ import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/Revi
 
 const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData, revisions }) => {
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData, revisions, idMajada }) => {
   const id = (revisionModificar) ? revisionModificar.id : null;
   
   // Definimos los valores iniciales en un objeto para mejor mantenimiento
@@ -83,7 +83,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const handleRegistro = () => {
     if (!validarFormulario()) return;
     try {
-      instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setValoresNull();
     } catch (error) {
@@ -94,7 +94,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const handleActualizar = () => {
     if (!validarFormulario()) return;
     try {
-      instanciaControlador.modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      instanciaControlador.modificarRevision(id, idMajada , sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión Actualizada con éxito");
       setValoresNull();
     } catch (error) {

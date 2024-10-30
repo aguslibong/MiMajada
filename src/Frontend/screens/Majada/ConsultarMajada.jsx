@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
-import SheepReviewCard from '../../components/SheepReviewCard.jsx';
-import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js';
+import MajadaCard from '../../components/MajadaCard.jsx';
+import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'; // Asegúrate de tener el controlador adecuado
 
-const ConsultarRevisionOvino = ({ setAction, revisions, loading, onModificar, onEliminar }) => {
-  const handleModify = useCallback((RevisionOvinoModificar) => {
-    onModificar(RevisionOvinoModificar);
+const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
+  const handleModify = useCallback((MajadaModificar) => {
+    onModificar(MajadaModificar);
   }, [onModificar]);
 
   const handleDelete = useCallback((id) => {
@@ -19,7 +19,7 @@ const ConsultarRevisionOvino = ({ setAction, revisions, loading, onModificar, on
   const confirmDelete = useCallback((id) => {
     Alert.alert(
       "Confirmar Eliminación",
-      "¿Estás seguro de que deseas eliminar esta revisión? Esta acción no se puede deshacer.",
+      "¿Estás seguro de que deseas eliminar esta majada? Esta acción no se puede deshacer.",
       [
         { text: "Cancelar", style: "cancel" },
         { text: "Eliminar", onPress: () => handleDelete(id), style: "destructive" },
@@ -35,7 +35,7 @@ const ConsultarRevisionOvino = ({ setAction, revisions, loading, onModificar, on
       </View>
     );
   }
-  
+
   return (
     <View>
       <View style={styles.buttonsContainer}>
@@ -44,21 +44,20 @@ const ConsultarRevisionOvino = ({ setAction, revisions, loading, onModificar, on
         </TouchableOpacity>
       </View>
       <ScrollView>
-        {revisions.length === 0 ? (
+        {majadas.length === 0 ? (
           <View style={styles.noDataContainer}>
-            <Text style={styles.noDataText}>No hay ovinos cargados aún</Text>
+            <Text style={styles.noDataText}>No hay majadas cargadas aún</Text>
           </View>
         ) : (
-          revisions.map((revision) => (
-            <SheepReviewCard
-              key={revision.id}
-              caravana={revision.caravana}
-              sexo={revision.sexo.descripcion}
-              condicionBucal={revision.condicionBucal.descripcion}
-              condicionCorporal={revision.condicionCorporal}
-              enfermedad={revision.enfermedad.descripcion}
-              onModify={() => handleModify(revision)}
-              onDelete={() => confirmDelete(revision.id)}
+          majadas.map((majada) => (
+            <MajadaCard
+              key={majada.id}
+              epocaDelAño={majada.epocaDelAño}
+              estancia={majada.estancia}
+              fechaDeRevision={majada.fechaDeRevision}
+              observacion={majada.observacion}
+              onModify={() => handleModify(majada)}
+              onDelete={() => confirmDelete(majada.id)}
             />
           ))
         )}
@@ -103,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ConsultarRevisionOvino;
+export default ConsultarMajada;

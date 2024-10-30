@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Picker } from '@react-native-picker/picker';
 
 const { width } = Dimensions.get('window');
 
@@ -25,15 +26,6 @@ const RegistrarMajada = () => {
           <Text style={styles.title}>Registrar Majada</Text>
         </View>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Época del Año</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ingresa la época del año"
-            value={epocaDelAnio}
-            onChangeText={setEpocaDelAnio}
-          />
-        </View>
-        <View style={styles.formGroup}>
           <Text style={styles.label}>Estancia</Text>
           <TextInput
             style={styles.input}
@@ -43,13 +35,17 @@ const RegistrarMajada = () => {
           />
         </View>
         <View style={styles.formGroup}>
-          <Text style={styles.label}>Fecha de Revisión</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Ingresa la fecha de revisión"
-            value={fechaDeRevision}
-            onChangeText={setFechaDeRevision}
-          />
+        <Text style={styles.label}>Epoca del Año</Text>
+          <Picker
+            selectedValue={epocaDelAnio}
+            style={styles.picker}
+            onValueChange={(itemValue) => setEpocaDelAnio(itemValue)}>
+              <Picker.Item label="Seleccione la condición bucal" value="" />
+              <Picker.Item label="PreServio" value="1" />
+              <Picker.Item label="PreParto" value="2" />
+              <Picker.Item label="PostParto" value="3" />
+              <Picker.Item label="Otro" value="3" />
+          </Picker>
         </View>
         <View style={styles.formGroup}>
           <Text style={styles.label}>Observación</Text>
@@ -91,6 +87,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
+  formGroup: {
+    marginBottom: 15,
+    justifyContent: 'center',
+  },
   header: {
     marginBottom: 20,
   },
@@ -107,6 +107,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
+  },picker: {
+    height: 50,
+    borderWidth: 1,
+    borderColor: '#ccc',
   },
   input: {
     borderWidth: 1,
