@@ -71,12 +71,6 @@ const Majada = () => {
         <View>
             {(action === 'R' || action === 'M') && (
                 <RegistrarMajada
-                    setAction={handleSetAction}
-                    MajadaModificar={MajadaModificar}
-                    onFinalizar={onFinalizar}
-                    onObservacion={onObservacion}
-                    fetchData={fetchData}
-                    majadas={majadas}
                 />
             )}
             {action === 'C' && (

@@ -72,9 +72,13 @@ const RevisionOvino = ({ route }) => {
         <View>
             {(action === 'R' || action === 'M') && (
                 <RegistroRevisionOvino 
+                    setAction={setAction}
                     revisionModificar={revisionModificar}
+                    onFinalizar={onFinalizar}
+                    onObservacion={onObservacion}
                     fetchData={fetchData}
                     revisions={revisions}
+                    idMajada={idMajada}
                 />
             )}
             {action === 'C' && (
