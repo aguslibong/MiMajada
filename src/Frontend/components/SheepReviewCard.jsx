@@ -6,10 +6,6 @@ const SheepReviewCard = ({ revisionNumber, caravana, sexo, condicionBucal, condi
   <Card style={styles.card}>
     <Card.Content>
       <View style={styles.row}>
-        <Text style={styles.label}>Número de Revisión:</Text>
-        <Text style={styles.value}>{revisionNumber}</Text>
-      </View>
-      <View style={styles.row}>
         <Text style={styles.label}>Caravana:</Text>
         <Text style={styles.value}>{caravana}</Text>
       </View>

@@ -75,8 +75,8 @@ const setupDatabase = async () => {
         await (await db).runAsync(
             'INSERT OR IGNORE INTO EpocasDelAño (idEpocaDelAño, descripcion) VALUES (1, "PreServicio"), (2, "PreParto"), (3, "PostParto"), (4, "Otro");'
         );
-        
-        /*LIMPIAR BASE DE DATOS
+        /*
+        //LIMPIAR BASE DE DATOS
         await (await db).runAsync(
             'DELETE FROM Sexo'
           );
@@ -90,7 +90,12 @@ const setupDatabase = async () => {
         );
         await (await db).runAsync(
             'DROP TABLE IF EXISTS Majadas'
-        );*/
+        );
+        await (await db).runAsync(
+            'DELETE FROM RevisionOvinos'
+          );
+        //
+        */
         console.log("Base de datos configurada y tablas creadas correctamente.");
     } catch (error) {
         console.error("Error al configurar la base de datos:", error);
