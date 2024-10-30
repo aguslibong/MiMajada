@@ -6,6 +6,8 @@ import RegistrarRevisionOvino from './src/Frontend/screens/RevisionOvino/Registr
 import ConsultarRevisionOvino from './src/Frontend/screens/RevisionOvino/ConsultarRevisionOvino';
 import RevisionOvino from './src/Frontend/screens/RevisionOvino/RevisionOvino';
 import RegistrarMajada from './src/Frontend/screens/Majada/RegistrarMajada'
+import Majada from './src/Frontend/screens/Majada/Majada';
+import ConsultarMajada from './src/Frontend/screens/Majada/ConsultarMajada';
 
 const Stack = createStackNavigator();
 
@@ -17,7 +19,9 @@ const App = () => {
         <Stack.Screen name="RevisionOvino" component={RevisionOvino} />
         <Stack.Screen name="RegistrarRevisionOvino" component={RegistrarRevisionOvino} />
         <Stack.Screen name="ConsultarRevisionOvino" component={ConsultarRevisionOvino} />
+        <Stack.Screen name="Majada" component={Majada} />
         <Stack.Screen name="RegistrarMajada" component={RegistrarMajada} />
+        <Stack.Screen name="ConsultarMajada" component={ConsultarMajada} />
       </Stack.Navigator>
     </NavigationContainer>
   );

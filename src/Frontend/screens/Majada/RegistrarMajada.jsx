@@ -3,20 +3,18 @@ import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, Scroll
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
 import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
-import EpocaDelAñoSingleton from '../../../Backend/service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service.js';
 
 const { width } = Dimensions.get('window');
 
 const RegistrarMajada = () => {
+  const [epocaDelAnio, setEpocaDelAnio] = useState('');
   const [estancia, setEstancia] = useState('');
-  const [fechaDeRevision, setFechaDeRevision] = useState('');
   const [observacion, setObservacion] = useState('');
   
   const navigation = useNavigation();
   
   const handleRegistro = () => {
-    const EpocadelAñoValue = EpocaDelAñoSingleton.
-    const idMajada = controladorMajada.registrarMajada(estancia)
+    const idMajada = controladorMajada.registrarMajada(estancia,epocaDelAnio)
     navigation.navigate('RevisionOvino', { idMajada });
   };
 

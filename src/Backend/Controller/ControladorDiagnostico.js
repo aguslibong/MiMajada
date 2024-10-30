@@ -1,23 +1,16 @@
-import setupDatabase from '../db/db-config';
-import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
-import { Majada } from '../model/majada';
-import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository';
-
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
-class ControladorMajada {
+import { EpocaDelAñoSingleton } from "../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service";
+
+class ControladorDiagnostico {
     constructor() {
         if (!ControladorMajada.instance) {
-            this.majada = new Majada();
-            this.majadas = [];
-            setupDatabase();
             ControladorMajada.instance = this;
         }
         return ControladorMajada.this;
     }
 
     registrarMajada(epocaDelAño, estancia) {
-        
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
         const date = new Date();
         const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
@@ -37,10 +30,9 @@ class ControladorMajada {
         }
     }
 
-    obtenerMajada(){
+    consultarMajada(){
         if(majadas.length === 0){ 
-            majadas = getAllMajada();
-        }
+            majadas = getAllMajada();}
         return this.majadas;
     }
 
