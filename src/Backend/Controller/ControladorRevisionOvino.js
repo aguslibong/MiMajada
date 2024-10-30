@@ -9,7 +9,6 @@ import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/Enfermed
 class ControladorRevisionOvino {
   constructor() {
     if (!ControladorRevisionOvino.instance) {
-      this.revisiones = []; // Array para almacenar los objetos RevisionOvino
       ControladorRevisionOvino.instance = this;
     }
     return ControladorRevisionOvino.instance;
@@ -55,20 +54,13 @@ class ControladorRevisionOvino {
   }
     
   async obtenerRevisiones(idMajada) {
-    if (this.revisiones.length === 0) {
       arrayOvinos = await getAllRevisionOvino(idMajada);
       arrayOvinos.forEach((ovino) => {
-        this.revisiones.push(this.crearRevisionOvino(ovino));
-      });
-    } 
-    return this.revisiones;
+        this.revisiones.push(this.crearRevisionOvino(ovino))});
+      return arrayOvinos;
   }
 
   eliminarRevision(id) {
-    const index = this.revisiones.findIndex((revision) => revision.id === id);
-    if (index !== -1) {
-      this.revisiones.splice(index, 1);
-    }
     deleteRevisionOvino(id);
   }
 
