@@ -54,7 +54,7 @@ const RevisionOvino = () => {
         <View>
             {
                 (action === 'R' || action === 'M') && (
-                    <RegistroRevisionOvino setAction={setAction} revisionModificar={revisionModificar} onFinalizar={onFinalizar} onObservacion={onObservacion}  />
+                    <RegistroRevisionOvino setAction={setAction} revisionModificar={revisionModificar} onFinalizar={onFinalizar} onObservacion={onObservacion} fetchData={fetchData} />
                 )
             }
             {
