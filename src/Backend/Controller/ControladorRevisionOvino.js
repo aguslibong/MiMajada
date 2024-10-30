@@ -3,7 +3,7 @@ import { getAllRevisionOvino, insertRevisionOvino, deleteRevisionOvino, updateRe
 import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
-
+import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service';
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
 class ControladorRevisionOvino {
