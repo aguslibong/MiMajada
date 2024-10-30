@@ -6,16 +6,15 @@ import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
 
 const { width } = Dimensions.get('window');
 
-const RegistrarMajada = () => {
+const RegistrarMajada = ({setAction,majadaModificar,onFinalizar, OnObservacion, fecthData, majadas}) => {
   const [epocaDelAnio, setEpocaDelAnio] = useState('');
   const [estancia, setEstancia] = useState('');
   const [observacion, setObservacion] = useState('');
   
   const navigation = useNavigation();
   
-  const handleRegistro = () => {
-    
-    const idMajada = controladorMajada.registrarMajada(estancia,epocaDelAnio,observacion)
+  const handleRegistro = async () => {
+    const idMajada = await controladorMajada.registrarMajada(estancia,epocaDelAnio,observacion)
     console.log("ID DE LA MAJADA CREADA : " + idMajada)
     navigation.navigate('RevisionOvino', { idMajada });
   };

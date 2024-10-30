@@ -11,7 +11,7 @@ const Majada = () => {
     const [action, setAction] = useState(actionInicial);
     const [majadas, setMajadas] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [MajadaModificar, setMajadaModificar] = useState(null);
+    const [majadaModificar, setMajadaModificar] = useState(null);
 
 
     const fetchData = useCallback(async () => {
@@ -77,6 +77,12 @@ const Majada = () => {
         <View>
             {(action === 'R' || action === 'M') && (
                 <RegistrarMajada
+                    setAction={setAction}
+                    majadaModificar={majadaModificar}
+                    onFinalizar={onFinalizar}
+                    onObservacion={onObservacion}
+                    fetchData={fetchData}
+                    majadas={majadas}
                 />
             )}
             {action === 'C' && (
