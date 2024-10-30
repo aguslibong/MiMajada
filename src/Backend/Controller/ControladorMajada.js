@@ -22,7 +22,7 @@ class ControladorMajada {
         const date = new Date();
         const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
 
-        if (epocaDelAño && estancia && arrayRevisiones) {
+        if (epocaDelAño && estancia ) {
             this.majada.setEpocaDelAño(epocaDelAñoValue)
             this.majada.setEstancia(estancia)
             this.majada.setFecha(fechaActual)
