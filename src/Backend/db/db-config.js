@@ -33,7 +33,7 @@ const setupDatabase = async () => {
 
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS Majadas (
-                idMajada INTEGER PRIMARY KEY,
+                idMajada INTEGER PRIMARY KEY AUTOINCREMENT,
                 idEpocaDelAño INTEGER,
                 estancia TEXT,
                 fechaDeRevision DATETIME,
@@ -88,9 +88,8 @@ const setupDatabase = async () => {
         await (await db).runAsync(
             'DELETE FROM Enfermedades'
         );
-
         await (await db).runAsync(
-            'DROP TABLE IF EXISTS RevisionOvinos'
+            'DROP TABLE IF EXISTS Majadas'
         );*/
         console.log("Base de datos configurada y tablas creadas correctamente.");
     } catch (error) {

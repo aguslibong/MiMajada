@@ -1,5 +1,20 @@
-export class Majada{
-    constructor(){};
+export class Majada {
+    constructor(id, epocaDelAño, estancia, fechaDeRevision, observacion) {
+        if (id && epocaDelAño && estancia && fechaDeRevision) {
+            this.id = id;
+            this.epocaDelAño = epocaDelAño;
+            this.estancia = estancia;
+            this.fechaDeRevision = fechaDeRevision;
+            this.observacion = observacion;
+        } else {
+            this.id = null;
+            this.epocaDelAño = null;
+            this.estancia = null;
+            this.fechaDeRevision = null;
+            this.observacion = null;
+        }
+    }
+
 
     getId(){
         return this.id;
@@ -43,11 +58,11 @@ export class Majada{
 
     toString() {
         return `Majada {
-            epocaDelAño: ${this.epocaDelAño},
+            idepocaDelAño: ${this.epocaDelAño},
             estancia: ${this.estancia},
             fechaDeRevision: ${this.fechaDeRevision},
             observacion: ${this.observacion},
-            RevisionOvino: ${this.RevisionOvino}
+            idMajada: ${this.id}
         }`;
     }
 }
