@@ -60,10 +60,8 @@ class ControladorRevisionOvino {
       arrayOvinos.forEach((ovino) => {
         this.revisiones.push(this.crearRevisionOvino(ovino));
       });
-      return getAllRevisionOvino(idMajada)
-    } else {
-      return this.revisiones;
-    }
+    } 
+    return this.revisiones;
   }
 
   eliminarRevision(id) {
