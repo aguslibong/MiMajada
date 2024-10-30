@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card, Button } from 'react-native-paper';
 
-const SheepReviewCard = ({ estancia, epocadelaño, fecha, observaciones, onModify, onDelete }) => (
+const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observaciones, onModify, onDelete }) => (
   <Card style={styles.card}>
     <Card.Content>
       <View style={styles.row}>
@@ -11,7 +11,7 @@ const SheepReviewCard = ({ estancia, epocadelaño, fecha, observaciones, onModif
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Epoca del Año</Text>
-        <Text style={styles.value}>{epocadelaño}</Text>
+        <Text style={styles.value}>{epocaDelAño}</Text>
       </View>
       <View style={styles.row}>
         <Text style={styles.label}>Fecha</Text>

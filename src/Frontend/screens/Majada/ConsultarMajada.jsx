@@ -3,7 +3,9 @@ import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, Touchabl
 import MajadaCard from '../../components/MajadaCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'; // Asegúrate de tener el controlador adecuado
 
+
 const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
+  
   const handleModify = useCallback((MajadaModificar) => {
     onModificar(MajadaModificar);
   }, [onModificar]);

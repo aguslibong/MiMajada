@@ -77,11 +77,13 @@ const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, onObservacio
           />
         </View>
         <View style={styles.buttonsContainer}>
+          { majadaModificar !== null && (
+              <TouchableOpacity style={styles.button} onPress={() => setAction('C')}>
+              <Text style={styles.buttonText}>Volver</Text>
+            </TouchableOpacity>
+            )}
           <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-            <Text style={styles.buttonText}>{majadaModificar ? "Actualizar Majada" : "Registrar Majada"}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => setAction('C')}>
-            <Text style={styles.buttonText}>Volver</Text>
+            <Text style={styles.buttonText}>{majadaModificar ? "Consultar Revision Ovinos" : "Registrar Reviciones Ovinos"}</Text>
           </TouchableOpacity>
         </View>
       </View>
