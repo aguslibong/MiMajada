@@ -12,7 +12,7 @@ const Majada = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const allRevisions = instanciaControlador.obtenerMajada();
+            const allRevisions = await instanciaControlador.obtenerMajada();
             console.log("Todas las MAjadas que tengo:", allRevisions);
             setRevisions(allRevisions);
         } catch (error) {
