@@ -15,7 +15,7 @@ const insertMajada = async (majada) => {
     return (await result).lastInsertRowId;
 };
 
-const getAllMajada = async () => {
+const getAllMajada = async (idMajada) => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
     const arrayMajadas = new Array();
@@ -25,23 +25,24 @@ const getAllMajada = async () => {
     return arrayMajadas;
 }
 
-const deleteRevisionOvino = async (id) => {
+const deleteMajada = async (idMajada) => {
     if (!db) return;
-    console.log(id);
-    (await db).runAsync('DELETE FROM RevisionOvinos WHERE id = ?', id);
+    (await db).runAsync('DELETE FROM Majadas WHERE idMajada = ?', idMajada);
 }
 
-const updateRevisionOvino = async (revisionOvino) => {
+const updateMajada = async (majada) => {
     if (!db) return;
-    const id = revisionOvino.getId();
-    const condicionCorporal = revisionOvino.getCondicionCorporal();
-    const idSexo = revisionOvino.getSexo().getIdSexo();
-    const idConditionBucal = revisionOvino.getCondicionBucal().getIdCondicionBucal();
-    const idEnfermedad = revisionOvino.getEnfermedad().getIdEnfermedad();
-    const caravana = revisionOvino.getCaravana();
+    
+    const idMajada = majada.getIdMajada();
+    const estancia = majada.getEstancia();
+    const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
+    const fechaActual = majada.getFechaDeRevision();
+    const observacion = majada.getObservacion();
 
-    (await db).runAsync('UPDATE RevisionOvinos SET condicionCorporal = ?, idSexo = ?, idConditionBucal = ?, idEnfermedad = ?, caravana = ? WHERE id = ?',
-    condicionCorporal, idSexo, idConditionBucal, idEnfermedad, caravana, id);
+    (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?, fechaDeRevision = ?, observacion = ? WHERE idMajada = ?',
+    idEpocaDelAño, estancia, fechaActual, observacion, idMajada);
+
+
 }
 
-export { insertMajada, getAllMajada, deleteRevisionOvino, updateRevisionOvino, obtenerIdMajadaMasGrande };
+export { insertMajada, getAllMajada, deleteMajada, updateMajada};
