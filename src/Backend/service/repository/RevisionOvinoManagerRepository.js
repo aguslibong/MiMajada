@@ -17,13 +17,14 @@ const insertRevisionOvino = async (revisionOvino) => {
     
 };
 
-const getAllRevisionOvino = async () => {
+const getAllRevisionOvino = async (idMajada) => {
     if (!db) return;
-    const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos');
+    const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos WHERE idMajada = ?', idMajada);
+    const arrayRevisiones = new Array();
     for (const row of allRows) {
-        console.log(row.id, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana);
+        arrayRevisiones.push(new RevisionOvino(row.id, row.idMajada, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana))
     };
-    return allRows;
+    return arrayRevisiones;
 }
 
 const deleteRevisionOvino = async (id) => {

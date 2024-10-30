@@ -13,6 +13,7 @@ export class EpocaDelAñoSingleton {
                 new EpocaDelAño(1, 'PreServicio'),
                 new EpocaDelAño(2, 'PreParto'),
                 new EpocaDelAño(3, 'PosParto'),
+                new EpocaDelAño(4, 'Otro')
             ];
             EpocaDelAñoSingleton.instance = this;
         }

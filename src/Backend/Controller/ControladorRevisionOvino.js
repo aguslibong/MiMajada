@@ -1,13 +1,8 @@
-import db from '../db/db-init';
 import setupDatabase from '../db/db-config';
-import { getAllCondicionBucal, insertCondicionBucal } from '../service/repository/CondicionBucalRepository';
-import { insertSexo, getAllSexo } from '../service/repository/SexoRepository';
-import { getAllEnfermedad, insertEnfermedad } from '../service/repository/EnfermedadManagerRepository';
 import { getAllRevisionOvino, insertRevisionOvino, deleteRevisionOvino, updateRevisionOvino } from '../service/repository/RevisionOvinoManagerRepository';
 import { RevisionOvino }  from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
-import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service'
 
 // Clase que lleva la lógica de como se registran las revisiones de ovinos
 
@@ -15,21 +10,20 @@ class ControladorRevisionOvino {
   constructor() {
     if (!ControladorRevisionOvino.instance) {
       this.revisiones = []; // Array para almacenar los objetos RevisionOvino
-      posActual = 0,
       ControladorRevisionOvino.instance = this;
     }
     return ControladorRevisionOvino.instance;
   }
 
 
-  registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+  registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
     const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad)
     console.log(this.revisiones.length);
     if (sexoValue && condicionBucalObjetoValue) {
       const revisionOvino = new RevisionOvino(
-        0, // ID autogenerado
+        idMajada, // ID autogenerado
         caravana ? caravana : 'No posee', // Si hay caravana, usar el valor ingresado; si no, usar un valor por defecto
         sexoValue,
         condicionCorporal,
@@ -39,13 +33,37 @@ class ControladorRevisionOvino {
       this.revisiones.push(revisionOvino); // Agregar la nueva revisión al array
 
       // Guardar los datos en la base de datos
-      setupDatabase();
       insertRevisionOvino(revisionOvino)
     }
   }
 
-  obtenerRevisiones() {
-    return this.revisiones;
+  crearRevisionOvino(revisionOvino) {
+    if (revisionOvino) {
+      const sexo = SexoSingleton.getInstance().getSexoById(revisionOvino.idSexo);
+      const condicionBucal = CondicionBucalSingleton.getInstance().getCondicionBucalById(revisionOvino.idConditionBucal);
+      const enfermedad = EnfermedadSingleton.getInstance().getEnfermedadById(revisionOvino.idEnfermedad);
+      return new RevisionOvino(
+        revisionOvino.id,
+        revisionOvino.idMajada,
+        revisionOvino.caravana,
+        sexo,
+        revisionOvino.condicionCorporal,
+        condicionBucal,
+        enfermedad
+      );
+    }
+  }
+    
+  obtenerRevisiones(idMajada) {
+    if (this.revisiones.length === 0) {
+      arrayOvinos = getAllRevisionOvino(idMajada);
+      arrayOvinos.forEach((ovino) => {
+        this.revisiones.push(this.crearRevisionOvino(ovino));
+      });
+      return getAllRevisionOvino(idMajada)
+    } else {
+      return this.revisiones;
+    }
   }
 
   eliminarRevision(id) {
@@ -73,9 +91,6 @@ class ControladorRevisionOvino {
   obtenerRevisionPorId(id) {
     return this.revisiones.find((revision) => revision.id == id);
 }
-  getPosActua(){
-
-  }
 }
 
 // Asegurar una única instancia

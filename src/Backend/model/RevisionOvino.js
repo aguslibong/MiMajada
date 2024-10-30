@@ -1,6 +1,7 @@
 export class RevisionOvino {
-  constructor(id, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
-    this.id = id;
+  constructor(idMajada, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
+    
+    this.idMajada = idMajada;
     this.sexo = sexo;
     this.condicionCorporal = condicionCorporal;
     this.condicionBucal = condicionBucal;
@@ -16,6 +17,13 @@ export class RevisionOvino {
     this.id = id;
   }
 
+  getIdMajada(){
+    return this.idMajada
+  }
+
+  setIdMajada(idMajada){
+    this.idMajada = idMajada
+  }
   getEnfermedad() {
     return this.enfermedad;
   }
