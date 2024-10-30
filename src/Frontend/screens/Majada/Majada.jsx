@@ -6,7 +6,7 @@ import instanciaControlador from '../../../Backend/Controller/ControladorMajada.
 
 const Majada = () => {
     const [action, setAction] = useState('C');
-    const [revisions, setRevisions] = useState([]);
+    const [majadas, setMajadas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [MajadaModificar, setMajadaModificar] = useState(null);
 
@@ -14,7 +14,7 @@ const Majada = () => {
         try {
             const allRevisions = await instanciaControlador.obtenerMajada();
             console.log("Todas las MAjadas que tengo:", allRevisions);
-            setRevisions(allRevisions);
+            setMajadas(allRevisions);
         } catch (error) {
             console.error('Error fetching revisions:', error);
         } finally {
@@ -48,7 +48,7 @@ const Majada = () => {
         try {
             await instanciaControlador.eliminarMajada(idEliminar);
             console.log('Eliminar exitoso:');
-            setRevisions(prev => prev.filter(revision => revision.id !== idEliminar));
+            setMajadas(prev => prev.filter(revision => revision.id !== idEliminar));
         } catch (error) {
             console.error('Error al eliminar la revisión:', error);
         }
@@ -76,13 +76,13 @@ const Majada = () => {
                     onFinalizar={onFinalizar}
                     onObservacion={onObservacion}
                     fetchData={fetchData}
-                    revisions={revisions}
+                    majadas={majadas}
                 />
             )}
             {action === 'C' && (
                 <ConsultarMajada
                     setAction={handleSetAction}
-                    revisions={revisions}
+                    majadas={majadas}
                     loading={loading}
                     onModificar={onModificar}
                     onEliminar={onEliminar}
