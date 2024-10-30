@@ -1,6 +1,5 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
-import instanciaControlador from './ControladorRevisionOvino';
 import { Majada } from '../model/majada';
 import { getAllMajada, insertMajada, updateMajada, deleteMajada } from '../service/repository/MajadaRepository';
 
@@ -61,11 +60,6 @@ class ControladorMajada {
     ekiminarMajada(idMajada){
         deleteMajada(idMajada)
     }
-
-    getId(){
-        this.idMajada
-    }
-    
 }
 
 // Asegurar una única instancia

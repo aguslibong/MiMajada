@@ -1,8 +1,7 @@
 export class RevisionOvino {
-  constructor(idMajada,id,caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
+  constructor(idMajada, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
     
     this.idMajada = idMajada;
-    this.id = id
     this.sexo = sexo;
     this.condicionCorporal = condicionCorporal;
     this.condicionBucal = condicionBucal;

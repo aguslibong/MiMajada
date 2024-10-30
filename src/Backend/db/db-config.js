@@ -54,7 +54,7 @@ const setupDatabase = async () => {
                     FOREIGN KEY(idSexo) REFERENCES Sexo(idSexo),
                     FOREIGN KEY(idConditionBucal) REFERENCES CondicionBucal(idCondicionBucal),
                     FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad),
-                    FOREIGN KEY(idMajada) REFERENCES Majadas(idMajada)
+                    FOREIGN KEY(idMajada) REFERENCES Majadas(idMajada) ON DELETE CASCADE
                 );`
         )
 
@@ -70,6 +70,10 @@ const setupDatabase = async () => {
 
         await (await db).runAsync(
             'INSERT OR IGNORE INTO Enfermedades (idEnfermedad, descripcion) VALUES (1, "No posee"), (2, "Sarna"), (3, "Infeccion"), (4, "Garrapata"), (5, "Otra");'
+        );
+
+        await (await db).runAsync(
+            'INSERT OR IGNORE INTO EpocasDelAño (idEpocaDelAño, descripcion) VALUES (1, "PreServicio"), (2, "PreParto"), (3, "PostParto"), (4, "Otro");'
         );
         
         /*LIMPIAR BASE DE DATOS
