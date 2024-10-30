@@ -15,21 +15,20 @@ class ControladorRevisionOvino {
   constructor() {
     if (!ControladorRevisionOvino.instance) {
       this.revisiones = []; // Array para almacenar los objetos RevisionOvino
-      posActual = 0,
       ControladorRevisionOvino.instance = this;
     }
     return ControladorRevisionOvino.instance;
   }
 
 
-  registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+  registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
     const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad)
     console.log(this.revisiones.length);
     if (sexoValue && condicionBucalObjetoValue) {
       const revisionOvino = new RevisionOvino(
-        0, // ID autogenerado
+        idMajada, // ID autogenerado
         caravana ? caravana : 'No posee', // Si hay caravana, usar el valor ingresado; si no, usar un valor por defecto
         sexoValue,
         condicionCorporal,
@@ -73,9 +72,6 @@ class ControladorRevisionOvino {
   obtenerRevisionPorId(id) {
     return this.revisiones.find((revision) => revision.id == id);
 }
-  getPosActua(){
-
-  }
 }
 
 // Asegurar una única instancia

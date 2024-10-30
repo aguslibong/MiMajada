@@ -1,6 +1,14 @@
 export class Majada{
     constructor(){};
-    
+
+    getId(){
+        return this.id;
+    };
+
+    setId(id){
+        this.id = id
+    }
+
     getEpocaDelAño() {
         return this.epocaDelAño;
     }
