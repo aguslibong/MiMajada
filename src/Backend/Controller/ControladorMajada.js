@@ -25,10 +25,10 @@ class ControladorMajada {
         if (epocaDelAño && estancia ) {
             this.majada.setEpocaDelAño(epocaDelAñoValue)
             this.majada.setEstancia(estancia)
-            this.majada.setFecha(fechaActual)
+            this.majada.setFechaDeRevision(fechaActual)
 
             const idMajada = insertMajada(this.majada)
-            this.majada.setIdMajada(idMajada)
+            this.majada.setId(idMajada)
 
             return idMajada;
             
