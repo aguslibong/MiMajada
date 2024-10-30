@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, TouchableOpacity, TextInput, Dimensions, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
@@ -10,16 +10,56 @@ import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/Revi
 
 const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData }) => {
-  const id = (revisionModificar) ? revisionModificar.id : null; // Obtenemos el ID de la revisión a modificar, si existe
-  const [sexo, setSexo] = useState((revisionModificar) ? revisionModificar.sexo.IdSexo : null); // 0 = Macho y 1 = Hembra
-  const [condicionBucal, setCondicionBucal] = useState((revisionModificar) ? String(revisionModificar.condicionBucal.idCondicionBucal) : '');
-  const [condicionCorporal, setCondicionCorporal] = useState((revisionModificar) ? revisionModificar.condicionCorporal : 0);
-  const [enfermedad, setEnfermedad] = useState((revisionModificar) ? String(revisionModificar.enfermedad.idEnfermedad) : '');
-  const [caravana, setCaravana] = useState((revisionModificar) ? revisionModificar.caravana : ''); // Campo para la caravana
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData, revisions }) => {
+  const id = (revisionModificar) ? revisionModificar.id : null;
   
+  // Definimos los valores iniciales en un objeto para mejor mantenimiento
+  const initialValues = {
+    sexo: null,
+    condicionBucal: '',
+    condicionCorporal: 0,
+    enfermedad: '',
+    caravana: ''
+  };
+
+  // Estados del formulario
+  const [sexo, setSexo] = useState(revisionModificar ? revisionModificar.sexo.IdSexo : initialValues.sexo);
+  const [condicionBucal, setCondicionBucal] = useState(revisionModificar ? String(revisionModificar.condicionBucal.idCondicionBucal) : initialValues.condicionBucal);
+  const [condicionCorporal, setCondicionCorporal] = useState(revisionModificar ? revisionModificar.condicionCorporal : initialValues.condicionCorporal);
+  const [enfermedad, setEnfermedad] = useState(revisionModificar ? String(revisionModificar.enfermedad.idEnfermedad) : initialValues.enfermedad);
+  const [caravana, setCaravana] = useState(revisionModificar ? revisionModificar.caravana : initialValues.caravana);
+
+  // Función para resetear los valores
+  const setValoresNull = useCallback(() => {
+    setSexo(initialValues.sexo);
+    setCondicionBucal(initialValues.condicionBucal);
+    setCondicionCorporal(initialValues.condicionCorporal);
+    setEnfermedad(initialValues.enfermedad);
+    setCaravana(initialValues.caravana);
+  }, []);
+
+  // Efecto para manejar la limpieza cuando el componente se desmonta
+  useEffect(() => {
+    return () => {
+      setValoresNull();
+    };
+  }, [setValoresNull]);
+
+  // Efecto para manejar cambios en revisionModificar
+  useEffect(() => {
+    if (!revisionModificar) {
+      setValoresNull();
+    } else {
+      setSexo(revisionModificar.sexo.IdSexo);
+      setCondicionBucal(String(revisionModificar.condicionBucal.idCondicionBucal));
+      setCondicionCorporal(revisionModificar.condicionCorporal);
+      setEnfermedad(String(revisionModificar.enfermedad.idEnfermedad));
+      setCaravana(revisionModificar.caravana);
+    }
+  }, [revisionModificar, setValoresNull]);
 
   const handleConsultar = () => {
+    setValoresNull();
     fetchData();
     setAction('C');
   };
@@ -41,33 +81,24 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   };
 
   const handleRegistro = () => {
-    if (!validarFormulario()) return; // Si la validación falla, no continúa
+    if (!validarFormulario()) return;
     try {
       instanciaControlador.registrarRevision(sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
-      setSexo(null);
-      setCondicionBucal('');
-      setCondicionCorporal(0);
-      setEnfermedad('');
-      setCaravana('');
+      setValoresNull();
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
   };
 
   const handleActualizar = () => {
-    if (!validarFormulario()) return; // Si la validación falla, no continúa
+    if (!validarFormulario()) return;
     try {
       instanciaControlador.modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
-      console.log("Revisión registrada con éxito");
-      setSexo(null);
-      setCondicionBucal('');
-      setCondicionCorporal(0);
-      setEnfermedad('');
-      setCaravana('');
-      setAction('C')
+      console.log("Revisión Actualizada con éxito");
+      setValoresNull();
     } catch (error) {
-      console.log("Error al registrar la revisión:", error);
+      console.log("Error al Actualizar la revisión:", error);
     }
   };
 
@@ -75,9 +106,12 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
       {revisionModificar === null && (
-        <TouchableOpacity style={styles.button} onPress={handleConsultar}>
-          <Text style={styles.buttonText}>Lista Majada</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity style={styles.button} onPress={handleConsultar}>
+            <Text style={styles.buttonText}>Lista Majada</Text>
+          </TouchableOpacity>
+          <Text style={styles.revisionCount}>Cant Registrados:  {revisions.length}</Text>
+        </View>
       )}
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
@@ -264,5 +298,12 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  revisionCount: {
+    color: '#45658C',  // Utiliza el mismo color que los botones
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });

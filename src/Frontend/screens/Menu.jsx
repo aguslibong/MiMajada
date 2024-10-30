@@ -5,8 +5,8 @@ const Menu = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Button
-        title="Registrar Revisión Ovino"
-        onPress={() => navigation.navigate('RevisionOvino')}
+        title="Registrar Majada"
+        onPress={() => navigation.navigate('RegistrarMajada')}
       />
     </View>
   );

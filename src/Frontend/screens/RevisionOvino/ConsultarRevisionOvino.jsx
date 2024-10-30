@@ -1,22 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import SheepReviewCard from '../../components/SheepReviewCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js';
 
 const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onEliminar}) => {
-
-  const handleModify = (RevisionOvinoModificar) => {
+  const handleModify = useCallback((RevisionOvinoModificar) => {
     onModificar(RevisionOvinoModificar);
-  };
+  }, [onModificar]);
 
-  const handleDelete = (id) => {
-    onEliminar(id)
-  };
+  const handleDelete = useCallback((id) => {
+    onEliminar(id);
+  }, [onEliminar]);
 
-  const handleRegistro = () => {
-    setAction('R')
-  }
-
+  const handleRegistro = useCallback(() => {
+    setAction('R');
+  }, [setAction]);
 
   if (loading) {
     return (
@@ -42,7 +40,6 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onE
           revisions.map((revision) => (
             <SheepReviewCard
               key={revision.id}
-              revisionNumber={revision.nroRevision}
               caravana={revision.caravana}
               sexo={revision.sexo.descripcion}
               condicionBucal={revision.condicionBucal.descripcion}
@@ -55,7 +52,6 @@ const ConsultarRevisionOvino = ({setAction, revisions, loading, onModificar, onE
         )}
       </ScrollView>
     </View>
-    
   );
 };
 

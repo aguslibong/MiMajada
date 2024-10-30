@@ -1,74 +1,96 @@
-import React, { useState, useEffect } from 'react';
-import RegistroRevisionOvino from './RegistroRevisionOvino.jsx'
-import ConsultarRevisionOvino from './ConsultarRevisionOvino.jsx'
+import React, { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
-import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js';
+import RegistroRevisionOvino from './RegistroRevisionOvino';
+import ConsultarRevisionOvino from './ConsultarRevisionOvino';
+import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js'
 
-const RevisionOvino = () => {
-    const [action, setAction] = useState ('R')
+const RevisionOvino = ({ route }) => {
+    const [action, setAction] = useState('R');
     const [revisions, setRevisions] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [revisionModificar, setRevisionModificar] = useState (null)
-    
-    useEffect(() => {
-        fetchData();
-    }, []);
+    const [revisionModificar, setRevisionModificar] = useState(null);
+    const {idMajada} = route.params 
 
-
-    const fetchData = async () => {
+    const fetchData = useCallback(async () => {
         try {
             const allRevisions = instanciaControlador.obtenerRevisiones();
-            console.log("Todas las revisiones que tengo:",allRevisions)
+            console.log("Todas las revisiones que tengo:", allRevisions);
             setRevisions(allRevisions);
         } catch (error) {
-          console.error('Error fetching revisions:', error);
+            console.error('Error fetching revisions:', error);
         } finally {
-          setLoading(false);
+            setLoading(false);
         }
-    };
+    }, []);
 
-    const onModificar = async (revisionModificar) => {
-        setRevisionModificar(revisionModificar)
-        setAction('M')
-        await fetchData()
-    }
+    // Efecto para limpiar revisionModificar cuando se cambia de acción
+    useEffect(() => {
+        if (action === 'C' || action === 'R') {
+            setRevisionModificar(null);
+        }
+    }, [action]);
 
-    const onEliminar = async (idEliminar) => {
-    try {
-        // Asegúrate de que eliminarRevision sea una función async/await
-        await instanciaControlador.eliminarRevision(idEliminar);
-        console.log('Eliminar exitoso:', instanciaControlador.revisiones);
+    // Manejador personalizado para setAction que limpia estados cuando es necesario
+    const handleSetAction = useCallback((newAction) => {
+        // Si estamos cambiando a consulta o registro nuevo, limpiamos revisionModificar
+        if (newAction === 'C' || newAction === 'R') {
+            setRevisionModificar(null);
+        }
+        setAction(newAction);
+    }, []);
 
-        // Actualizamos el estado local de revisions para reflejar la eliminación
-        const updatedRevisions = revisions.filter((revision) => revision.id !== idEliminar);
-        setRevisions(updatedRevisions);
+    const onModificar = useCallback(async (revisionModificar) => {
+        setRevisionModificar(revisionModificar);
+        setAction('M');
+        await fetchData();
+    }, [fetchData]);
 
-        // Vuelve a llamar a fetchData si necesitas recargar las revisiones desde el servidor
-        // await fetchData(); // Puedes quitar esto si no necesitas volver a cargar de la base de datos
-    } catch (error) {
-        console.error('Error al eliminar la revisión:', error);
-    }
-};
+    const onEliminar = useCallback(async (idEliminar) => {
+        try {
+            await instanciaControlador.eliminarRevision(idEliminar);
+            console.log('Eliminar exitoso:', instanciaControlador.revisiones);
+            setRevisions(prev => prev.filter(revision => revision.id !== idEliminar));
+        } catch (error) {
+            console.error('Error al eliminar la revisión:', error);
+        }
+    }, []);
 
-    
- 
-    const onFinalizar = async () => {}
+    const onFinalizar = useCallback(async () => {
+        // Implementa la lógica de finalización aquí
+    }, []);
 
-    const onObservacion = async () => {}
+    const onObservacion = useCallback(async () => {
+        // Implementa la lógica de observación aquí
+    }, []);
 
-    
+    // Efecto inicial para cargar datos
+    useEffect(() => {
+        fetchData();
+    }, [fetchData]);
+
     return (
         <View>
-            {
-                (action === 'R' || action === 'M') && (
-                    <RegistroRevisionOvino setAction={setAction} revisionModificar={revisionModificar} onFinalizar={onFinalizar} onObservacion={onObservacion}  />
-                )
-            }
-            {
-                action === 'C' && (
-                    <ConsultarRevisionOvino setAction={setAction} revisions={revisions} loading={loading} onModificar={onModificar} onEliminar={onEliminar} fetchData={fetchData}/> 
-                )
-            }
+            {(action === 'R' || action === 'M') && (
+                <RegistroRevisionOvino 
+                    setAction={handleSetAction}
+                    revisionModificar={revisionModificar}
+                    onFinalizar={onFinalizar}
+                    onObservacion={onObservacion}
+                    fetchData={fetchData}
+                    revisions={revisions}
+                    idMajada={idMajada}
+                />
+            )}
+            {action === 'C' && (
+                <ConsultarRevisionOvino 
+                    setAction={handleSetAction}
+                    revisions={revisions}
+                    loading={loading}
+                    onModificar={onModificar}
+                    onEliminar={onEliminar}
+                    fetchData={fetchData}
+                />
+            )}
         </View>
     );
 };
