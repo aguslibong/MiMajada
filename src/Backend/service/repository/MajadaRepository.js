@@ -15,7 +15,7 @@ const insertMajada = async (majada) => {
     return (await result).lastInsertRowId;
 };
 
-const getAllMajada = async (idMajada) => {
+const getAllMajada = async () => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
     const arrayMajadas = new Array();
