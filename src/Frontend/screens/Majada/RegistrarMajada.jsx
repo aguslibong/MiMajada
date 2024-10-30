@@ -14,8 +14,9 @@ const RegistrarMajada = () => {
   const navigation = useNavigation();
   
   const handleRegistro = () => {
-    console.log(estancia,epocaDelAnio)
+    
     const idMajada = controladorMajada.registrarMajada(estancia,epocaDelAnio,observacion)
+    console.log("ID DE LA MAJADA CREADA : " + idMajada)
     navigation.navigate('RevisionOvino', { idMajada });
   };
 
