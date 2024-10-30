@@ -1,7 +1,7 @@
 import db from '../db/db-init';
 import setupDatabase from '../db/db-config';
 import { getAllCondicionBucal, insertCondicionBucal } from '../service/repository/CondicionBucalRepository';
-import { insertSexo, getAllSexo } from '../service/Repository/SexoManager';
+import { insertSexo, getAllSexo } from '../service/repository/SexoRepository';
 import { getAllEnfermedad, insertEnfermedad } from '../service/repository/EnfermedadManagerRepository';
 import { getAllRevisionOvino, insertRevisionOvino, deleteRevisionOvino, updateRevisionOvino } from '../service/repository/RevisionOvinoManagerRepository';
 import { RevisionOvino }  from '../model/RevisionOvino';
