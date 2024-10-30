@@ -10,10 +10,10 @@ const insertMajada = async (majada) => {
     const observacion = majada.getObservacion();
     console.log("Insertando Majada en la base de datos", idEpocaDelAño, estancia, fechaActual, observacion) 
 
-    const result = (await db).runAsync('INSERT INTO Majadas (idEpocaDelAño, estancia, fechaDeRevision, observacion) VALUES (?, ?, ?, ?)',
+    const result = await (await db).runAsync('INSERT INTO Majadas (idEpocaDelAño, estancia, fechaDeRevision, observacion) VALUES (?, ?, ?, ?)',
     idEpocaDelAño, estancia, fechaActual, observacion)
-    
-    return (await result).lastInsertRowId;
+    const id = result.lastInsertRowId;
+    return id;
 };
 
 const getAllMajada = async () => {

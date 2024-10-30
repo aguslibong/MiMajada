@@ -18,7 +18,7 @@ class ControladorMajada {
         return ControladorMajada.this;
     }
 
-    registrarMajada(estancia, epocaDelAño, observacion) {
+    async registrarMajada(estancia, epocaDelAño, observacion) {
 
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
         const date = new Date();
@@ -29,10 +29,9 @@ class ControladorMajada {
             this.majada.setEstancia(estancia)
             this.majada.setFechaDeRevision(fechaActual)
             this.majada.setObservacion(observacion)
-            const idMajada = insertMajada(this.majada)
+            const idMajada = await insertMajada(this.majada)
             this.majada.setId(idMajada)
             getAllEpocaDelAño();
-            console.log("Cree el objeto en la base de datos:",idMajada)
             return idMajada;
             
         } else {
