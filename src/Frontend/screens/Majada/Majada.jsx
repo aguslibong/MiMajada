@@ -72,7 +72,7 @@ const Majada = () => {
             {(action === 'R' || action === 'M') && (
                 <RegistrarMajada
                     setAction={handleSetAction}
-                    revisionModificar={revisionModificar}
+                    MajadaModificar={MajadaModificar}
                     onFinalizar={onFinalizar}
                     onObservacion={onObservacion}
                     fetchData={fetchData}
