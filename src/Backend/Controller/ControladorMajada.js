@@ -69,6 +69,7 @@ class ControladorMajada {
 
     eliminarMajada(idMajada){
         deleteMajada(idMajada)
+        this.majadas.splice(this.majadas.findIndex((majada) => majada.idMajada === idMajada), 1);
     }
 }
 

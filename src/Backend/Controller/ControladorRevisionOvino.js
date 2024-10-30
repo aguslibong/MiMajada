@@ -54,9 +54,9 @@ class ControladorRevisionOvino {
     }
   }
     
-  obtenerRevisiones(idMajada) {
+  async obtenerRevisiones(idMajada) {
     if (this.revisiones.length === 0) {
-      arrayOvinos = getAllRevisionOvino(idMajada);
+      arrayOvinos = await getAllRevisionOvino(idMajada);
       arrayOvinos.forEach((ovino) => {
         this.revisiones.push(this.crearRevisionOvino(ovino));
       });
