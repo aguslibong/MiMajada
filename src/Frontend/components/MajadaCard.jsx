@@ -2,7 +2,7 @@ import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card, Button } from 'react-native-paper';
 
-const SheepReviewCard = ({ estancia, epocadelaño, fecha, observaciones }) => (
+const SheepReviewCard = ({ estancia, epocadelaño, fecha, observaciones, onModify, onDelete }) => (
   <Card style={styles.card}>
     <Card.Content>
       <View style={styles.row}>
