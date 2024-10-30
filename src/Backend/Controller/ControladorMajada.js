@@ -42,12 +42,26 @@ class ControladorMajada {
     async obtenerMajada() {
         if (this.majadas.length === 0) { 
             const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
-            this.majadas.push(...majadas);         // Agrega los elementos del array a `this.majadas`
+            majadas.forEach((majada)=>{
+                this.majada.push(this.crearMajada(majada));
+            });         // Agrega los elementos del array a `this.majadas`
         }
         console.log(this.majadas);
         return this.majadas;
     }
     
+    crearMajada(majada) {
+        if (majada) {
+            const epocaDelAño = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(majada.idEpocaDelAño);
+            return new Majada(
+                majada.idMajada,
+                epocaDelAño,
+                majada.estancia,
+                majada.fechaDeRevision,
+                majada.observacion
+            );
+        }
+    }
 
     modifificarMajada(id, epocaDelAño, estancia){
         this.majada = getAllMajada().find((majada) => majada.idMajada === id);
