@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
+import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
+import EpocaDelAñoSingleton from '../../../Backend/service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service.js';
 
 const { width } = Dimensions.get('window');
 
 const RegistrarMajada = () => {
-  const [epocaDelAnio, setEpocaDelAnio] = useState('');
   const [estancia, setEstancia] = useState('');
   const [fechaDeRevision, setFechaDeRevision] = useState('');
   const [observacion, setObservacion] = useState('');
@@ -14,8 +15,8 @@ const RegistrarMajada = () => {
   const navigation = useNavigation();
   
   const handleRegistro = () => {
-    // Lógica para registrar los datos y obtener el id de la majada para pasar por parametro
-    const idMajada = 1;
+    const EpocadelAñoValue = EpocaDelAñoSingleton.
+    const idMajada = controladorMajada.registrarMajada(estancia)
     navigation.navigate('RevisionOvino', { idMajada });
   };
 
