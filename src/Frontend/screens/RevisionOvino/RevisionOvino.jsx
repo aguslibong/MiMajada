@@ -13,11 +13,12 @@ const RevisionOvino = () => {
     useEffect(() => {
         fetchData();
     }, []);
-    
+
+
     const fetchData = async () => {
         try {
-            console.log("nacho gai")
-            const allRevisions = await instanciaControlador.obtenerRevisiones();
+            const allRevisions = instanciaControlador.obtenerRevisiones();
+            console.log("Todas las revisiones que tengo:",allRevisions)
             setRevisions(allRevisions);
         } catch (error) {
           console.error('Error fetching revisions:', error);
@@ -33,16 +34,22 @@ const RevisionOvino = () => {
     }
 
     const onEliminar = async (idEliminar) => {
-        try {
-            // Asegúrate de que eliminarRevision sea una función async/await
-            await instanciaControlador.eliminarRevision(idEliminar);
-            console.log('Eliminar exitoso:', instanciaControlador.revisiones);
-            // Vuelve a llamar a fetchData para actualizar la lista de revisiones
-            await fetchData();
-        } catch (error) {
-            console.error('Error al eliminar la revisión:', error);
-        }
-    };
+    try {
+        // Asegúrate de que eliminarRevision sea una función async/await
+        await instanciaControlador.eliminarRevision(idEliminar);
+        console.log('Eliminar exitoso:', instanciaControlador.revisiones);
+
+        // Actualizamos el estado local de revisions para reflejar la eliminación
+        const updatedRevisions = revisions.filter((revision) => revision.id !== idEliminar);
+        setRevisions(updatedRevisions);
+
+        // Vuelve a llamar a fetchData si necesitas recargar las revisiones desde el servidor
+        // await fetchData(); // Puedes quitar esto si no necesitas volver a cargar de la base de datos
+    } catch (error) {
+        console.error('Error al eliminar la revisión:', error);
+    }
+};
+
     
  
     const onFinalizar = async () => {}
@@ -54,12 +61,12 @@ const RevisionOvino = () => {
         <View>
             {
                 (action === 'R' || action === 'M') && (
-                    <RegistroRevisionOvino setAction={setAction} revisionModificar={revisionModificar} onFinalizar={onFinalizar} onObservacion={onObservacion} fetchData={fetchData} />
+                    <RegistroRevisionOvino setAction={setAction} revisionModificar={revisionModificar} onFinalizar={onFinalizar} onObservacion={onObservacion}  />
                 )
             }
             {
                 action === 'C' && (
-                    <ConsultarRevisionOvino setAction={setAction} revisions={revisions} loading={loading} onModificar={onModificar} onEliminar={onEliminar}/> 
+                    <ConsultarRevisionOvino setAction={setAction} revisions={revisions} loading={loading} onModificar={onModificar} onEliminar={onEliminar} fetchData={fetchData}/> 
                 )
             }
         </View>
