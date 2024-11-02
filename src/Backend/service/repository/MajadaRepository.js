@@ -1,5 +1,5 @@
 import db from '../../db/db-init';
-import { Majada } from '../../model/Majada';
+import { Majada } from '../../model/Majada'
 
 const insertMajada = async (majada) => {
     if (!db) {return};
@@ -19,8 +19,8 @@ const insertMajada = async (majada) => {
 const getAllMajada = async () => {
     if (!db) return [];  // Devuelve un array vacío si `db` no está inicializado
 
-    const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');
-    
+    const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');    
+
     return allRows.map(row => 
         new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
     );

@@ -36,7 +36,7 @@ class ControladorRevisionOvino {
     }
   }
 
-  async consultarRevisiones(idMajada) {
+  async obtenerRevisiones(idMajada) {
     return await getAllRevisionOvino(idMajada);
   }
 

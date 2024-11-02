@@ -1,6 +1,6 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
-import { Majada } from '../model/majada';
+import { Majada } from '../model/Majada';
 import { getAllMajada, insertMajada, obtenerIdMajadaMasGrande } from '../service/repository/MajadaRepository';
 
 // Clase que lleva la lógica de cómo se registran las revisiones de ovinos
@@ -35,7 +35,7 @@ class ControladorMajada {
         }
     }
 
-    async consultarMajada() {
+    async obtenerMajada() {
         return await getAllMajada();
     }
 
