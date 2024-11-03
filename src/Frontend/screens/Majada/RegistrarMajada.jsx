@@ -6,7 +6,7 @@ import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
 
 const { width } = Dimensions.get('window');
 
-const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacion, fecthData, majadas }) => {
+const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => {
   const id = majadaModificar ? majadaModificar.id : null;
   const navigation = useNavigation();
 
@@ -64,9 +64,9 @@ const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacio
     if (!validarFormulario()) return;
     try {
       console.log(epocaDelAnio)
-      const idMajada = await controladorMajada.registrarMajada(estancia, epocaDelAnio, observacion);
+      const idMajada = await controladorMajada.registrarMajada(epocaDelAnio, estancia, observacion);
       console.log("ID DE LA MAJADA CREADA: " + idMajada);
-      navigation.navigate('RevisionOvino', { idMajada });
+      navigation.navigate('RevisionOvino', { idMajada ,  actionInicial: 'R' });
       setValoresNull();
     } catch (error) {
       console.log("Error al registrar la majada:", error);
@@ -76,9 +76,9 @@ const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacio
   const handleActualizar = async () => {
     if (!validarFormulario()) return;
     try {
-      await controladorMajada.modificarMajada(id, estancia, epocaDelAnio, observacion);
+      await controladorMajada.modificarMajada(id, epocaDelAnio, estancia, observacion);
       console.log("Majada actualizada con éxito");
-      navigation.navigate('RevisionOvino', { id });
+      navigation.navigate('RevisionOvino', { id ,  actionInicial: 'C'});
       setValoresNull();
     } catch (error) {
       console.log("Error al actualizar la majada:", error);

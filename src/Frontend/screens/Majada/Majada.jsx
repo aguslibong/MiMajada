@@ -58,13 +58,6 @@ const Majada = () => {
         }
     }, []);
 
-    const onFinalizar = useCallback(async () => {
-        // Implementa la lógica de finalización aquí
-    }, []);
-
-    const onObservacion = useCallback(async () => {
-        // Implementa la lógica de observación aquí
-    }, []);
 
     // Efecto inicial para cargar datos
     useEffect(() => {
@@ -79,8 +72,6 @@ const Majada = () => {
                 <RegistrarMajada
                     setAction={setAction}
                     majadaModificar={majadaModificar}
-                    onFinalizar={onFinalizar}
-                    onObservacion={onObservacion}
                     fetchData={fetchData}
                     majadas={majadas}
                 />

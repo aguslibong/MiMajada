@@ -1,15 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import RegistroRevisionOvino from './RegistroRevisionOvino';
 import ConsultarRevisionOvino from './ConsultarRevisionOvino';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js'
 
 const RevisionOvino = ({ route }) => {
-    const [action, setAction] = useState('R');
+    const {actionInicial} = route.params
+    const [action, setAction] = useState(actionInicial);
     const [revisions, setRevisions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [revisionModificar, setRevisionModificar] = useState(null);
     const {idMajada} = route.params 
+    
+    const navigation = useNavigation();
 
     const fetchData = useCallback(async () => {
         try {
@@ -56,7 +60,7 @@ const RevisionOvino = ({ route }) => {
     }, []);
 
     const onFinalizar = useCallback(async () => {
-        // Implementa la lógica de finalización aquí
+        navigation.navigate('DiagnosticoMajada', { idMajada });
     }, []);
 
     const onObservacion = useCallback(async () => {
