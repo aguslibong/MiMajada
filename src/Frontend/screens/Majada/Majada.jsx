@@ -17,7 +17,6 @@ const Majada = () => {
     const fetchData = useCallback(async () => {
         try {
             const allRevisions = await instanciaControlador.obtenerMajada();
-            console.log("Todas las MAjadas que tengo:", allRevisions);
             setMajadas(allRevisions);
         } catch (error) {
             console.error('Error fetching revisions:', error);

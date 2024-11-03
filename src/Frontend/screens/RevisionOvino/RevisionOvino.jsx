@@ -18,7 +18,6 @@ const RevisionOvino = ({ route }) => {
     const fetchData = useCallback(async () => {
         try {
             const allRevisions = await instanciaControlador.obtenerRevisiones(idMajada);
-            console.log("Todas las revisiones que tengo:", allRevisions);
             setRevisions(allRevisions);
         } catch (error) {
             console.error('Error fetching revisions:', error);

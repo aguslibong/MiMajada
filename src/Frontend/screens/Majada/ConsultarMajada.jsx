@@ -49,7 +49,7 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
           majadas.map((majada) => (
             <MajadaCard
               key={majada.id}
-              epocaDelAño={majada.epocaDelAño}
+              epocaDelAño={majada.epocaDelAño.descripcion}
               estancia={majada.estancia}
               fechaDeRevision={majada.fechaDeRevision}
               observacion={majada.observacion}
