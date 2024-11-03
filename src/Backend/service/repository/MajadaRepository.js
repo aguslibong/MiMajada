@@ -22,6 +22,12 @@ const getAllMajada = async () => {
 
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');    
 
+    const majada = allRows.map(row => 
+        new Majada(row.idMajada, EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(row.idEpocaDelAño), row.estancia, row.fechaDeRevision, row.observacion)
+    );
+
+    console.log(majada)
+
     return allRows.map(row => 
         new Majada(row.idMajada, EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(row.idEpocaDelAño), row.estancia, row.fechaDeRevision, row.observacion)
     );
@@ -33,17 +39,11 @@ const deleteMajada = async (idMajada) => {
     (await db).runAsync('DELETE FROM Majadas WHERE idMajada = ?', idMajada);
 }
 
-const updateMajada = async (majada) => {
+const updateMajada = async (idMajada, idEpocaDelAño, estancia, observacion) => {
     if (!db) return;
-    console.log(majada)
-    const idMajada = majada.getId();
-    const estancia = majada.getEstancia();
-    const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
-    const fechaActual = majada.getFechaDeRevision();
-    const observacion = majada.getObservacion();
-
-    (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?, fechaDeRevision = ?, observacion = ? WHERE idMajada = ?',
-    idEpocaDelAño, estancia, fechaActual, observacion, idMajada);
+    const idEpoca = parseInt(idEpocaDelAño);
+    (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?,  observacion = ? WHERE idMajada = ?',
+    idEpoca, estancia, observacion, idMajada);
 
 }
 
