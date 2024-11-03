@@ -1,5 +1,6 @@
 import db from '../../db/db-init';
 import { Majada } from '../../model/Majada'
+import { EpocaDelAñoSingleton } from '../Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 
 const insertMajada = async (majada) => {
     if (!db) {return};
@@ -22,7 +23,7 @@ const getAllMajada = async () => {
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');    
 
     return allRows.map(row => 
-        new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
+        new Majada(row.idMajada, EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(row.idEpocaDelAño), row.estancia, row.fechaDeRevision, row.observacion)
     );
 }
 
@@ -50,9 +51,9 @@ const updateMajada = async (majada) => {
 const getMajadaById = async (idMajada) => {
     if (!db) return; 
 
-    const result = await (await db).runAsync('Select * FROM Majada WHERE idMajada = ?', idMajada)
-    
-    if (result){
+    const row = await (await db).getFirstAsync('Select * FROM Majadas WHERE idMajada = ?', idMajada)
+    console.log(row.idMajada);
+    if (row){
         return new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
     }
     else {

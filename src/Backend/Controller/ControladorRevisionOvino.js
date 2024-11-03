@@ -4,10 +4,14 @@ import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service';
 import { getMajadaById } from '../service/repository/MajadaRepository';
+import { Sexo } from '../model/Sexo';
 
 // Clase que lleva la lógica de cómo se registran las revisiones de ovinos
 class ControladorRevisionOvino {
   static instance;
+  sexoSingleton = SexoSingleton.getInstance();
+  condicionBucalSingleton = CondicionBucalSingleton.getInstance();
+  enfermedadSingleton = EnfermedadSingleton.getInstance();
 
   constructor() {
     if (ControladorRevisionOvino.instance) {
@@ -17,11 +21,10 @@ class ControladorRevisionOvino {
   }
 
   async registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
-    const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
-    const condicionBucalObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
-    const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
+    const sexoObjeto = this.sexoSingleton.getSexoById(sexo);
+    const condicionBucalObjeto = this.condicionBucalSingleton.getCondicionBucalById(condicionBucal);
+    const enfermedadObjeto = this.enfermedadSingleton.getEnfermedadById(enfermedad);
     const majadaObjeto = await getMajadaById(idMajada)
-    console.log(majadaObjeto)
     if (sexoObjeto && condicionBucalObjeto) {
       const revisionOvino = new RevisionOvino(
         majadaObjeto,
@@ -32,12 +35,20 @@ class ControladorRevisionOvino {
         condicionBucalObjeto,
         enfermedadObjeto || EnfermedadSingleton.getInstance().getEnfermedadById(1)
       );
+      console.log(revisionOvino)
       await insertRevisionOvino(revisionOvino);
     }
   }
 
+
   async obtenerRevisiones(idMajada) {
-    return await getAllRevisionOvino(idMajada);
+    const ovinos = await getAllRevisionOvino(idMajada);
+    return ovinos.map( ovino => 
+      new RevisionOvino(ovino.idMajada,ovino.id, this.sexoSingleton.getSexoById(ovino.idSexo), ovino.condicionCorporal, 
+        this.condicionBucalSingleton.getCondicionBucalById(ovino.idMajada),ovino.caravana, this.enfermedadSingleton.getEnfermedadById(ovino.enfermedad) 
+      )
+    )
+
   }
 
   eliminarRevision(id) {
@@ -49,7 +60,7 @@ class ControladorRevisionOvino {
   }
 
   async modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
-    const revision = this.revisiones.find((revision) => revision.id === id);
+    const revision = await getRevisionOvinoById();
     const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjetoObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
     const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);

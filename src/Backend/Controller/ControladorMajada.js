@@ -10,10 +10,10 @@ class ControladorMajada {
 
     constructor() {
         if (ControladorMajada.instance) {
+            
             return ControladorMajada.instance;
         }
         this.majada = new Majada();
-        setupDatabase();
         ControladorMajada.instance = this;
     }
 
@@ -32,8 +32,8 @@ class ControladorMajada {
             this.majada.setEpocaDelAño(epocaDelAñoValue);
             this.majada.setEstancia(estancia);
             this.majada.setFechaDeRevision(fechaActual);
+            this.majada.setObservacion(observacion)
             const idMajada = insertMajada(this.majada);
-
             return idMajada;
         } else {
             console.log("No se han registrado todos los datos necesarios");
@@ -47,10 +47,6 @@ class ControladorMajada {
 
     registrarObservacion(observacion) {
         this.majada.setObservacion(observacion);
-    }
-
-    getId() {
-        return this.idMajada;
     }
 }
 
