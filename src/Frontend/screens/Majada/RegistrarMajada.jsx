@@ -63,6 +63,7 @@ const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacio
   const handleRegistro = async () => {
     if (!validarFormulario()) return;
     try {
+      console.log(epocaDelAnio)
       const idMajada = await controladorMajada.registrarMajada(estancia, epocaDelAnio, observacion);
       console.log("ID DE LA MAJADA CREADA: " + idMajada);
       navigation.navigate('RevisionOvino', { idMajada });
@@ -77,6 +78,7 @@ const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacio
     try {
       await controladorMajada.modificarMajada(id, estancia, epocaDelAnio, observacion);
       console.log("Majada actualizada con éxito");
+      navigation.navigate('RevisionOvino', { id });
       setValoresNull();
     } catch (error) {
       console.log("Error al actualizar la majada:", error);

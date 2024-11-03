@@ -36,28 +36,7 @@ class ControladorMajada {
     }
 
     async obtenerMajada() {
-<<<<<<< HEAD
-            const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
-            const majadaCreada = majadas.forEach((majada)=>{
-                majada.push(this.crearMajada(majada));}
-            )
-        return majadaCreada;
-}
-    
-    crearMajada(majada) {
-        if (majada) {
-            const epocaDelAño = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(majada.idEpocaDelAño);
-            return new Majada(
-                majada.idMajada,
-                epocaDelAño,
-                majada.estancia,
-                majada.fechaDeRevision,
-                majada.observacion
-            );
-        }
-=======
         return await getAllMajada();
->>>>>>> cafeeeab5820e4d6522a2d178d8733fe0897e885
     }
 
     registrarObservacion(observacion) {

@@ -40,11 +40,6 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
 
   return (
     <View>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-          <Text style={styles.buttonText}>Registrar Nuevo Diagnostico</Text>
-        </TouchableOpacity>
-      </View>
       <ScrollView>
         {majadas.length === 0 ? (
           <View style={styles.noDataContainer}>
