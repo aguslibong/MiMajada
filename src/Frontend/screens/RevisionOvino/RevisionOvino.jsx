@@ -6,12 +6,13 @@ import ConsultarRevisionOvino from './ConsultarRevisionOvino';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js'
 
 const RevisionOvino = ({ route }) => {
+    const {idMajada} = route.params
+    console.log("preuba de ID q llega el modificar: " + idMajada) 
     const {actionInicial} = route.params
     const [action, setAction] = useState(actionInicial);
     const [revisions, setRevisions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [revisionModificar, setRevisionModificar] = useState(null);
-    const {idMajada} = route.params 
     
     const navigation = useNavigation();
 

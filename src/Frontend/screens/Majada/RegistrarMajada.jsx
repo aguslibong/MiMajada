@@ -70,8 +70,9 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
     if (!validarFormulario()) return;
     try {
       await controladorMajada.modificarMajada(id, epocaDelAnio, estancia, observacion);
-      console.log("Majada actualizada con éxito");
-      navigation.navigate('RevisionOvino', { id, actionInicial: 'C' });
+      console.log("Majada actualizada con éxito con el id: " + id);
+      const idMajada = id;
+      navigation.navigate('RevisionOvino', { idMajada, actionInicial: 'C' });
       setValoresNull();
     } catch (error) {
       console.log("Error al actualizar la majada:", error);
