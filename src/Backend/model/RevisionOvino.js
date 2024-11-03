@@ -1,8 +1,5 @@
-import { Majada } from "./Majada";
-
 export class RevisionOvino {
-  constructor(majada,id, caravana, sexo, condicionCorporal, condicionBucal, enfermedad) {
-    
+  constructor(majada, id, sexo, condicionCorporal, condicionBucal, caravana, enfermedad) {
     this.majada = majada;
     this.id = id
     this.sexo = sexo;
@@ -24,7 +21,7 @@ export class RevisionOvino {
     return this.majada.getId();
   }
 
-  setMajada(majada){
+  setIdMajada(majada){
     this.majada = majada
   }
   getEnfermedad() {
