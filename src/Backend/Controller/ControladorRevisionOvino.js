@@ -16,12 +16,12 @@ class ControladorRevisionOvino {
     ControladorRevisionOvino.instance = this;
   }
 
-  registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+  async registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
     const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
-    const majadaObjeto = getMajadaById(idMajada)
-
+    const majadaObjeto = await getMajadaById(idMajada)
+    console.log(majadaObjeto)
     if (sexoObjeto && condicionBucalObjeto) {
       const revisionOvino = new RevisionOvino(
         majadaObjeto,
@@ -32,7 +32,7 @@ class ControladorRevisionOvino {
         condicionBucalObjeto,
         enfermedadObjeto || EnfermedadSingleton.getInstance().getEnfermedadById(1)
       );
-      insertRevisionOvino(revisionOvino);
+      await insertRevisionOvino(revisionOvino);
     }
   }
 

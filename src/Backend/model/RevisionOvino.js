@@ -20,7 +20,7 @@ export class RevisionOvino {
     this.id = id;
   }
 
-  getIdMajada(majada){
+  getIdMajada(){
     return this.majada.getId();
   }
 
