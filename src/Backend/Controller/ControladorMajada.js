@@ -17,10 +17,16 @@ class ControladorMajada {
         ControladorMajada.instance = this;
     }
 
-    registrarMajada(epocaDelAño, estancia) {
+
+    getFechaActual(){
+        const date = new Date()
+
+        return date.toISOString().slice(0, 19).replace("T", " ");
+    }
+
+    registrarMajada(epocaDelAño, estancia, observacion) {
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
-        const date = new Date();
-        const fechaActual = date.toISOString().slice(0, 19).replace("T", " ");
+        const fechaActual = this.getFechaActual();
 
         if (epocaDelAño && estancia) {
             this.majada.setEpocaDelAño(epocaDelAñoValue);
