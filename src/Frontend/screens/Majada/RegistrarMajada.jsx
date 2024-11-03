@@ -63,7 +63,6 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
   const handleRegistro = async () => {
     if (!validarFormulario()) return;
     try {
-      console.log(epocaDelAnio)
       const idMajada = await controladorMajada.registrarMajada(epocaDelAnio, estancia, observacion);
       console.log("ID DE LA MAJADA CREADA: " + idMajada);
       navigation.navigate('RevisionOvino', { idMajada ,  actionInicial: 'R' });
