@@ -3,6 +3,7 @@ import db from '../../db/db-init';
 const insertRevisionOvino = async (revisionOvino) => {
     if (!db) return;
 
+    const majada = revisionOvino.getIdMajada();
     const condicionCorporal = revisionOvino.getCondicionCorporal();
     const idSexo = revisionOvino.getSexo().getIdSexo();
     const idConditionBucal = revisionOvino.getCondicionBucal().getIdCondicionBucal();

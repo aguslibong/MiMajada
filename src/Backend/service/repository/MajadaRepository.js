@@ -47,4 +47,17 @@ const updateMajada = async (majada) => {
 
 }
 
-export { insertMajada, getAllMajada, deleteMajada, updateMajada};
+const getMajadaById = async (idMajada) => {
+    if (!db) return; 
+
+    const result = await (await db).runAsync('Select * FROM Majada WHERE idMajada = ?', idMajada)
+    
+    if (result){
+        return new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
+    }
+    else {
+        return ;
+    }
+}
+
+export { insertMajada, getAllMajada, deleteMajada, updateMajada, getMajadaById};

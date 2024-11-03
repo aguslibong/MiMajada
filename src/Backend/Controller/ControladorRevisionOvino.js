@@ -3,6 +3,7 @@ import { RevisionOvino } from '../model/RevisionOvino';
 import { SexoSingleton } from '../service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 import { EnfermedadSingleton } from '../service/Singleton/RevisionOvino/EnfermedadSingleton.service';
+import { getMajadaById } from '../service/repository/MajadaRepository';
 
 // Clase que lleva la lógica de cómo se registran las revisiones de ovinos
 class ControladorRevisionOvino {
@@ -12,24 +13,24 @@ class ControladorRevisionOvino {
     if (ControladorRevisionOvino.instance) {
       return ControladorRevisionOvino.instance;
     }
-    this.revisiones = []; // Array para almacenar los objetos RevisionOvino
     ControladorRevisionOvino.instance = this;
   }
 
-  registrarRevision(idMajada, id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
-    const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
-    const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
-    const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
-    
-    if (sexoValue && condicionBucalObjetoValue) {
+  registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+    const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
+    const condicionBucalObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
+    const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
+    const majadaObjeto = getMajadaById(idMajada)
+
+    if (sexoObjeto && condicionBucalObjeto) {
       const revisionOvino = new RevisionOvino(
-        idMajada,
+        majadaObjeto,
         0,
         caravana ? caravana : 'No posee',
-        sexoValue,
+        sexoObjeto,
         condicionCorporal,
-        condicionBucalObjetoValue,
-        enfermedadValue || EnfermedadSingleton.getInstance().getEnfermedadById(1)
+        condicionBucalObjeto,
+        enfermedadObjeto || EnfermedadSingleton.getInstance().getEnfermedadById(1)
       );
       this.revisiones.push(revisionOvino);
       insertRevisionOvino(revisionOvino);
@@ -50,15 +51,15 @@ class ControladorRevisionOvino {
 
   modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const revision = this.revisiones.find((revision) => revision.id === id);
-    const sexoValue = SexoSingleton.getInstance().getSexoById(sexo);
-    const condicionBucalObjetoValue = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
-    const enfermedadValue = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
+    const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
+    const condicionBucalObjetoObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
+    const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
 
     if (revision) {
-      revision.setSexo(sexoValue);
+      revision.setSexo(sexoObjeto);
       revision.setCondicionCorporal(condicionCorporal);
-      revision.setCondicionBucal(condicionBucalObjetoValue);
-      revision.setEnfermedad(enfermedadValue);
+      revision.setCondicionBucal(condicionBucalObjetoObjeto);
+      revision.setEnfermedad(enfermedadObjeto);
       revision.setCaravana(caravana);
       updateRevisionOvino(revision);
     }
