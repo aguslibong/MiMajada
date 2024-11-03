@@ -1,20 +1,18 @@
-export class Majada {
-    constructor(id, epocaDelAño, estancia, fechaDeRevision, observacion) {
-        if (id && epocaDelAño && estancia && fechaDeRevision) {
-            this.id = id;
-            this.epocaDelAño = epocaDelAño;
-            this.estancia = estancia;
-            this.fechaDeRevision = fechaDeRevision;
-            this.observacion = observacion;
-        } else {
-            this.id = null;
-            this.epocaDelAño = null;
-            this.estancia = null;
-            this.fechaDeRevision = null;
-            this.observacion = null;
+export class Majada{
+    constructor(id,epoca,estancia,fechaDeRevision,observacion){
+    
+        if (epoca && estancia && fechaDeRevision) {this.id = id;
+        this.epoca = epoca;
+        this.estancia = estancia;
+        this.fechaDeRevision = fechaDeRevision;
+        this.observacion = observacion;} else {
+            this.id = null,
+            this.epoca = null,
+            this.estancia = null,
+            this.fechaDeRevision = null,
+            this.observacion = null
         }
     }
-
 
     getId(){
         return this.id;
@@ -56,13 +54,14 @@ export class Majada {
         this.observacion = observacion;
     }
 
+
     toString() {
         return `Majada {
-            idepocaDelAño: ${this.epocaDelAño},
+            epocaDelAño: ${this.epocaDelAño},
             estancia: ${this.estancia},
             fechaDeRevision: ${this.fechaDeRevision},
             observacion: ${this.observacion},
-            idMajada: ${this.id}
+            RevisionOvino: ${this.RevisionOvino}
         }`;
     }
 }

@@ -1,30 +1,30 @@
 import db from '../../db/db-init';
-import { RevisionOvino } from '../../model/RevisionOvino';
+
 const insertRevisionOvino = async (revisionOvino) => {
     if (!db) return;
 
+    const majada = revisionOvino.getIdMajada();
     const condicionCorporal = revisionOvino.getCondicionCorporal();
     const idSexo = revisionOvino.getSexo().getIdSexo();
     const idConditionBucal = revisionOvino.getCondicionBucal().getIdCondicionBucal();
     const idEnfermedad = revisionOvino.getEnfermedad().getIdEnfermedad();
     const caravana = revisionOvino.getCaravana();
-
-    const result = (await db).runAsync('INSERT INTO RevisionOvinos (condicionCorporal, idSexo, idConditionBucal, idEnfermedad, caravana) VALUES (?, ?, ?, ?, ?)',
-    condicionCorporal, idSexo, idConditionBucal, idEnfermedad, caravana)
+    const idMajada = revisionOvino.getIdMajada();
+    
+    const result = (await db).runAsync('INSERT INTO RevisionOvinos (condicionCorporal, idSexo, idConditionBucal, idEnfermedad,idMajada, caravana) VALUES (?, ?, ?, ?, ?,?)',
+    condicionCorporal, idSexo, idConditionBucal, idEnfermedad,idMajada, caravana)
 
     const idRevionOvino = (await result).lastInsertRowId;
     revisionOvino.setId(idRevionOvino);
-    
 };
 
 const getAllRevisionOvino = async (idMajada) => {
     if (!db) return;
     const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos WHERE idMajada = ?', idMajada);
-    const arrayRevisiones = new Array();
     for (const row of allRows) {
-        arrayRevisiones.push(new RevisionOvino(row.id, row.idMajada, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana))
+        console.log(row.id, row.condicionCorporal, row.idSexo, row.idConditionBucal, row.idEnfermedad, row.caravana);
     };
-    return arrayRevisiones;
+    return allRows;
 }
 
 const deleteRevisionOvino = async (id) => {
