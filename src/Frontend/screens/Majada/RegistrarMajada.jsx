@@ -1,29 +1,93 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, ScrollView } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Dimensions, ScrollView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Picker } from '@react-native-picker/picker';
-import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
+import controladorMajada from '../../../Backend/Controller/ControladorMajada.js';
 
 const { width } = Dimensions.get('window');
 
-const RegistrarMajada = ({setAction,majadaModificar,onFinalizar, OnObservacion, fecthData, majadas}) => {
-  const [epocaDelAnio, setEpocaDelAnio] = useState('');
-  const [estancia, setEstancia] = useState('');
-  const [observacion, setObservacion] = useState('');
-  
+const RegistrarMajada = ({ setAction, majadaModificar, onFinalizar, OnObservacion, fecthData, majadas }) => {
+  const id = majadaModificar ? majadaModificar.id : null;
   const navigation = useNavigation();
-  
+
+  const initialValues = {
+    epocaDelAnio: '',
+    estancia: '',
+    observacion: ''
+  };
+
+  const [epocaDelAnio, setEpocaDelAnio] = useState(majadaModificar ? majadaModificar.epocaDelAnio : initialValues.epocaDelAnio);
+  const [estancia, setEstancia] = useState(majadaModificar ? majadaModificar.estancia : initialValues.estancia);
+  const [observacion, setObservacion] = useState(majadaModificar ? majadaModificar.observacion : initialValues.observacion);
+
+  const setValoresNull = useCallback(() => {
+    setEpocaDelAnio(initialValues.epocaDelAnio);
+    setEstancia(initialValues.estancia);
+    setObservacion(initialValues.observacion);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      setValoresNull();
+    };
+  }, [setValoresNull]);
+
+  useEffect(() => {
+    if (!majadaModificar) {
+      setValoresNull();
+    } else {
+      setEpocaDelAnio(majadaModificar.epocaDelAnio);
+      setEstancia(majadaModificar.estancia);
+      setObservacion(majadaModificar.observacion);
+    }
+  }, [majadaModificar, setValoresNull]);
+
+  const handleConsultar = () => {
+    setValoresNull();
+    //fecthData();
+    setAction('C');
+  };
+
+  const validarFormulario = () => {
+    if (epocaDelAnio === '') {
+      Alert.alert('Error', 'Debe seleccionar la época del año.');
+      return false;
+    }
+    if (estancia === '') {
+      Alert.alert('Error', 'Debe ingresar la estancia.');
+      return false;
+    }
+    return true;
+  };
+
   const handleRegistro = async () => {
-    const idMajada = await controladorMajada.registrarMajada(estancia,epocaDelAnio,observacion)
-    console.log("ID DE LA MAJADA CREADA : " + idMajada)
-    navigation.navigate('RevisionOvino', { idMajada });
+    if (!validarFormulario()) return;
+    try {
+      const idMajada = await controladorMajada.registrarMajada(estancia, epocaDelAnio, observacion);
+      console.log("ID DE LA MAJADA CREADA: " + idMajada);
+      navigation.navigate('RevisionOvino', { idMajada });
+      setValoresNull();
+    } catch (error) {
+      console.log("Error al registrar la majada:", error);
+    }
+  };
+
+  const handleActualizar = async () => {
+    if (!validarFormulario()) return;
+    try {
+      await controladorMajada.modificarMajada(id, estancia, epocaDelAnio, observacion);
+      console.log("Majada actualizada con éxito");
+      setValoresNull();
+    } catch (error) {
+      console.log("Error al actualizar la majada:", error);
+    }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.title}>Registrar Majada</Text>
+          <Text style={styles.title}>{majadaModificar === null ? 'Registrar Majada' : 'Modificar Majada'}</Text>
         </View>
         <View style={styles.formGroup}>
           <Text style={styles.label}>Estancia</Text>
@@ -35,16 +99,16 @@ const RegistrarMajada = ({setAction,majadaModificar,onFinalizar, OnObservacion, 
           />
         </View>
         <View style={styles.formGroup}>
-        <Text style={styles.label}>Epoca del Año</Text>
+          <Text style={styles.label}>Epoca del Año</Text>
           <Picker
             selectedValue={epocaDelAnio}
             style={styles.picker}
             onValueChange={(itemValue) => setEpocaDelAnio(itemValue)}>
-              <Picker.Item label="Seleccione la condición bucal" value="" />
-              <Picker.Item label="PreServicio" value="1" />
-              <Picker.Item label="PreParto" value="2" />
-              <Picker.Item label="PostParto" value="3" />
-              <Picker.Item label="Otro" value="4" />
+            <Picker.Item label="Seleccione la época del año" value="" />
+            <Picker.Item label="PreServicio" value="1" />
+            <Picker.Item label="PreParto" value="2" />
+            <Picker.Item label="PostParto" value="3" />
+            <Picker.Item label="Otro" value="4" />
           </Picker>
         </View>
         <View style={styles.formGroup}>
@@ -57,9 +121,19 @@ const RegistrarMajada = ({setAction,majadaModificar,onFinalizar, OnObservacion, 
           />
         </View>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleRegistro}>
-            <Text style={styles.buttonText}>Registrar Ovinos</Text>
+          <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={majadaModificar ? handleConsultar : () => navigation.navigate('Menu')}>
+            <Text style={styles.buttonText}>Cancelar</Text>
           </TouchableOpacity>
+          {majadaModificar === null && (
+            <TouchableOpacity style={[styles.button, styles.registerButton]} onPress={handleRegistro}>
+              <Text style={styles.buttonText}>Registrar Ovinos</Text>
+            </TouchableOpacity>
+          )}
+          {majadaModificar !== null && (
+            <TouchableOpacity style={[styles.button, styles.updateButton]} onPress={handleActualizar}>
+              <Text style={styles.buttonText}>Actualizar Majada</Text>
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     </ScrollView>
@@ -87,10 +161,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
   },
-  formGroup: {
-    marginBottom: 15,
-    justifyContent: 'center',
-  },
   header: {
     marginBottom: 20,
   },
@@ -107,7 +177,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 5,
-  },picker: {
+  },
+  picker: {
     height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
@@ -122,18 +193,27 @@ const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginTop: 20,
   },
   button: {
     flex: 1,
-    backgroundColor: '#45658C',
-    padding: 10,
-    marginHorizontal: 5,
+    padding: 15,
     borderRadius: 5,
     alignItems: 'center',
+    marginHorizontal: 5,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  cancelButton: {
+    backgroundColor: '#f44336',
+  },
+  registerButton: {
+    backgroundColor: '#4CAF50',
+  },
+  updateButton: {
+    backgroundColor: '#2196F3',
   },
 });

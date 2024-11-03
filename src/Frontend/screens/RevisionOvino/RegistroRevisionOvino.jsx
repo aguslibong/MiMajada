@@ -23,7 +23,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   };
 
   // Estados del formulario
-  const [sexo, setSexo] = useState(revisionModificar ? revisionModificar.sexo.IdSexo : initialValues.sexo);
+  const [sexo, setSexo] = useState(revisionModificar ? revisionModificar.sexo.id : initialValues.sexo);
   const [condicionBucal, setCondicionBucal] = useState(revisionModificar ? String(revisionModificar.condicionBucal.idCondicionBucal) : initialValues.condicionBucal);
   const [condicionCorporal, setCondicionCorporal] = useState(revisionModificar ? revisionModificar.condicionCorporal : initialValues.condicionCorporal);
   const [enfermedad, setEnfermedad] = useState(revisionModificar ? String(revisionModificar.enfermedad.idEnfermedad) : initialValues.enfermedad);

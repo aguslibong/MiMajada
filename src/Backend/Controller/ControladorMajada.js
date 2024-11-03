@@ -41,7 +41,7 @@ class ControladorMajada {
     async obtenerMajada() {
             const majadas = await getAllMajada();  // Espera a que la función asíncrona devuelva los datos
             const majadaCreada = majadas.forEach((majada)=>{
-                this.majada.push(this.crearMajada(majada));}
+                majada.push(this.crearMajada(majada));}
             )
         return majadaCreada;
 }
