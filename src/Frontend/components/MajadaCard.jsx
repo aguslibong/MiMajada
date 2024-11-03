@@ -16,19 +16,19 @@ const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observacion, onModify,
     <Card style={styles.card}>
       <Card.Content>
         <View style={styles.row}>
-          <Text style={styles.label}>Estancia</Text>
+          <Text style={styles.label}>Estancia: </Text>
           <Text style={styles.value}>{estancia}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Epoca del Año</Text>
+          <Text style={styles.label}>Epoca del Año: </Text>
           <Text style={styles.value}>{epocaDelAño}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Fecha</Text>
+          <Text style={styles.label}>Fecha: </Text>
           <Text style={styles.value}>{fechaFormateada}</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.label}>Observacion</Text>
+          <Text style={styles.label}>Observación: </Text>
           <Text style={styles.value}>{observacion}</Text>
         </View>
       </Card.Content>
