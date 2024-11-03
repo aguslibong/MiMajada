@@ -33,30 +33,31 @@ const setupDatabase = async () => {
 
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS Majadas (
-                idMajada INTEGER PRIMARY KEY AUTOINCREMENT,
+                idMajada INTEGER PRIMARY KEY,
                 idEpocaDelAño INTEGER,
                 estancia TEXT,
                 fechaDeRevision DATETIME,
                 observacion TEXT,
                 FOREIGN KEY(idEpocaDelAño) REFERENCES EpocasDelAño(idEpocaDelAño)
             );`
-        )
-         
+        );
+        
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS RevisionOvinos (
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    condicionCorporal INTEGER,
-                    idSexo INTEGER,
-                    idConditionBucal INTEGER,
-                    idEnfermedad INTEGER,
-                    idMajada INTEGER,
-                    caravana TEXT,
-                    FOREIGN KEY(idSexo) REFERENCES Sexo(idSexo),
-                    FOREIGN KEY(idConditionBucal) REFERENCES CondicionBucal(idCondicionBucal),
-                    FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad),
-                    FOREIGN KEY(idMajada) REFERENCES Majadas(idMajada) ON DELETE CASCADE
-                );`
-        )
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                condicionCorporal REAL,
+                idSexo INTEGER,
+                idCondicionBucal INTEGER,
+                idEnfermedad INTEGER,
+                idMajada INTEGER,
+                caravana TEXT,
+                FOREIGN KEY(idSexo) REFERENCES Sexo(idSexo),
+                FOREIGN KEY(idCondicionBucal) REFERENCES CondicionBucal(idCondicionBucal),
+                FOREIGN KEY(idEnfermedad) REFERENCES Enfermedades(idEnfermedad),
+                FOREIGN KEY(idMajada) REFERENCES Majadas(idMajada) ON DELETE CASCADE
+            );`
+        );
+        
 
         //Seteo los valores predeterminados que nunca cambian de los atributos de la revision ovino
         
@@ -71,12 +72,11 @@ const setupDatabase = async () => {
         await (await db).runAsync(
             'INSERT OR IGNORE INTO Enfermedades (idEnfermedad, descripcion) VALUES (1, "No posee"), (2, "Sarna"), (3, "Infeccion"), (4, "Garrapata"), (5, "Otra");'
         );
-
         await (await db).runAsync(
             'INSERT OR IGNORE INTO EpocasDelAño (idEpocaDelAño, descripcion) VALUES (1, "PreServicio"), (2, "PreParto"), (3, "PostParto"), (4, "Otro");'
         );
-        /*
-        //LIMPIAR BASE DE DATOS
+        
+        /*LIMPIAR BASE DE DATOS
         await (await db).runAsync(
             'DELETE FROM Sexo'
           );
@@ -90,12 +90,10 @@ const setupDatabase = async () => {
         );
         await (await db).runAsync(
             'DROP TABLE IF EXISTS Majadas'
-        );
+        )
         await (await db).runAsync(
-            'DELETE FROM RevisionOvinos'
-          );
-        //
-        */
+            'DROP TABLE IF EXISTS RevisionOvinos'
+        );*/
         console.log("Base de datos configurada y tablas creadas correctamente.");
     } catch (error) {
         console.error("Error al configurar la base de datos:", error);

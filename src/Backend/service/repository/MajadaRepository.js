@@ -45,14 +45,12 @@ const updateMajada = async (majada) => {
     (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?, fechaDeRevision = ?, observacion = ? WHERE idMajada = ?',
     idEpocaDelAño, estancia, fechaActual, observacion, idMajada);
 
-
 }
 
 const getMajadaById = async (idMajada) => {
     if (!db) return; 
 
     const row = await (await db).getFirstAsync('Select * FROM Majadas WHERE idMajada = ?', idMajada)
-    console.log(row.idMajada);
     if (row){
         return new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
     }

@@ -21,56 +21,63 @@ class ControladorRevisionOvino {
   }
 
   async registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+      const revisionOvino = await this.crearOvinoDeClaseAEntidad(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana)
+      console.log(revisionOvino)
+      await insertRevisionOvino(revisionOvino);
+    }
+
+
+  crearOvinoDeEntidadAClase(ovino){
+
+    return new RevisionOvino(
+      ovino.idMajada, 
+      ovino.id, 
+      this.sexoSingleton.getSexoById(ovino.idSexo), 
+      ovino.condicionCorporal, 
+      this.condicionBucalSingleton.getCondicionBucalById(ovino.idCondicionBucal),
+      ovino.caravana,
+      this.enfermedadSingleton.getEnfermedadById(ovino.idEnfermedad) 
+    )
+
+  }
+
+  async crearOvinoDeClaseAEntidad(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana){
     const sexoObjeto = this.sexoSingleton.getSexoById(sexo);
     const condicionBucalObjeto = this.condicionBucalSingleton.getCondicionBucalById(condicionBucal);
     const enfermedadObjeto = this.enfermedadSingleton.getEnfermedadById(enfermedad);
     const majadaObjeto = await getMajadaById(idMajada)
     if (sexoObjeto && condicionBucalObjeto) {
-      const revisionOvino = new RevisionOvino(
+      return new RevisionOvino(
         majadaObjeto,
         0,
-        caravana ? caravana : 'No posee',
         sexoObjeto,
         condicionCorporal,
         condicionBucalObjeto,
+        caravana ? caravana : 'No posee',
         enfermedadObjeto || EnfermedadSingleton.getInstance().getEnfermedadById(1)
-      );
-      console.log(revisionOvino)
-      await insertRevisionOvino(revisionOvino);
-    }
+      );}
+    
+    return ;
   }
-
 
   async obtenerRevisiones(idMajada) {
     const ovinos = await getAllRevisionOvino(idMajada);
-    return ovinos.map( ovino => 
-      new RevisionOvino(ovino.idMajada,ovino.id, this.sexoSingleton.getSexoById(ovino.idSexo), ovino.condicionCorporal, 
-        this.condicionBucalSingleton.getCondicionBucalById(ovino.idMajada),ovino.caravana, this.enfermedadSingleton.getEnfermedadById(ovino.enfermedad) 
-      )
+    const ovino = ovinos.map( ovino => this.crearOvinoDeEntidadAClase(ovino)
     )
-
+    console.log(ovino)
+    return ovinos.map( ovino => 
+      this.crearOvinoDeEntidadAClase(ovino)
+    )
   }
 
-  eliminarRevision(id) {
-    const index = this.revisiones.findIndex((revision) => revision.id === id);
-    if (index !== -1) {
-      this.revisiones.splice(index, 1);
-      deleteRevisionOvino(id);
-    }
+  async eliminarRevision(id) {
+      await deleteRevisionOvino(id);
   }
 
-  async modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
-    const revision = await getRevisionOvinoById();
-    const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
-    const condicionBucalObjetoObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
-    const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
-
+  async modificarRevision(id, idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+    const revision = await this.crearOvinoDeClaseAEntidad(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana)
+    revision.setId(id)
     if (revision) {
-      revision.setSexo(sexoObjeto);
-      revision.setCondicionCorporal(condicionCorporal);
-      revision.setCondicionBucal(condicionBucalObjetoObjeto);
-      revision.setEnfermedad(enfermedadObjeto);
-      revision.setCaravana(caravana);
       await updateRevisionOvino(revision);
     }
   }

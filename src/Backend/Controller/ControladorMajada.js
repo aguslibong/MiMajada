@@ -1,7 +1,7 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 import { Majada } from '../model/Majada';
-import { getAllMajada, insertMajada, obtenerIdMajadaMasGrande } from '../service/repository/MajadaRepository';
+import { deleteMajada, getAllMajada, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
 
 // Clase que lleva la lógica de cómo se registran las revisiones de ovinos
 
@@ -45,8 +45,15 @@ class ControladorMajada {
         return await getAllMajada();
     }
 
-    registrarObservacion(observacion) {
-        this.majada.setObservacion(observacion);
+    async modificarMajada(id, epocaDelAño, estancia, observacion){
+        
+        const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+        
+        return await updateMajada(new Majada(id, epocaDelAño, estancia, observacion))
+
+    }
+    async eliminarMajada(idMajada){
+        deleteMajada(idMajada)
     }
 }
 
