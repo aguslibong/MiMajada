@@ -84,7 +84,6 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     if (!validarFormulario()) return;
     try {
       console.log("este es el id de la majada: " + idMajada)
-      console.log(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana)
       await instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setValoresNull();

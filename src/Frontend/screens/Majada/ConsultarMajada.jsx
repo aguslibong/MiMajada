@@ -6,6 +6,18 @@ import instanciaControlador from '../../../Backend/Controller/ControladorMajada.
 
 const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
   
+  /*
+  useEffect(() => {
+    if (majadas && majadas.length > 0) {
+      majadas.forEach(element => {
+        console.log("elemento:", element);
+      });
+    } else {
+      console.log("No hay elementos en majadas");
+    }
+  }, [majadas]); // Agrega majadas como dependencia
+  */
+ 
   const handleModify = useCallback((MajadaModificar) => {
     onModificar(MajadaModificar);
   }, [onModificar]);
@@ -49,9 +61,9 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
           majadas.map((majada) => (
             <MajadaCard
               key={majada.id}
-              epocaDelAño={majada.epocaDelAño.descripcion}
+              epocaDelAño={majada.epoca.descripcion}
               estancia={majada.estancia}
-              fechaDeRevision={majada.fechaDeRevision}
+              fecha={majada.fechaDeRevision}
               observacion={majada.observacion}
               onModify={() => handleModify(majada)}
               onDelete={() => confirmDelete(majada.id)}
