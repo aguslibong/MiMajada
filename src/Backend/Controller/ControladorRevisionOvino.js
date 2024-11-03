@@ -48,7 +48,7 @@ class ControladorRevisionOvino {
     }
   }
 
-  modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
+  async modificarRevision(id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
     const revision = this.revisiones.find((revision) => revision.id === id);
     const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjetoObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
@@ -60,7 +60,7 @@ class ControladorRevisionOvino {
       revision.setCondicionBucal(condicionBucalObjetoObjeto);
       revision.setEnfermedad(enfermedadObjeto);
       revision.setCaravana(caravana);
-      updateRevisionOvino(revision);
+      await updateRevisionOvino(revision);
     }
   }
 
