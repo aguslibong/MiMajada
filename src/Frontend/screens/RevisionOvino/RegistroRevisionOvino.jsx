@@ -80,11 +80,11 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     return true;
   };
 
-  const handleRegistro = () => {
+  const handleRegistro = async () => {
     if (!validarFormulario()) return;
     try {
       console.log("este es el id de la majada: " + idMajada)
-      instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      await instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setValoresNull();
     } catch (error) {
@@ -92,10 +92,10 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     }
   };
 
-  const handleActualizar = () => {
+  const handleActualizar = async () => {
     if (!validarFormulario()) return;
     try {
-      instanciaControlador.modificarRevision(id, idMajada , sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      await instanciaControlador.modificarRevision(id, idMajada , sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión Actualizada con éxito");
       setValoresNull();
     } catch (error) {

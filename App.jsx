@@ -8,10 +8,17 @@ import RevisionOvino from './src/Frontend/screens/RevisionOvino/RevisionOvino';
 import RegistrarMajada from './src/Frontend/screens/Majada/RegistrarMajada'
 import Majada from './src/Frontend/screens/Majada/Majada';
 import ConsultarMajada from './src/Frontend/screens/Majada/ConsultarMajada';
+import setupDatabase from './src/Backend/db/db-config';
 
 const Stack = createStackNavigator();
 
 const App = () => {
+
+  React.useEffect(()=> {
+    setupDatabase()
+   },[]
+  )
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Menu">
