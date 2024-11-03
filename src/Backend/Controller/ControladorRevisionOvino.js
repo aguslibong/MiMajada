@@ -32,7 +32,6 @@ class ControladorRevisionOvino {
         condicionBucalObjeto,
         enfermedadObjeto || EnfermedadSingleton.getInstance().getEnfermedadById(1)
       );
-      this.revisiones.push(revisionOvino);
       insertRevisionOvino(revisionOvino);
     }
   }
