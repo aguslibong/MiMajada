@@ -1,13 +1,13 @@
 export class Majada{
-    constructor(id,epoca,estancia,fechaDeRevision,observacion){
+    constructor(id,epocaDelAño,estancia,fechaDeRevision,observacion){
     
-        if (epoca && estancia && fechaDeRevision) {this.id = id;
-        this.epoca = epoca;
+        if (epocaDelAño && estancia && fechaDeRevision) {this.id = id;
+        this.epocaDelAño = epocaDelAño;
         this.estancia = estancia;
         this.fechaDeRevision = fechaDeRevision;
         this.observacion = observacion;} else {
             this.id = null,
-            this.epoca = null,
+            this.epocaDelAño = null,
             this.estancia = null,
             this.fechaDeRevision = null,
             this.observacion = null

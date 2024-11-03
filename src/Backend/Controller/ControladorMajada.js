@@ -49,9 +49,10 @@ class ControladorMajada {
         
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
         
-        return await updateMajada(new Majada(id, epocaDelAño, estancia, observacion))
+        return await updateMajada(new Majada(id, epocaDelAñoValue, estancia, observacion))
 
     }
+    
     async eliminarMajada(idMajada){
         deleteMajada(idMajada)
     }

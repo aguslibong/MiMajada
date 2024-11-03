@@ -7,6 +7,7 @@ import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
 const { width } = Dimensions.get('window');
 
 const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => {
+ 
   const id = majadaModificar ? majadaModificar.id : null;
   const navigation = useNavigation();
 
@@ -16,9 +17,9 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
     observacion: ''
   };
 
-  const [epocaDelAnio, setEpocaDelAnio] = useState(majadaModificar ? majadaModificar.epocaDelAnio : initialValues.epocaDelAnio);
-  const [estancia, setEstancia] = useState(majadaModificar ? majadaModificar.estancia : initialValues.estancia);
-  const [observacion, setObservacion] = useState(majadaModificar ? majadaModificar.observacion : initialValues.observacion);
+  const [epocaDelAnio, setEpocaDelAnio] = useState(initialValues.epocaDelAnio);
+  const [estancia, setEstancia] = useState(initialValues.estancia);
+  const [observacion, setObservacion] = useState(initialValues.observacion);
 
   const setValoresNull = useCallback(() => {
     setEpocaDelAnio(initialValues.epocaDelAnio);
@@ -27,24 +28,17 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
   }, []);
 
   useEffect(() => {
-    return () => {
-      setValoresNull();
-    };
-  }, [setValoresNull]);
-
-  useEffect(() => {
-    if (!majadaModificar) {
-      setValoresNull();
-    } else {
-      setEpocaDelAnio(majadaModificar.epocaDelAnio);
+    if (majadaModificar) {
+      setEpocaDelAnio(String(majadaModificar.epocaDelAño.idEpocaDelAño));
       setEstancia(majadaModificar.estancia);
       setObservacion(majadaModificar.observacion);
+    } else {
+      setValoresNull();
     }
   }, [majadaModificar, setValoresNull]);
 
   const handleConsultar = () => {
     setValoresNull();
-    //fecthData();
     setAction('C');
   };
 
@@ -65,7 +59,7 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
     try {
       const idMajada = await controladorMajada.registrarMajada(epocaDelAnio, estancia, observacion);
       console.log("ID DE LA MAJADA CREADA: " + idMajada);
-      navigation.navigate('RevisionOvino', { idMajada ,  actionInicial: 'R' });
+      navigation.navigate('RevisionOvino', { idMajada, actionInicial: 'R' });
       setValoresNull();
     } catch (error) {
       console.log("Error al registrar la majada:", error);
@@ -77,7 +71,7 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
     try {
       await controladorMajada.modificarMajada(id, epocaDelAnio, estancia, observacion);
       console.log("Majada actualizada con éxito");
-      navigation.navigate('RevisionOvino', { id ,  actionInicial: 'C'});
+      navigation.navigate('RevisionOvino', { id, actionInicial: 'C' });
       setValoresNull();
     } catch (error) {
       console.log("Error al actualizar la majada:", error);

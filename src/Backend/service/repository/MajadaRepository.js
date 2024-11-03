@@ -35,8 +35,8 @@ const deleteMajada = async (idMajada) => {
 
 const updateMajada = async (majada) => {
     if (!db) return;
-    
-    const idMajada = majada.getIdMajada();
+    console.log(majada)
+    const idMajada = majada.getId();
     const estancia = majada.getEstancia();
     const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
     const fechaActual = majada.getFechaDeRevision();

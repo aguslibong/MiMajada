@@ -41,8 +41,8 @@ const Majada = () => {
         setAction(newAction);
     }, []);
 
-    const onModificar = useCallback(async (revisionModificar) => {
-        setMajadaModificar(revisionModificar);
+    const onModificar = useCallback(async (majadaMod) => {
+        setMajadaModificar(majadaMod);
         setAction('M');
         await fetchData();
     }, [fetchData]);
