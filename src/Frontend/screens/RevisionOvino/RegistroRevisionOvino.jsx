@@ -199,7 +199,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
           <TouchableOpacity style={styles.button} onPress={OnObservacion}>
             <Text style={styles.buttonText}>Agregar Observación</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={revisionModificar === null ? handleRegistro : handleActualizar}>
+          <TouchableOpacity style={styles.buttonRegistrar} onPress={revisionModificar === null ? handleRegistro : handleActualizar}>
             <Text style={styles.buttonText}>
               {revisionModificar === null ? 'Registrar' : 'Actualizar'}
             </Text>
@@ -299,6 +299,14 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  buttonRegistrar: {
+    flex: 1,
+    backgroundColor: '#77a345',
+    padding: 10,
+    marginHorizontal: 5,
+    borderRadius: 5,
+    alignItems: 'center',
   },
   revisionCount: {
     color: '#45658C',

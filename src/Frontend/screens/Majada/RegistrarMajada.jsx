@@ -80,7 +80,6 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>{majadaModificar === null ? 'Registrar Majada' : 'Modificar Majada'}</Text>
@@ -132,30 +131,17 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
           )}
         </View>
       </View>
-    </ScrollView>
   );
 };
 
 export default RegistrarMajada;
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   container: {
-    width: width * 0.9,
+    width: width * 1,
     padding: 20,
     backgroundColor: '#fff',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    flex: 1,
     justifyContent: 'center',
-    resizeMode: 'contain',
   },
   header: {
     marginBottom: 20,
@@ -164,6 +150,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+    justifyContent: 'center',
   },
   formGroup: {
     marginBottom: 15,
