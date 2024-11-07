@@ -4,6 +4,8 @@ import db from './db-init.js';
 //Acá se inicializa la base de datos y se crean las tablas si no existen
 const setupDatabase = async () => {
     try {
+        await (await db).execAsync('PRAGMA foreign_keys = ON;');
+
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS Sexo (
                     idSexo INTEGER PRIMARY KEY,
@@ -45,7 +47,7 @@ const setupDatabase = async () => {
         
         await (await db).execAsync(
             `CREATE TABLE IF NOT EXISTS RevisionOvinos (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id INTEGER PRIMARY KEY,
                 condicionCorporal REAL,
                 idSexo INTEGER,
                 idCondicionBucal INTEGER,

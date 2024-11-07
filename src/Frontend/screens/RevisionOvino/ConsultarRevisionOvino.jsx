@@ -49,6 +49,7 @@ const ConsultarRevisionOvino = ({ setAction, revisions, loading, onModificar, on
             <Text style={styles.noDataText}>No hay ovinos cargados aún</Text>
           </View>
         ) : (
+          console.log(revisions),
           revisions.map((revision) => (
             <SheepReviewCard
               key={revision.id}

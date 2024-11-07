@@ -1,7 +1,7 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 import { Majada } from '../model/Majada';
-import { deleteMajada, getAllMajada, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
+import { deleteMajada, getAllMajada, insertMajada, obtenerIdMajadaMasGrande, updateMajada, updateMajadaFinalizado } from '../service/repository/MajadaRepository';
 
 // Clase que lleva la lógica de cómo se registran las revisiones de ovinos
 
@@ -50,6 +50,10 @@ class ControladorMajada {
 
     async eliminarMajada(idMajada){
         deleteMajada(idMajada)
+    }
+    
+    async finalizado(idMajada){
+        updateMajadaFinalizado(idMajada)
     }
 }
 

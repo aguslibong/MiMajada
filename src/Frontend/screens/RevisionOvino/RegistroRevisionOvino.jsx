@@ -217,9 +217,11 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 20, // Espacio adicional para centrar verticalmente
   },
   container: {
-    width: width * 0.9,
+    width: '90%', // Hace que el formulario ocupe el 90% del ancho de la pantalla
+    maxWidth: 600, // Limita el ancho en dispositivos grandes
     padding: 20,
     backgroundColor: '#fff',
     borderRadius: 10,
@@ -228,8 +230,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 5,
     elevation: 3,
-    flex: 1,
-    justifyContent: 'center',
   },
   header: {
     marginBottom: 20,
@@ -301,7 +301,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   revisionCount: {
-    color: '#45658C',  // Utiliza el mismo color que los botones
+    color: '#45658C',
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center',

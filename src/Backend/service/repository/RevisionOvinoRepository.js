@@ -17,12 +17,14 @@ const insertRevisionOvino = async (revisionOvino) => {
     
     const result = (await db).runAsync('INSERT INTO RevisionOvinos (condicionCorporal, idSexo, idCondicionBucal, idEnfermedad,idMajada, caravana) VALUES (?, ?, ?, ?, ?, ?)',
     condicionCorporal, idSexo, idCondicionBucal, idEnfermedad,idMajada, caravana)
-
+    
+    
     const idRevionOvino = (await result).lastInsertRowId;
     revisionOvino.setId(idRevionOvino);
+
 };
 
-const crearOvinoDeClaseAEntidad = async (idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) => {
+const crearOvinoDeClaseAEntidad = async (idMajada,id, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) => {
     const sexoObjeto = SexoSingleton.getInstance().getSexoById(sexo);
     const condicionBucalObjeto = CondicionBucalSingleton.getInstance().getCondicionBucalById(condicionBucal);
     const enfermedadObjeto = EnfermedadSingleton.getInstance().getEnfermedadById(enfermedad);
@@ -31,7 +33,7 @@ const crearOvinoDeClaseAEntidad = async (idMajada, sexo, condicionCorporal, cond
     if (sexoObjeto && condicionBucalObjeto) {
         return new RevisionOvino(
             majadaObjeto,
-            0,
+            id,
             sexoObjeto,
             condicionCorporal,
             condicionBucalObjeto,
@@ -47,14 +49,11 @@ const getAllRevisionOvino = async (idMajada) => {
     if (!db) return;
     
     const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos WHERE idMajada = ?', idMajada);
-    
-    for (const row of allRows) {
-        console.log(row.id, row.condicionCorporal, row.idSexo, row.idCondicionBucal, row.idEnfermedad, row.caravana);
-    }
 
     return Promise.all(
         allRows.map(row => crearOvinoDeClaseAEntidad(
-            row.idMajada, 
+            row.idMajada,
+            row.id,
             row.idSexo, 
             row.condicionCorporal, 
             row.idCondicionBucal, 

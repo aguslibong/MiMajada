@@ -153,9 +153,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
-    elevation: 3,
     flex: 1,
     justifyContent: 'center',
+    resizeMode: 'contain',
   },
   header: {
     marginBottom: 20,
@@ -178,6 +178,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
+    marginBottom: 10,
   },
   input: {
     borderWidth: 1,
@@ -185,6 +186,29 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     fontSize: 16,
+  },
+  slider: {
+    width: '100%',
+  },
+  sliderValue: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 5,
+  },
+  tabsContainer: {
+    marginBottom: 10,
+  },
+  tabStyle: {
+    borderColor: '#ccc',
+  },
+  activeTabStyle: {
+    backgroundColor: '#45658C',
+  },
+  tabTextStyle: {
+    color: '#000',
+  },
+  activeTabTextStyle: {
+    color: '#fff',
   },
   buttonsContainer: {
     flexDirection: 'row',

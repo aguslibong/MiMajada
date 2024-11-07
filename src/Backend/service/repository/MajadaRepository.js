@@ -53,11 +53,18 @@ const getMajadaById = async (idMajada) => {
 
     const row = await (await db).getFirstAsync('Select * FROM Majadas WHERE idMajada = ?', idMajada)
     if (row){
-        return new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion)
+        return new Majada(row.idMajada, row.idEpocaDelAño, row.estancia, row.fechaDeRevision, row.observacion, row.finalizado)
     }
     else {
         return ;
     }
 }
 
-export { insertMajada, getAllMajada, deleteMajada, updateMajada, getMajadaById};
+const updateMajadaFinalizado= async (idMajada) => {
+    if (!db) return;
+
+    (await db).runAsync('UPDATE Majadas SET finalizado = 1 WHERE idMajada = ?',
+        idMajada);
+}
+
+export { insertMajada, getAllMajada, deleteMajada, updateMajada, getMajadaById, updateMajadaFinalizado};

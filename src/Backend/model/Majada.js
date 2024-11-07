@@ -60,7 +60,7 @@ export class Majada{
     }
 
     setFinalizado(finalizado){
-        return this.finalizado = finalizado
+        this.finalizado = finalizado
     }
 
 
