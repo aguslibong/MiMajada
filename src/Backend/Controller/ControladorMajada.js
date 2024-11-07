@@ -10,7 +10,6 @@ class ControladorMajada {
 
     constructor() {
         if (ControladorMajada.instance) {
-            
             return ControladorMajada.instance;
         }
         this.majada = new Majada();
@@ -20,7 +19,6 @@ class ControladorMajada {
 
     getFechaActual(){
         const date = new Date()
-
         return date.toISOString().slice(0, 19).replace("T", " ");
     }
 
@@ -33,6 +31,7 @@ class ControladorMajada {
             this.majada.setEstancia(estancia);
             this.majada.setFechaDeRevision(fechaActual);
             this.majada.setObservacion(observacion)
+            this.majada.setFinalizado(0) //Se setea en cero que es igual a false
             const idMajada = insertMajada(this.majada);
             return idMajada;
         } else {

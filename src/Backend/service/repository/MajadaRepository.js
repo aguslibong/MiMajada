@@ -2,6 +2,7 @@ import db from '../../db/db-init';
 import { Majada } from '../../model/Majada'
 import { EpocaDelAñoSingleton } from '../Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 
+
 const insertMajada = async (majada) => {
     if (!db) {return};
 
@@ -9,10 +10,11 @@ const insertMajada = async (majada) => {
     const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
     const fechaActual = majada.getFechaDeRevision();
     const observacion = majada.getObservacion();
+    const finalizado = majada.getFinalizado();
     console.log("Insertando Majada en la base de datos", idEpocaDelAño, estancia, fechaActual, observacion) 
 
-    const result = await (await db).runAsync('INSERT INTO Majadas (idEpocaDelAño, estancia, fechaDeRevision, observacion) VALUES (?, ?, ?, ?)',
-    idEpocaDelAño, estancia, fechaActual, observacion)
+    const result = await (await db).runAsync('INSERT INTO Majadas (idEpocaDelAño, estancia, fechaDeRevision, observacion, finalizado) VALUES (?, ?, ?, ?,?)',
+    idEpocaDelAño, estancia, fechaActual, observacion, finalizado)
     const id = result.lastInsertRowId;
     return id;
 };
@@ -44,7 +46,6 @@ const updateMajada = async (idMajada, idEpocaDelAño, estancia, observacion) => 
     const idEpoca = parseInt(idEpocaDelAño);
     (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?,  observacion = ? WHERE idMajada = ?',
     idEpoca, estancia, observacion, idMajada);
-
 }
 
 const getMajadaById = async (idMajada) => {

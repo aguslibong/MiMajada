@@ -22,24 +22,9 @@ class ControladorRevisionOvino {
 
   async registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana) {
       const revisionOvino = await this.crearOvinoDeClaseAEntidad(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana)
-      console.log(revisionOvino)
       await insertRevisionOvino(revisionOvino);
     }
 
-
-  crearOvinoDeEntidadAClase(ovino){
-
-    return new RevisionOvino(
-      ovino.idMajada, 
-      ovino.id, 
-      this.sexoSingleton.getSexoById(ovino.idSexo), 
-      ovino.condicionCorporal, 
-      this.condicionBucalSingleton.getCondicionBucalById(ovino.idCondicionBucal),
-      ovino.caravana,
-      this.enfermedadSingleton.getEnfermedadById(ovino.idEnfermedad) 
-    )
-
-  }
 
   async crearOvinoDeClaseAEntidad(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana){
     const sexoObjeto = this.sexoSingleton.getSexoById(sexo);
@@ -61,13 +46,7 @@ class ControladorRevisionOvino {
   }
 
   async obtenerRevisiones(idMajada) {
-    const ovinos = await getAllRevisionOvino(idMajada);
-    const ovino = ovinos.map( ovino => this.crearOvinoDeEntidadAClase(ovino)
-    )
-    console.log(ovino)
-    return ovinos.map( ovino => 
-      this.crearOvinoDeEntidadAClase(ovino)
-    )
+    return await getAllRevisionOvino(idMajada)
   }
 
   async eliminarRevision(id) {
@@ -82,9 +61,6 @@ class ControladorRevisionOvino {
     }
   }
 
-  obtenerRevisionPorId(id) {
-    return this.revisiones.find((revision) => revision.id === id);
-  }
 }
 
 // Asegurar una única instancia

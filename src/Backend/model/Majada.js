@@ -1,16 +1,17 @@
 export class Majada{
-    constructor(id,epocaDelAño,estancia,fechaDeRevision,observacion){
-    
+    constructor(id,epocaDelAño,estancia,fechaDeRevision,observacion, finalizado){
         if (epocaDelAño && estancia && fechaDeRevision) {this.id = id;
         this.epocaDelAño = epocaDelAño;
         this.estancia = estancia;
         this.fechaDeRevision = fechaDeRevision;
+        this.finalizado = finalizado
         this.observacion = observacion;} else {
             this.id = null,
             this.epocaDelAño = null,
             this.estancia = null,
             this.fechaDeRevision = null,
-            this.observacion = null
+            this.observacion = null,
+            this.finalizado = null
         }
     }
 
@@ -52,6 +53,14 @@ export class Majada{
 
     setObservacion(observacion) {
         this.observacion = observacion;
+    }
+
+    getFinalizado(){
+        return this.finalizado
+    }
+
+    setFinalizado(finalizado){
+        return this.finalizado = finalizado
     }
 
 

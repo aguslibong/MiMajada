@@ -35,6 +35,7 @@ const setupDatabase = async () => {
             `CREATE TABLE IF NOT EXISTS Majadas (
                 idMajada INTEGER PRIMARY KEY,
                 idEpocaDelAño INTEGER,
+                finalizado INTEGER,
                 estancia TEXT,
                 fechaDeRevision DATETIME,
                 observacion TEXT,
