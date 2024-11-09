@@ -19,13 +19,14 @@ class ControladorDiagnostico {
 
     async calcularPorEdad(idMajada) {
         const revisiones = await this.traerArray(idMajada)
+        console.log("lista en controlador :" + revisiones)
         const cantidadTotalRevisiones = revisiones.length();
         const length = CondicionBucalSingleton.getInstance().length();
         const conteoCondicionBucal = Array(length).fill(0);
         for(const revision of revisiones){
             conteoCondicionBucal[revision.getCondicionBucal().getIdCondicionBucal() - 1] = conteoCondicionBucal[revision.getCondicionBucal().getIdCondicionBucal() - 1] + 1;
         }
-        return (conteoCondicionBucal, cantidadTotalRevisiones)
+        return (conteoCondicionBucal)
     }
 
     async traerArray(idMajada){

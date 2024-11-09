@@ -103,6 +103,10 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
     }
   };
 
+  const handleFinalizar = () => {
+    OnFinalizar()
+  }
+
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -187,7 +191,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
         </View>
         <View style={styles.buttonsContainer}>
             {revisionModificar === null && (
-            <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
+            <TouchableOpacity style={styles.button} onPress={handleFinalizar}>
               <Text style={styles.buttonText}>Finalizar</Text>
             </TouchableOpacity>
           )}

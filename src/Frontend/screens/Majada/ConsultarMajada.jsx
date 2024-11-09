@@ -2,11 +2,12 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import MajadaCard from '../../components/MajadaCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'; // Asegúrate de tener el controlador adecuado
-
+import { useNavigation } from '@react-navigation/native';
 
 const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
   
-  
+  const navigation = useNavigation();
+
   useEffect(() => {
     if (majadas && majadas.length > 0) {
       majadas.forEach(element => {
@@ -26,9 +27,9 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
     onEliminar(id);
   }, [onEliminar]);
 
-  const handleRegistro = useCallback(() => {
-    setAction('R');
-  }, [setAction]);
+  const diagnostico = (idMajada) =>{
+    navigation.navigate('Diagnostico', { idMajada });
+  }
 
   const confirmDelete = useCallback((id) => {
     Alert.alert(
@@ -67,6 +68,7 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
               observacion={majada.observacion}
               onModify={() => handleModify(majada)}
               onDelete={() => confirmDelete(majada.id)}
+              onDiagnostico={()=> diagnostico(majada.id)}
             />
           ))
         )}

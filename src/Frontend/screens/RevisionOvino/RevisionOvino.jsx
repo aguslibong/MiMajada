@@ -60,7 +60,8 @@ const RevisionOvino = ({ route }) => {
     }, []);
 
     const onFinalizar = useCallback(async () => {
-        navigation.navigate('DiagnosticoMajada', { idMajada });
+        navigation.navigate('DiagnosticoMajada', { idMajada })
+        //setear finalizado true
     }, []);
 
     const onObservacion = useCallback(async () => {

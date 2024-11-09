@@ -11,8 +11,6 @@ import RegistrarMajada from './src/Frontend/screens/Majada/RegistrarMajada'
 import Majada from './src/Frontend/screens/Majada/Majada';
 import ConsultarMajada from './src/Frontend/screens/Majada/ConsultarMajada';
 import setupDatabase from './src/Backend/db/db-config';
-import NavigationConsultarMajada from './src/Frontend/screens/Navigation/NavigationConsultarMajada'
-import NavigationRegistroMajada from './src/Frontend/screens/Navigation/NavigationRegistroMajada'
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 
 const Drawer = createDrawerNavigator();
@@ -48,20 +46,6 @@ const App = () => {
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         initialRouteName="Menu">
         <Drawer.Screen name="Menu" component={Menu} />
-        <Drawer.Screen
-          name="NavigationConsultarMajada"
-          component={NavigationConsultarMajada}
-          options={{
-            drawerItemStyle: { display: 'flex' }
-          }}
-        />
-        <Drawer.Screen
-          name="NavigationRegistroMajada"
-          component={NavigationRegistroMajada}
-          options={{
-            drawerItemStyle: { display: 'flex' }
-          }}
-        />
         <Drawer.Screen
           name="Capacitacion"
           component={Capacitacion}
