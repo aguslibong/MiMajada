@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Majada3.0",
-    "slug": "Majada3.0",
+    "slug": "Majada",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,10 +18,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.aguslibong.Majada"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "93f27117-f000-4970-842e-992f8d34d58e"
+      }
     }
   }
 }
