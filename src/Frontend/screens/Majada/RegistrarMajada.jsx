@@ -8,7 +8,11 @@ const { width } = Dimensions.get('window');
 
 const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => {
  
+<<<<<<< HEAD
   const id = majadaModificar ? majadaModificar.id : null;
+=======
+  const id = majadaModificar ? majadaModificar.idMajada : null;
+>>>>>>> Agus
   const navigation = useNavigation();
 
   const initialValues = {
@@ -103,7 +107,10 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
             <Picker.Item label="PreServicio" value="1" />
             <Picker.Item label="PreParto" value="2" />
             <Picker.Item label="PostParto" value="3" />
+<<<<<<< HEAD
             <Picker.Item label="Otro" value="4" />
+=======
+>>>>>>> Agus
           </Picker>
         </View>
         <View style={styles.formGroup}>

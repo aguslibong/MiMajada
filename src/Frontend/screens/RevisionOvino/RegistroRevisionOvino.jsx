@@ -7,12 +7,22 @@ import instanciaControlador from '../../../Backend/Controller/ControladorRevisio
 import { EnfermedadSingleton } from '../../../Backend/service/Singleton/RevisionOvino/EnfermedadSingleton.service';
 import { SexoSingleton } from '../../../Backend/service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
+<<<<<<< HEAD
 
 const { width } = Dimensions.get('window');
 
 const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData, revisions, idMajada }) => {
   const id = (revisionModificar) ? revisionModificar.id : null;
   
+=======
+import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
+import { useNavigation } from '@react-navigation/native';
+const { width } = Dimensions.get('window');
+
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, fetchData, revisions, idMajada }) => {
+  const id = (revisionModificar) ? revisionModificar.id : null;
+  const navigation = useNavigation();
+>>>>>>> Agus
   // Definimos los valores iniciales en un objeto para mejor mantenimiento
   const initialValues = {
     sexo: null,
@@ -87,6 +97,10 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
       await instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setValoresNull();
+<<<<<<< HEAD
+=======
+      fetchData();
+>>>>>>> Agus
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
@@ -95,14 +109,22 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   const handleActualizar = async () => {
     if (!validarFormulario()) return;
     try {
+<<<<<<< HEAD
       await instanciaControlador.modificarRevision(id, idMajada , sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión Actualizada con éxito");
       setValoresNull();
+=======
+      await instanciaControlador.modificarRevision(id, idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      console.log("Revisión Actualizada con éxito");
+      setValoresNull();
+      fetchData();
+>>>>>>> Agus
     } catch (error) {
       console.log("Error al Actualizar la revisión:", error);
     }
   };
 
+<<<<<<< HEAD
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
@@ -117,6 +139,41 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
         </View>
+=======
+  const handleFinalizar = () => {
+    Alert.alert(
+      "Confirmación",
+      "¿Estás seguro de que deseas finalizar? Una vez finalizado no se podra modificar!",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Finalizar",
+          style: "destructive",
+          onPress: () => {
+            controladorMajada.finalizarMajada(idMajada);
+            navigation.navigate('Diagnostico', { idMajada: idMajada });
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
+
+  return (
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.title}>Registrar Revisión Ovino</Text>
+        </View>
+
+        {revisionModificar === null && (
+          <View style={styles.buttonsContainer}>
+            <Text style={styles.revisionCount}>Cant Registrados:  {revisions.length}</Text>
+          </View>
+        )}
+
+>>>>>>> Agus
         <View style={styles.formGroup}>
           <Text style={styles.label}>Caravana (opcional)</Text>
           <TextInput
@@ -186,8 +243,13 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
           </Picker>
         </View>
         <View style={styles.buttonsContainer}>
+<<<<<<< HEAD
             {revisionModificar === null && (
             <TouchableOpacity style={styles.button} onPress={OnFinalizar}>
+=======
+          {revisionModificar === null && (
+            <TouchableOpacity style={styles.button} onPress={handleFinalizar}>
+>>>>>>> Agus
               <Text style={styles.buttonText}>Finalizar</Text>
             </TouchableOpacity>
           )}
@@ -196,9 +258,17 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
               <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>
           )}
+<<<<<<< HEAD
           <TouchableOpacity style={styles.button} onPress={OnObservacion}>
             <Text style={styles.buttonText}>Agregar Observación</Text>
           </TouchableOpacity>
+=======
+          {revisionModificar === null && (
+            <TouchableOpacity style={styles.button} onPress={handleConsultar}>
+              <Text style={styles.buttonText}>Lista Majada</Text>
+            </TouchableOpacity>
+          )}
+>>>>>>> Agus
           <TouchableOpacity style={styles.buttonRegistrar} onPress={revisionModificar === null ? handleRegistro : handleActualizar}>
             <Text style={styles.buttonText}>
               {revisionModificar === null ? 'Registrar' : 'Actualizar'}
@@ -210,7 +280,11 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   );
 };
 
+<<<<<<< HEAD
 export default  RegistrarRevisionOvino;
+=======
+export default RegistrarRevisionOvino;
+>>>>>>> Agus
 
 const styles = StyleSheet.create({
   scrollContainer: {

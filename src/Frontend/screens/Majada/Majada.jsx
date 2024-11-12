@@ -2,18 +2,30 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
 import ConsultarMajada from './ConsultarMajada.jsx';
 import RegistrarMajada from './RegistrarMajada.jsx';
+<<<<<<< HEAD
 import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'
 import { useRoute } from '@react-navigation/native';
 
 const Majada = () => {
     const route = useRoute()
     const {actionInicial} = route.params
+=======
+import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js';
+import { useRoute } from '@react-navigation/native';
+
+const Majada = () => {
+    const route = useRoute();
+    const { actionInicial } = route.params;
+>>>>>>> Agus
     const [action, setAction] = useState(actionInicial);
     const [majadas, setMajadas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [majadaModificar, setMajadaModificar] = useState(null);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Agus
     const fetchData = useCallback(async () => {
         try {
             const allRevisions = await instanciaControlador.obtenerMajada();
@@ -25,7 +37,16 @@ const Majada = () => {
         }
     }, []);
 
+<<<<<<< HEAD
     // Efecto para limpiar revisionModificar cuando se cambia de acción
+=======
+    // Efecto para actualizar el estado de action cuando cambia actionInicial
+    useEffect(() => {
+        setAction(actionInicial);
+    }, [actionInicial]);
+
+    // Efecto para limpiar majadaModificar cuando se cambia de acción
+>>>>>>> Agus
     useEffect(() => {
         if (action === 'C' || action === 'R') {
             setMajadaModificar(null);
@@ -34,7 +55,11 @@ const Majada = () => {
 
     // Manejador personalizado para setAction que limpia estados cuando es necesario
     const handleSetAction = useCallback((newAction) => {
+<<<<<<< HEAD
         // Si estamos cambiando a consulta o registro nuevo, limpiamos revisionModificar
+=======
+        // Si estamos cambiando a consulta o registro nuevo, limpiamos majadaModificar
+>>>>>>> Agus
         if (newAction === 'C' || newAction === 'R') {
             setMajadaModificar(null);
         }
@@ -57,14 +82,20 @@ const Majada = () => {
         }
     }, []);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Agus
     // Efecto inicial para cargar datos
     useEffect(() => {
         fetchData();
     }, [fetchData]);
 
+<<<<<<< HEAD
 
     //falta la accion cuando se modifica majada
+=======
+>>>>>>> Agus
     return (
         <View>
             {(action === 'R' || action === 'M') && (
@@ -89,4 +120,8 @@ const Majada = () => {
     );
 };
 
+<<<<<<< HEAD
 export default Majada;
+=======
+export default Majada;
+>>>>>>> Agus

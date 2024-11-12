@@ -2,7 +2,11 @@ import * as React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Card, Button } from 'react-native-paper';
 
+<<<<<<< HEAD
 const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observacion, onModify, onDelete }) => {
+=======
+const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observacion,finalizado, onModify, onDelete, onDiagnostico }) => {
+>>>>>>> Agus
   // Convierte la fecha a un objeto Date
   const fechaObjeto = new Date(fecha);
   // Formatea la fecha a dd/MM/yyyy
@@ -11,6 +15,12 @@ const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observacion, onModify,
     month: '2-digit',
     year: 'numeric'
   });
+<<<<<<< HEAD
+=======
+  
+  const Esfinalizado = finalizado
+  console.log(Esfinalizado)
+>>>>>>> Agus
 
   return (
     <Card style={styles.card}>
@@ -33,7 +43,12 @@ const SheepReviewCard = ({ estancia, epocaDelAño, fecha, observacion, onModify,
         </View>
       </Card.Content>
       <Card.Actions>
+<<<<<<< HEAD
         <Button onPress={onModify}>Modificar</Button>
+=======
+        <Button onPress={onDiagnostico}>Diagnostico</Button>
+        {finalizado !== 1 && (<Button onPress={onModify}>Modificar</Button>)}
+>>>>>>> Agus
         <Button onPress={onDelete}>Eliminar</Button>
       </Card.Actions>
     </Card>

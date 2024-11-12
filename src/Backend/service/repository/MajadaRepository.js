@@ -5,9 +5,15 @@ import { EpocaDelAñoSingleton } from '../Singleton/RevisionOvino/EpocaDelAñoSi
 
 const insertMajada = async (majada) => {
     if (!db) {return};
+<<<<<<< HEAD
 
     const estancia = majada.getEstancia();
     const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
+=======
+    console.log("majada a registrar en repositorio: " + majada)
+    const estancia = majada.getEstancia();
+    const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño()
+>>>>>>> Agus
     const fechaActual = majada.getFechaDeRevision();
     const observacion = majada.getObservacion();
     const finalizado = majada.getFinalizado();
@@ -24,6 +30,7 @@ const getAllMajada = async () => {
 
     const allRows = await (await db).getAllAsync('SELECT * FROM Majadas');    
 
+<<<<<<< HEAD
     const majada = allRows.map(row => 
         new Majada(row.idMajada, EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(row.idEpocaDelAño), row.estancia, row.fechaDeRevision, row.observacion)
     );
@@ -36,11 +43,28 @@ const getAllMajada = async () => {
 }
 
 
+=======
+    const majadaPromises = allRows.map(async row => {
+        const EDA = await EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(row.idEpocaDelAño);
+        return new Majada(row.idMajada, EDA, row.estancia, row.fechaDeRevision, row.observacion, row.finalizado);
+    });
+
+    const majada = await Promise.all(majadaPromises);
+
+    console.log("mostrar Majadas: ", majada);
+
+    return majada;
+}
+
+
+
+>>>>>>> Agus
 const deleteMajada = async (idMajada) => {
     if (!db) return;
     (await db).runAsync('DELETE FROM Majadas WHERE idMajada = ?', idMajada);
 }
 
+<<<<<<< HEAD
 const updateMajada = async (idMajada, idEpocaDelAño, estancia, observacion) => {
     if (!db) return;
     const idEpoca = parseInt(idEpocaDelAño);
@@ -48,6 +72,16 @@ const updateMajada = async (idMajada, idEpocaDelAño, estancia, observacion) => 
     idEpoca, estancia, observacion, idMajada);
 }
 
+=======
+const updateMajada = async (idMajada, idEpocaDelAño, estancia, observacion, finalizado) => {
+    if (!db) return;
+    const idEpoca = parseInt(idEpocaDelAño);
+    (await db).runAsync('UPDATE Majadas SET idEpocaDelAño = ?, estancia = ?,  observacion = ?, finalizado = ? WHERE idMajada = ?',
+    idEpoca, estancia, observacion, finalizado, idMajada);
+}
+
+
+>>>>>>> Agus
 const getMajadaById = async (idMajada) => {
     if (!db) return; 
 

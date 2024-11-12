@@ -22,8 +22,13 @@ class ControladorMajada {
         return date.toISOString().slice(0, 19).replace("T", " ");
     }
 
+<<<<<<< HEAD
     registrarMajada(epocaDelAño, estancia, observacion) {
         const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+=======
+    async registrarMajada(epocaDelAño, estancia, observacion) {
+        const epocaDelAñoValue = await EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+>>>>>>> Agus
         const fechaActual = this.getFechaActual();
 
         if (epocaDelAño && estancia) {
@@ -48,13 +53,23 @@ class ControladorMajada {
         return await updateMajada(id, epocaDelAño, estancia, observacion)
     }
 
+<<<<<<< HEAD
+=======
+    async finalizarMajada(id){
+        await updateMajadaFinalizado(id)
+    }
+
+>>>>>>> Agus
     async eliminarMajada(idMajada){
         deleteMajada(idMajada)
     }
     
+<<<<<<< HEAD
     async finalizado(idMajada){
         updateMajadaFinalizado(idMajada)
     }
+=======
+>>>>>>> Agus
 }
 
 // Asegurar una única instancia

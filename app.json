@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "MiMAjada2.0",
-    "slug": "MiMAjada-2-0",
+    "name": "Majada3.0",
+    "slug": "Majada",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -19,14 +19,14 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.MiMAjada20"
+      "package": "com.aguslibong.Majada"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "3d6f2f97-5364-4780-9c98-35e88241e63b"
+        "projectId": "93f27117-f000-4970-842e-992f8d34d58e"
       }
     }
   }

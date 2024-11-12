@@ -1,7 +1,11 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 import { Majada } from '../model/Majada';
+<<<<<<< HEAD
 import { deleteMajada, getAllMajada, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
+=======
+import { deleteMajada, getAllMajada, getMajadaById, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
+>>>>>>> Agus
 import { getAllRevisionOvino } from '../service/repository/RevisionOvinoRepository';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 
@@ -18,6 +22,7 @@ class ControladorDiagnostico {
     }
 
     async calcularPorEdad(idMajada) {
+<<<<<<< HEAD
         const revisiones = await this.traerArray(idMajada)
         const cantidadTotalRevisiones = revisiones.length();
         const length = CondicionBucalSingleton.getInstance().length();
@@ -28,6 +33,50 @@ class ControladorDiagnostico {
         return (conteoCondicionBucal, cantidadTotalRevisiones)
     }
 
+=======
+        try {
+            const revisionesData = await this.traerArray(idMajada);
+            console.log("Tipo de datos recibidos:", typeof revisionesData);
+
+            // Parsear el JSON si viene como string
+            let revisiones;
+            if (typeof revisionesData === 'string') {
+                revisiones = JSON.parse(revisionesData);
+            } else {
+                revisiones = revisionesData;
+            }
+
+            console.log("Revisiones parseadas:", revisiones);
+
+            if (!Array.isArray(revisiones)) {
+                throw new Error('Los datos no son un array después del parsing');
+            }
+
+            const cantidadTotalRevisiones = revisiones.length;
+            console.log("Cantidad total de revisiones:", cantidadTotalRevisiones);
+
+            const conteoCondicionBucal = new Array(7).fill(0);
+
+            for (const revision of revisiones) {
+                const idCondicionBucal = revision.condicionBucal.idCondicionBucal;
+                if (idCondicionBucal > 0 && idCondicionBucal <= 7) {
+                    conteoCondicionBucal[idCondicionBucal - 1]++;
+                }
+            }
+
+            console.log("Conteo final:", conteoCondicionBucal);
+            return conteoCondicionBucal;
+
+        } catch (error) {
+            console.error("Error en calcularPorEdad:", error);
+            throw error;
+        }
+    }
+
+
+
+
+>>>>>>> Agus
     async traerArray(idMajada){
         return await getAllRevisionOvino(idMajada)
     }
@@ -61,11 +110,54 @@ class ControladorDiagnostico {
     }
 
     async condicionCorporalTotal(idMajada){
+<<<<<<< HEAD
         const revisiones = this.traerArray(idMajada)
         const cantidadTotalRevisiones = revisiones.length();
         const conteoCondicionCorporal = 0;
         for(const revision of revisiones){
             conteoCondicionCorporal += revision.condicionCorporal 
+=======
+        const revisionesData = await this.traerArray(idMajada)
+        
+        let revisiones;
+        if (typeof revisionesData === 'string') {
+            revisiones = JSON.parse(revisionesData);
+        } else {
+            revisiones = revisionesData;
+        }
+
+        console.log("Revisiones parseadas:", revisiones);
+
+        if (!Array.isArray(revisiones)) {
+            throw new Error('Los datos no son un array después del parsing');
+        }
+
+        const cantidadTotalRevisiones = revisiones.length;
+        
+        console.log("Cantidad total de revisiones:", cantidadTotalRevisiones);
+        
+        let conteoCondicionCorporal = 0;
+        
+
+        revisiones.forEach( r => {
+            conteoCondicionCorporal += r.condicionCorporal 
+            console.log(conteoCondicionCorporal)
+        })
+       
+
+        const totalConCorp = conteoCondicionCorporal/cantidadTotalRevisiones;
+        
+        const majada = getMajadaById(idMajada)
+        
+        if (majada.idEpocaDelAño = 1 ){
+            return [1.2, totalConCorp]
+        }
+        if (majada.idEpocaDelAño = 2 ){
+            return [2.2, totalConCorp]
+        }
+        if (majada.idEpocaDelAño = 3 ){
+            return [3.5, totalConCorp]
+>>>>>>> Agus
         }
 
     }

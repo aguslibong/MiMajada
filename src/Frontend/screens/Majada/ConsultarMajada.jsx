@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { Button, ScrollView, ActivityIndicator, View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import MajadaCard from '../../components/MajadaCard.jsx';
 import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'; // Asegúrate de tener el controlador adecuado
+<<<<<<< HEAD
 
 
 const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
@@ -17,6 +18,14 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
     }
   }, [majadas]); // Agrega majadas como dependencia
   
+=======
+import { useNavigation } from '@react-navigation/native';
+
+const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar }) => {
+  
+  const navigation = useNavigation();
+
+>>>>>>> Agus
 
   const handleModify = useCallback((MajadaModificar) => {
     onModificar(MajadaModificar);
@@ -26,9 +35,18 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
     onEliminar(id);
   }, [onEliminar]);
 
+<<<<<<< HEAD
   const handleRegistro = useCallback(() => {
     setAction('R');
   }, [setAction]);
+=======
+  const diagnostico = (idMajada) =>{
+    console.log('id de la majada a diagnosticar: ' + idMajada)
+    // Ejemplo de navegación desde otra pantalla
+    navigation.navigate('Diagnostico', { idMajada: idMajada });
+
+  }
+>>>>>>> Agus
 
   const confirmDelete = useCallback((id) => {
     Alert.alert(
@@ -60,13 +78,24 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
         ) : (
           majadas.map((majada) => (
             <MajadaCard
+<<<<<<< HEAD
               key={majada.id}
+=======
+              key={majada.idMajada}
+>>>>>>> Agus
               epocaDelAño={majada.epocaDelAño.descripcion}
               estancia={majada.estancia}
               fecha={majada.fechaDeRevision}
               observacion={majada.observacion}
+<<<<<<< HEAD
               onModify={() => handleModify(majada)}
               onDelete={() => confirmDelete(majada.id)}
+=======
+              finalizado={majada.finalizado}
+              onModify={() => handleModify(majada)}
+              onDelete={() => confirmDelete(majada.idMajada)}
+              onDiagnostico={()=> diagnostico(majada.idMajada)}
+>>>>>>> Agus
             />
           ))
         )}
