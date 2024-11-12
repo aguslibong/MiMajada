@@ -1,7 +1,7 @@
 import setupDatabase from '../db/db-config';
 import { EpocaDelAñoSingleton } from '../service/Singleton/RevisionOvino/EpocaDelAñoSingleton.service';
 import { Majada } from '../model/Majada';
-import { deleteMajada, getAllMajada, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
+import { deleteMajada, getAllMajada, getMajadaById, insertMajada, obtenerIdMajadaMasGrande, updateMajada } from '../service/repository/MajadaRepository';
 import { getAllRevisionOvino } from '../service/repository/RevisionOvinoRepository';
 import { CondicionBucalSingleton } from '../service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
 
@@ -67,6 +67,17 @@ class ControladorDiagnostico {
         const conteoCondicionCorporal = 0;
         for(const revision of revisiones){
             conteoCondicionCorporal += revision.condicionCorporal 
+        }
+        const totalConCorp = conteoCondicionCorporal/cantidadTotalRevisiones;
+        const majada = getMajadaById(idMajada)
+        if (majada.idEpocaDelAño = 1 ){
+            return [totalConCorp, 1.2]
+        }
+        if (majada.idEpocaDelAño = 2 ){
+            return [totalConCorp, 2.2]
+        }
+        if (majada.idEpocaDelAño = 3 ){
+            return [totalConCorp, 3.5]
         }
 
     }

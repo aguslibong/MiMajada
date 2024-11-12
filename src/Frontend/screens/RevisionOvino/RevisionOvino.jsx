@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import RegistroRevisionOvino from './RegistroRevisionOvino';
 import ConsultarRevisionOvino from './ConsultarRevisionOvino';
 import instanciaControlador from '../../../Backend/Controller/ControladorRevisionOvino.js'
+import ControladorMajada from '../../../Backend/Controller/ControladorMajada.js'
 
 const RevisionOvino = ({ route }) => {
     const {idMajada} = route.params
@@ -59,10 +60,6 @@ const RevisionOvino = ({ route }) => {
         }
     }, []);
 
-    const onFinalizar = useCallback(async () => {
-        navigation.navigate('DiagnosticoMajada', { idMajada })
-        //setear finalizado true
-    }, []);
 
     const onObservacion = useCallback(async () => {
         // Implementa la lógica de observación aquí
@@ -79,7 +76,6 @@ const RevisionOvino = ({ route }) => {
                 <RegistroRevisionOvino 
                     setAction={setAction}
                     revisionModificar={revisionModificar}
-                    onFinalizar={onFinalizar}
                     onObservacion={onObservacion}
                     fetchData={fetchData}
                     revisions={revisions}

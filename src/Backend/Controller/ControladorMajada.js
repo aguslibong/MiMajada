@@ -48,13 +48,14 @@ class ControladorMajada {
         return await updateMajada(id, epocaDelAño, estancia, observacion)
     }
 
+    async finalizarMajada(id){
+        await updateMajadaFinalizado(id)
+    }
+
     async eliminarMajada(idMajada){
         deleteMajada(idMajada)
     }
     
-    async finalizado(idMajada){
-        updateMajadaFinalizado(idMajada)
-    }
 }
 
 // Asegurar una única instancia

@@ -8,16 +8,6 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
   
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (majadas && majadas.length > 0) {
-      majadas.forEach(element => {
-        console.log("elemento:", element);
-      });
-    } else {
-      console.log("No hay elementos en majadas");
-    }
-  }, [majadas]); // Agrega majadas como dependencia
-  
 
   const handleModify = useCallback((MajadaModificar) => {
     onModificar(MajadaModificar);
@@ -28,7 +18,10 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
   }, [onEliminar]);
 
   const diagnostico = (idMajada) =>{
-    navigation.navigate('Diagnostico', { idMajada });
+    console.log('id de la majada a diagnosticar: ' + idMajada)
+    // Ejemplo de navegación desde otra pantalla
+    navigation.navigate('Diagnostico', { idMajada: idMajada });
+
   }
 
   const confirmDelete = useCallback((id) => {
@@ -61,14 +54,15 @@ const ConsultarMajada = ({ setAction, majadas, loading, onModificar, onEliminar 
         ) : (
           majadas.map((majada) => (
             <MajadaCard
-              key={majada.id}
+              key={majada.idMajada}
               epocaDelAño={majada.epocaDelAño.descripcion}
               estancia={majada.estancia}
               fecha={majada.fechaDeRevision}
               observacion={majada.observacion}
+              finalizado={majada.finalizado}
               onModify={() => handleModify(majada)}
-              onDelete={() => confirmDelete(majada.id)}
-              onDiagnostico={()=> diagnostico(majada.id)}
+              onDelete={() => confirmDelete(majada.idMajada)}
+              onDiagnostico={()=> diagnostico(majada.idMajada)}
             />
           ))
         )}

@@ -103,7 +103,6 @@ const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => 
             <Picker.Item label="PreServicio" value="1" />
             <Picker.Item label="PreParto" value="2" />
             <Picker.Item label="PostParto" value="3" />
-            <Picker.Item label="Otro" value="4" />
           </Picker>
         </View>
         <View style={styles.formGroup}>

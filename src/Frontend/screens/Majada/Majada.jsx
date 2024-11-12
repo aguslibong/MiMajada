@@ -2,17 +2,16 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { View } from 'react-native';
 import ConsultarMajada from './ConsultarMajada.jsx';
 import RegistrarMajada from './RegistrarMajada.jsx';
-import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js'
+import instanciaControlador from '../../../Backend/Controller/ControladorMajada.js';
 import { useRoute } from '@react-navigation/native';
 
 const Majada = () => {
-    const route = useRoute()
-    const {actionInicial} = route.params
+    const route = useRoute();
+    const { actionInicial } = route.params;
     const [action, setAction] = useState(actionInicial);
     const [majadas, setMajadas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [majadaModificar, setMajadaModificar] = useState(null);
-
 
     const fetchData = useCallback(async () => {
         try {
@@ -25,7 +24,12 @@ const Majada = () => {
         }
     }, []);
 
-    // Efecto para limpiar revisionModificar cuando se cambia de acción
+    // Efecto para actualizar el estado de action cuando cambia actionInicial
+    useEffect(() => {
+        setAction(actionInicial);
+    }, [actionInicial]);
+
+    // Efecto para limpiar majadaModificar cuando se cambia de acción
     useEffect(() => {
         if (action === 'C' || action === 'R') {
             setMajadaModificar(null);
@@ -34,7 +38,7 @@ const Majada = () => {
 
     // Manejador personalizado para setAction que limpia estados cuando es necesario
     const handleSetAction = useCallback((newAction) => {
-        // Si estamos cambiando a consulta o registro nuevo, limpiamos revisionModificar
+        // Si estamos cambiando a consulta o registro nuevo, limpiamos majadaModificar
         if (newAction === 'C' || newAction === 'R') {
             setMajadaModificar(null);
         }
@@ -57,14 +61,11 @@ const Majada = () => {
         }
     }, []);
 
-
     // Efecto inicial para cargar datos
     useEffect(() => {
         fetchData();
     }, [fetchData]);
 
-
-    //falta la accion cuando se modifica majada
     return (
         <View>
             {(action === 'R' || action === 'M') && (

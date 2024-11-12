@@ -13,7 +13,6 @@ export class EpocaDelAñoSingleton {
                 new EpocaDelAño(1, 'PreServicio'),
                 new EpocaDelAño(2, 'PreParto'),
                 new EpocaDelAño(3, 'PosParto'),
-                new EpocaDelAño(4, 'Otro')
             ];
             EpocaDelAñoSingleton.instance = this;
         }
@@ -28,7 +27,7 @@ export class EpocaDelAñoSingleton {
         return EpocaDelAñoSingleton.instance;
     }
 
-    getEpocaDelAñoById(id) {
-        return this.epocasDelAño.find(epoca => epoca.getIdEpocaDelAño() == id);
+    async getEpocaDelAñoById(id) {
+        return await this.epocasDelAño.find(epoca => epoca.getIdEpocaDelAño() == id);
     }
 }

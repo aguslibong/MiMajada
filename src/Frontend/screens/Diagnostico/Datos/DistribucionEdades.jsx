@@ -1,11 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import Grafica from '../../../components/Grafica'
+import GraficaBarra from '../../../components/GraficaBarra';
 
 const DistribucionEdades = ({listDisBucal}) => {
     return (
         <View style={styles.container}>
-            <Grafica listDisBucal={listDisBucal}></Grafica>
+            <GraficaBarra listDisBucal={listDisBucal}></GraficaBarra>
             
         </View>
     );

@@ -7,12 +7,13 @@ import instanciaControlador from '../../../Backend/Controller/ControladorRevisio
 import { EnfermedadSingleton } from '../../../Backend/service/Singleton/RevisionOvino/EnfermedadSingleton.service';
 import { SexoSingleton } from '../../../Backend/service/Singleton/RevisionOvino/SexoSingleton.service';
 import { CondicionBucalSingleton } from '../../../Backend/service/Singleton/RevisionOvino/CondicionBucalSingleton.service';
-
+import controladorMajada from '../../../Backend/Controller/ControladorMajada.js'
+import { useNavigation } from '@react-navigation/native';
 const { width } = Dimensions.get('window');
 
-const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnObservacion, fetchData, revisions, idMajada }) => {
+const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, fetchData, revisions, idMajada }) => {
   const id = (revisionModificar) ? revisionModificar.id : null;
-  
+  const navigation = useNavigation();
   // Definimos los valores iniciales en un objeto para mejor mantenimiento
   const initialValues = {
     sexo: null,
@@ -104,7 +105,9 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnFinalizar, OnO
   };
 
   const handleFinalizar = () => {
-    OnFinalizar()
+    console.log(idMajada)
+    controladorMajada.finalizarMajada(idMajada)
+    navigation.navigate('Diagnostico', { idMajada: idMajada });
   }
 
   return (
