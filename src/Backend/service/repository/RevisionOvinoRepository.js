@@ -50,6 +50,7 @@ const getAllRevisionOvino = async (idMajada) => {
     
     const allRows = await (await db).getAllAsync('SELECT * FROM RevisionOvinos WHERE idMajada = ?', idMajada);
 
+    console.log(allRows)
     return Promise.all(
         allRows.map(row => crearOvinoDeClaseAEntidad(
             row.idMajada,

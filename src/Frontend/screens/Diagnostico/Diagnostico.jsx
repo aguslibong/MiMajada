@@ -1,55 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import { BottomNavigation } from 'react-native-paper';
+import { ActivityIndicator, View } from 'react-native';
 import CondicionCorporal from './Datos/CondicionCorporal';
 import DiagnosticoRecomendacion from './Datos/DiagnosticoRecomendacion';
 import DistribucionEdades from './Datos/DistribucionEdades';
 import ControladorDiagnostico from '../../../Backend/Controller/ControladorDiagnostico.js';
-import { useRoute } from '@react-navigation/native'
+import { useRoute } from '@react-navigation/native';
 
 const Diagnostico = () => {
-    const route = useRoute(); // Obtén la ruta actual
+    const route = useRoute();
     const { idMajada } = route.params;
     const [index, setIndex] = useState(0);
     const [listaDisBucal, setListaDisBucal] = useState([]);
     const [puntoCondCorpTotal, setPuntoCondCorpTotal] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        console.log("idMajada en useEffect:", idMajada); // Debug log
+        console.log("idMajada en useEffect:", idMajada);
         
         const cargarDatos = async () => {
+            setIsLoading(true);
             try {
-                console.log("Iniciando carga de datos..."); // Debug log
+                console.log("Iniciando carga de datos...");
                 const lista = await ControladorDiagnostico.calcularPorEdad(idMajada);
-                const punto = await ControladorDiagnostico.condicionCorporalTotal(idMajada); // Pasamos idMajada aquí
+                const punto = await ControladorDiagnostico.condicionCorporalTotal(idMajada);
                 
-                console.log("Lista obtenida:", lista); // Debug log
-                console.log("Punto obtenido:", punto); // Debug log
+                console.log("Lista obtenida:", lista);
+                console.log("Punto obtenido:", punto);
                 
-                setListaDisBucal(lista);
+                setListaDisBucal(lista)
                 setPuntoCondCorpTotal(punto);
             } catch (error) {
                 console.error("Error al cargar datos:", error);
+            } finally {
+                setIsLoading(false);
             }
         };
 
         if (idMajada) {
             cargarDatos();
         } else {
-            console.log("No hay idMajada disponible"); // Debug log
+            console.log("No hay idMajada disponible");
+            setIsLoading(false);
         }
     }, [idMajada]);
 
-    // Define route components
+    // Define route components with loading state
     const condicionCorporalRoute = () => (
-        <CondicionCorporal 
-            puntoCondCorpTotal={puntoCondCorpTotal} 
-        />
+        isLoading ? (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        ) : (
+            <CondicionCorporal 
+                puntoCondCorpTotal={puntoCondCorpTotal} 
+            />
+        )
     );
     
     const distribucionEdadesRoute = () => (
-        <DistribucionEdades 
-            listaDisBucal={listaDisBucal} 
-        />
+        isLoading ? (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#0000ff" />
+            </View>
+        ) : (
+            <DistribucionEdades 
+                listaDisBucal={listaDisBucal}
+            />
+        )
     );
     
     const diagnosticoRecomendacionRoute = () => <DiagnosticoRecomendacion />;
@@ -64,14 +82,14 @@ const Diagnostico = () => {
         {
             key: 'distribucionEdades',
             title: 'Distribución Edades',
-            focusedIcon: 'album',
-            unfocusedIcon: 'album-outline'
+            focusedIcon: 'chart-bar',
+            unfocusedIcon: 'chart-bar'
         },
         {
             key: 'diagnosticoRecomendacion',
             title: 'Diagnóstico',
-            focusedIcon: 'history',
-            unfocusedIcon: 'history-outline'
+            focusedIcon: 'clipboard-check',
+            unfocusedIcon: 'clipboard-check-outline'
         }
     ]);
 

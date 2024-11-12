@@ -8,7 +8,7 @@ const { width } = Dimensions.get('window');
 
 const RegistrarMajada = ({ setAction, majadaModificar, fecthData, majadas }) => {
  
-  const id = majadaModificar ? majadaModificar.id : null;
+  const id = majadaModificar ? majadaModificar.idMajada : null;
   const navigation = useNavigation();
 
   const initialValues = {

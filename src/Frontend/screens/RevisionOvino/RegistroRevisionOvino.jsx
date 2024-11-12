@@ -88,6 +88,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, f
       await instanciaControlador.registrarRevision(idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión registrada con éxito");
       setValoresNull();
+      fetchData();
     } catch (error) {
       console.log("Error al registrar la revisión:", error);
     }
@@ -96,34 +97,48 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, f
   const handleActualizar = async () => {
     if (!validarFormulario()) return;
     try {
-      await instanciaControlador.modificarRevision(id, idMajada , sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
+      await instanciaControlador.modificarRevision(id, idMajada, sexo, condicionCorporal, condicionBucal, enfermedad, caravana);
       console.log("Revisión Actualizada con éxito");
       setValoresNull();
+      fetchData();
     } catch (error) {
       console.log("Error al Actualizar la revisión:", error);
     }
   };
 
   const handleFinalizar = () => {
-    console.log(idMajada)
-    controladorMajada.finalizarMajada(idMajada)
-    navigation.navigate('Diagnostico', { idMajada: idMajada });
-  }
+    Alert.alert(
+      "Confirmación",
+      "¿Estás seguro de que deseas finalizar? Una vez finalizado no se podra modificar!",
+      [
+        { text: "Cancelar", style: "cancel" },
+        {
+          text: "Finalizar",
+          style: "destructive",
+          onPress: () => {
+            controladorMajada.finalizarMajada(idMajada);
+            navigation.navigate('Diagnostico', { idMajada: idMajada });
+          }
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
       <View style={styles.container}>
-      {revisionModificar === null && (
-        <View style={styles.buttonsContainer}>
-          <TouchableOpacity style={styles.button} onPress={handleConsultar}>
-            <Text style={styles.buttonText}>Lista Majada</Text>
-          </TouchableOpacity>
-          <Text style={styles.revisionCount}>Cant Registrados:  {revisions.length}</Text>
-        </View>
-      )}
         <View style={styles.header}>
           <Text style={styles.title}>Registrar Revisión Ovino</Text>
         </View>
+
+        {revisionModificar === null && (
+          <View style={styles.buttonsContainer}>
+            <Text style={styles.revisionCount}>Cant Registrados:  {revisions.length}</Text>
+          </View>
+        )}
+
         <View style={styles.formGroup}>
           <Text style={styles.label}>Caravana (opcional)</Text>
           <TextInput
@@ -193,7 +208,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, f
           </Picker>
         </View>
         <View style={styles.buttonsContainer}>
-            {revisionModificar === null && (
+          {revisionModificar === null && (
             <TouchableOpacity style={styles.button} onPress={handleFinalizar}>
               <Text style={styles.buttonText}>Finalizar</Text>
             </TouchableOpacity>
@@ -203,9 +218,11 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, f
               <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>
           )}
-          <TouchableOpacity style={styles.button} onPress={OnObservacion}>
-            <Text style={styles.buttonText}>Agregar Observación</Text>
-          </TouchableOpacity>
+          {revisionModificar === null && (
+            <TouchableOpacity style={styles.button} onPress={handleConsultar}>
+              <Text style={styles.buttonText}>Lista Majada</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.buttonRegistrar} onPress={revisionModificar === null ? handleRegistro : handleActualizar}>
             <Text style={styles.buttonText}>
               {revisionModificar === null ? 'Registrar' : 'Actualizar'}
@@ -217,7 +234,7 @@ const RegistrarRevisionOvino = ({ setAction, revisionModificar, OnObservacion, f
   );
 };
 
-export default  RegistrarRevisionOvino;
+export default RegistrarRevisionOvino;
 
 const styles = StyleSheet.create({
   scrollContainer: {

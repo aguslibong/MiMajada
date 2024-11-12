@@ -18,16 +18,47 @@ class ControladorDiagnostico {
     }
 
     async calcularPorEdad(idMajada) {
-        const revisiones = await this.traerArray(idMajada)
-        console.log("lista en controlador :" + revisiones)
-        const cantidadTotalRevisiones = revisiones.length();
-        const length = CondicionBucalSingleton.getInstance().length();
-        const conteoCondicionBucal = Array(length).fill(0);
-        for(const revision of revisiones){
-            conteoCondicionBucal[revision.getCondicionBucal().getIdCondicionBucal() - 1] = conteoCondicionBucal[revision.getCondicionBucal().getIdCondicionBucal() - 1] + 1;
+        try {
+            const revisionesData = await this.traerArray(idMajada);
+            console.log("Tipo de datos recibidos:", typeof revisionesData);
+
+            // Parsear el JSON si viene como string
+            let revisiones;
+            if (typeof revisionesData === 'string') {
+                revisiones = JSON.parse(revisionesData);
+            } else {
+                revisiones = revisionesData;
+            }
+
+            console.log("Revisiones parseadas:", revisiones);
+
+            if (!Array.isArray(revisiones)) {
+                throw new Error('Los datos no son un array después del parsing');
+            }
+
+            const cantidadTotalRevisiones = revisiones.length;
+            console.log("Cantidad total de revisiones:", cantidadTotalRevisiones);
+
+            const conteoCondicionBucal = new Array(7).fill(0);
+
+            for (const revision of revisiones) {
+                const idCondicionBucal = revision.condicionBucal.idCondicionBucal;
+                if (idCondicionBucal > 0 && idCondicionBucal <= 7) {
+                    conteoCondicionBucal[idCondicionBucal - 1]++;
+                }
+            }
+
+            console.log("Conteo final:", conteoCondicionBucal);
+            return conteoCondicionBucal;
+
+        } catch (error) {
+            console.error("Error en calcularPorEdad:", error);
+            throw error;
         }
-        return (conteoCondicionBucal)
     }
+
+
+
 
     async traerArray(idMajada){
         return await getAllRevisionOvino(idMajada)
@@ -62,22 +93,46 @@ class ControladorDiagnostico {
     }
 
     async condicionCorporalTotal(idMajada){
-        const revisiones = this.traerArray(idMajada)
-        const cantidadTotalRevisiones = revisiones.length();
-        const conteoCondicionCorporal = 0;
-        for(const revision of revisiones){
-            conteoCondicionCorporal += revision.condicionCorporal 
+        const revisionesData = await this.traerArray(idMajada)
+        
+        let revisiones;
+        if (typeof revisionesData === 'string') {
+            revisiones = JSON.parse(revisionesData);
+        } else {
+            revisiones = revisionesData;
         }
+
+        console.log("Revisiones parseadas:", revisiones);
+
+        if (!Array.isArray(revisiones)) {
+            throw new Error('Los datos no son un array después del parsing');
+        }
+
+        const cantidadTotalRevisiones = revisiones.length;
+        
+        console.log("Cantidad total de revisiones:", cantidadTotalRevisiones);
+        
+        let conteoCondicionCorporal = 0;
+        
+
+        revisiones.forEach( r => {
+            conteoCondicionCorporal += r.condicionCorporal 
+            console.log(conteoCondicionCorporal)
+        })
+       
+
         const totalConCorp = conteoCondicionCorporal/cantidadTotalRevisiones;
+        
         const majada = getMajadaById(idMajada)
+        
         if (majada.idEpocaDelAño = 1 ){
-            return [totalConCorp, 1.2]
+            return [1.2, totalConCorp]
         }
         if (majada.idEpocaDelAño = 2 ){
-            return [totalConCorp, 2.2]
+            return [2.2, totalConCorp]
         }
         if (majada.idEpocaDelAño = 3 ){
-            return [totalConCorp, 3.5]
+            return [3.5, totalConCorp]
         }
 
     }

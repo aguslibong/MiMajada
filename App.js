@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { View, Image, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Text } from 'react-native';
 import 'react-native-gesture-handler';
 import Menu from './src/Frontend/screens/Menu';
 import Diagnostico from './src/Frontend/screens/Diagnostico/Diagnostico';
 import Capacitacion from './src/Frontend/screens/Capacitacion/Capacitacion';
 import RevisionOvino from './src/Frontend/screens/RevisionOvino/RevisionOvino';
-import RegistrarMajada from './src/Frontend/screens/Majada/RegistrarMajada'
+import RegistrarMajada from './src/Frontend/screens/Majada/RegistrarMajada';
 import Majada from './src/Frontend/screens/Majada/Majada';
 import ConsultarMajada from './src/Frontend/screens/Majada/ConsultarMajada';
 import setupDatabase from './src/Backend/db/db-config';
@@ -15,9 +15,7 @@ import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawe
 
 const Drawer = createDrawerNavigator();
 
-
-
-// Primero, crea un componente personalizado para el contenido del drawer
+// Componente personalizado para el contenido del drawer
 const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props}>
@@ -32,48 +30,79 @@ const CustomDrawerContent = (props) => {
   );
 };
 
-
 const App = () => {
 
   React.useEffect(() => {
     setupDatabase()
-  }, []
-  )
+  }, []);
 
   return (
     <NavigationContainer>
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
         initialRouteName="Menu">
-        <Drawer.Screen name="Menu" component={Menu} />
+        <Drawer.Screen 
+          name="Menu" 
+          component={Menu} 
+          options={{
+            headerRight: () => (
+              <Text style={styles.headerTitle}>MI MAJADA</Text>
+            ),
+            headerStyle: {
+              backgroundColor: '#000',  // Cambia este color por el que quieras para el fondo del header
+            },
+            headerTintColor: '#fff',  // Cambia el color de los textos/íconos del header
+          }}
+        />
+        
         <Drawer.Screen
           name="Capacitacion"
           component={Capacitacion}
           options={{
-            drawerItemStyle: { display: 'flex' }
+            drawerItemStyle: { display: 'flex' },
+            headerRight: () => (
+              <Text style={styles.headerTitle}>MI MAJADA</Text>
+            ),
+            headerStyle: {
+              backgroundColor: '#000',  // Cambia este color para la pantalla de Capacitación
+            },
+            headerTintColor: '#fff',
           }}
         />
-        
         
         <Drawer.Screen
           name="Diagnostico"
           component={Diagnostico}
           options={{
-            drawerItemStyle: { display: 'none' }
+            drawerItemStyle: { display: 'none' },
+            headerStyle: {
+              backgroundColor: '#4CAF50',
+            },
+            headerTintColor: '#fff',
           }}
         />
+        
         <Drawer.Screen
           name="RevisionOvino"
           component={RevisionOvino}
           options={{
-            drawerItemStyle: { display: 'none' }
+            drawerItemStyle: { display: 'none' },
+            headerStyle: {
+              backgroundColor: '#4CAF50',
+            },
+            headerTintColor: '#fff',
           }}
         />
+        
         <Drawer.Screen
           name="Majada"
           component={Majada}
           options={{
-            drawerItemStyle: { display: 'none' }
+            drawerItemStyle: { display: 'none' },
+            headerStyle: {
+              backgroundColor: '#000',
+            },
+            headerTintColor: '#fff',
           }}
         />
       </Drawer.Navigator>
@@ -86,12 +115,18 @@ const styles = StyleSheet.create({
     height: 150,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#fff', // Puedes cambiar el color de fondo
+    backgroundColor: '#fff',
   },
   drawerImage: {
     height: 100,
     width: 100,
-    resizeMode: 'contain', // o 'cover' dependiendo de cómo quieras que se ajuste la imagen
+    resizeMode: 'contain',
+  },
+  headerTitle: {
+    marginRight: 30,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#fff', // Cambia este color si quieres que el texto del título también se ajuste
   }
 });
 

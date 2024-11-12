@@ -22,8 +22,8 @@ class ControladorMajada {
         return date.toISOString().slice(0, 19).replace("T", " ");
     }
 
-    registrarMajada(epocaDelAño, estancia, observacion) {
-        const epocaDelAñoValue = EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
+    async registrarMajada(epocaDelAño, estancia, observacion) {
+        const epocaDelAñoValue = await EpocaDelAñoSingleton.getInstance().getEpocaDelAñoById(epocaDelAño);
         const fechaActual = this.getFechaActual();
 
         if (epocaDelAño && estancia) {

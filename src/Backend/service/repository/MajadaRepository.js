@@ -5,9 +5,9 @@ import { EpocaDelAñoSingleton } from '../Singleton/RevisionOvino/EpocaDelAñoSi
 
 const insertMajada = async (majada) => {
     if (!db) {return};
-
+    console.log("majada a registrar en repositorio: " + majada)
     const estancia = majada.getEstancia();
-    const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño();
+    const idEpocaDelAño = majada.getEpocaDelAño().getIdEpocaDelAño()
     const fechaActual = majada.getFechaDeRevision();
     const observacion = majada.getObservacion();
     const finalizado = majada.getFinalizado();
