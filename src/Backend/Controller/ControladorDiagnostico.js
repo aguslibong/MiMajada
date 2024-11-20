@@ -120,20 +120,26 @@ class ControladorDiagnostico {
             console.log(conteoCondicionCorporal)
         })
        
+        let totalConCorp = conteoCondicionCorporal / cantidadTotalRevisiones;
+        if (isNaN(totalConCorp)) {
+            totalConCorp = 0;
+        }
+        
+        const majada = await getMajadaById(idMajada)
 
-        const totalConCorp = conteoCondicionCorporal/cantidadTotalRevisiones;
+        const fechaRevision = new Date(majada.fechaDeRevision);
+        const mesRevision = fechaRevision.getMonth() + 1; // Los meses en JavaScript son 0-indexed, por lo que se suma 1
+        const diaRevision = fechaRevision.getDate();
+        const diasEnMes = new Date(fechaRevision.getFullYear(), mesRevision, 0).getDate();
+        const fraccionDelMes = diaRevision / diasEnMes;
+        const mesConFraccion = mesRevision + fraccionDelMes ;
+
+        console.log('dia calculado ' + mesConFraccion);
+
+
+        return [7.5, totalConCorp]
         
-        const majada = getMajadaById(idMajada)
         
-        if (majada.idEpocaDelAño = 1 ){
-            return [1.2, totalConCorp]
-        }
-        if (majada.idEpocaDelAño = 2 ){
-            return [2.2, totalConCorp]
-        }
-        if (majada.idEpocaDelAño = 3 ){
-            return [3.5, totalConCorp]
-        }
 
     }
     

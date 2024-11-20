@@ -20,7 +20,6 @@ const GraficaLineal2 = ({ puntoCondCorpTotal }) => {
         );
     }
 
-
     // Ahora sabemos que puntoCondCorpTotal es válido
     const markerPoint = {
         x: puntoCondCorpTotal[0],
@@ -46,7 +45,7 @@ const GraficaLineal2 = ({ puntoCondCorpTotal }) => {
     }
 
     // Asegurarse de que los valores están dentro de rangos válidos
-    const validX = Math.max(0, Math.min(markerPoint.x, 3)); // Limitar entre 0 y 3
+    const validX = Math.max(0, Math.min(markerPoint.x, 12)); // Limitar entre 0 y 12
     const validY = Math.max(0, Math.min(markerPoint.y, 5)); // Limitar entre 0 y 5
 
     return (
@@ -61,10 +60,10 @@ const GraficaLineal2 = ({ puntoCondCorpTotal }) => {
             </Text>
             <LineChart
                 data={{
-                    labels: ['OTOÑO', 'INVIERNO','PRIMAVERA', 'VERANO'],
+                    labels: ['En', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ag', 'Sep', 'Oc', 'Nov', 'Dic'],
                     datasets: [
                         {
-                            data: [3, 2.5, 2, 3]
+                            data: [3, 3 , 3, 2.8, 2.7, 2.5, 2.4, 2.2, 2, 2.2, 2.5, 3]
                         }
                     ]
                 }}
@@ -78,7 +77,9 @@ const GraficaLineal2 = ({ puntoCondCorpTotal }) => {
                 formatYLabel={(value) => Number(value).toFixed(1)}
                 decorator={() => {
                     try {
-                        const xPos = (validX * (Dimensions.get("window").width - 64)) / 3 + 32;
+                        // Ajustar la posición x para que esté dentro de los 12 meses
+                        const screenWidth = Dimensions.get("window").width;
+                        const xPos = (validX * (screenWidth - 64)) / 12 + 32;
                         const yPos = ((5 - validY) * (180)) / 5 + 20;
                         
                         return (
